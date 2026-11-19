@@ -1,49 +1,21 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { KeyRound } from "lucide-react";
-import { Alert } from "@/components/ui/alert";
-import { PanelAuth } from "@/components/admin/panel-auth";
-import { FormLupaSandi } from "@/components/admin/form-lupa-sandi";
+import { PemulihanSandi } from "@/components/admin/pemulihan-sandi";
 
 export const metadata: Metadata = { title: "Lupa Kata Sandi" };
 
-type Props = { searchParams: Promise<{ galat?: string }> };
-
 /**
- * Halaman permintaan tautan pemulihan kata sandi.
+ * Halaman pemulihan kata sandi.
  *
- * `galat` diisi oleh /auth/confirm ketika tautan dari email tidak bisa
- * dipakai (kedaluwarsa, sudah pernah dipakai, atau token rusak).
+ * Seluruh alur (email -> kode 6 angka -> sandi baru) terjadi di satu halaman.
+ * Tidak ada tautan yang diklik dari email, sehingga tidak bergantung pada
+ * Site URL, Redirect URLs, maupun perangkat yang dipakai membuka email.
  */
-export default function LupaSandiPage({ searchParams }: Props) {
+export default function LupaSandiPage() {
   return (
     <Suspense fallback={<Kerangka />}>
-      <IsiHalaman searchParams={searchParams} />
+      <PemulihanSandi />
     </Suspense>
-  );
-}
-
-async function IsiHalaman({ searchParams }: Props) {
-  const { galat } = await searchParams;
-
-  return (
-    <PanelAuth
-      ikon={<KeyRound className="size-5" aria-hidden />}
-      judul="Lupa kata sandi?"
-      deskripsi="Masukkan email administrator sekolah. Kami akan mengirim tautan untuk membuat kata sandi baru."
-    >
-      <div className="flex flex-col gap-5">
-        {galat ? (
-          <Alert tone="bahaya">
-            {galat === "kedaluwarsa"
-              ? "Tautan pemulihan sudah kedaluwarsa atau pernah dipakai. Silakan minta tautan baru di bawah ini."
-              : "Tautan pemulihan tidak valid. Silakan minta tautan baru di bawah ini."}
-          </Alert>
-        ) : null}
-
-        <FormLupaSandi />
-      </div>
-    </PanelAuth>
   );
 }
 

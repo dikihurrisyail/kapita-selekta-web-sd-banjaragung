@@ -59,11 +59,10 @@ export async function proxy(request: NextRequest) {
 
   /*
    * Halaman pemulihan kata sandi harus tetap terbuka tanpa login — justru
-   * karena penggunanya belum bisa masuk. Tanpa pengecualian ini, tautan dari
-   * email akan langsung terlempar ke halaman login.
+   * karena penggunanya belum bisa masuk. Tanpa pengecualian ini, halaman itu
+   * akan langsung terlempar ke halaman login.
    */
-  const halamanPemulihan =
-    pathname === "/admin/lupa-sandi" || pathname === "/admin/sandi-baru";
+  const halamanPemulihan = pathname === "/admin/lupa-sandi";
 
   if (halamanPemulihan) return response;
 

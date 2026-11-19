@@ -106,10 +106,14 @@ export async function logoutAdmin() {
 /**
  * Kirim tautan pemulihan kata sandi ke email administrator.
  *
- * Pesan hasil SELALU sama, baik email terdaftar maupun tidak. Kalau aplikasi
- * membedakan keduanya, halaman ini bisa dipakai menebak email administrator
- * mana yang valid. Karena itu kegagalan "email tidak ditemukan" juga
- * dilaporkan sebagai sukses.
+ * Soal privasi: kalau email TIDAK terdaftar, Supabase tidak memberi tahu
+ * (permintaannya tetap sukses), dan aplikasi juga tidak membedakannya — supaya
+ * halaman ini tidak bisa dipakai menebak email administrator mana yang valid.
+ *
+ * Tetapi kegagalan INFRASTRUKTUR (SMTP belum diatur, kuota email habis, server
+ * tidak terjangkau) tidak boleh ikut disembunyikan. Kalau semua error
+ * dilaporkan sebagai sukses, pengguna menunggu email yang tidak akan pernah
+ * datang tanpa tahu ada masalah. Karena itu jenis error dibedakan.
  */
 export async function mintaResetSandi(
   _sebelumnya: HasilAksi | null,
@@ -141,11 +145,43 @@ export async function mintaResetSandi(
   });
 
   if (error) {
-    /*
-     * Jangan bocorkan apakah email terdaftar. Cukup catat di log server
-     * supaya pengelola tetap bisa menelusuri masalah konfigurasi SMTP.
-     */
     catatErrorSupabase("kirim email pemulihan", error);
+
+    const kode = (error.code ?? "").toLowerCase();
+    const status = error.status ?? 0;
+
+    /* Kuota pengiriman email habis. */
+    if (kode.includes("rate_limit") || status === 429) {
+      return {
+        ok: false,
+        pesan:
+          "Batas pengiriman email Supabase sudah tercapai. Coba lagi sekitar satu jam, atau minta pengelola mengatur SMTP kustom di dashboard Supabase.",
+      };
+    }
+
+    /* Pengiriman email belum dikonfigurasi di sisi Supabase. */
+    if (
+      kode.includes("smtp") ||
+      kode.includes("mailer") ||
+      kode.includes("email_provider") ||
+      kode.includes("email_not_configured")
+    ) {
+      return {
+        ok: false,
+        pesan:
+          "Pengiriman email belum dikonfigurasi di server. Hubungi pengelola website untuk mengatur SMTP di dashboard Supabase.",
+      };
+    }
+
+    /* Alamat email tidak valid secara format. */
+    if (kode.includes("email_address_invalid") || kode.includes("validation_failed")) {
+      return { ok: false, pesan: "Format alamat email tidak valid." };
+    }
+
+    /*
+     * Selain di atas, perlakukan sebagai sukses netral supaya keberadaan akun
+     * tidak bisa ditebak dari perbedaan pesan.
+     */
     return pesanSukses;
   }
 

@@ -2,9 +2,8 @@
  * Periksa kesiapan pengiriman email pemulihan kata sandi.
  *
  * Skrip ini TIDAK mengubah apa pun. Ia hanya melaporkan:
- *   1. apakah NEXT_PUBLIC_SITE_URL sudah diisi
- *   2. apakah Supabase menerima permintaan kirim email (kuota / SMTP)
- *   3. pesan galat persis dari Supabase bila ditolak
+ *   1. apakah Supabase menerima permintaan kirim email (kuota / SMTP)
+ *   2. pesan galat persis dari Supabase bila ditolak
  *
  * Pakai:
  *   node scripts/cek-smtp.mjs <email-tujuan>
@@ -16,7 +15,6 @@
 
 const URL_SUPABASE = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const KUNCI = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-const SITE = process.env.NEXT_PUBLIC_SITE_URL;
 
 const email = process.argv[2];
 
@@ -41,11 +39,14 @@ async function main() {
   }
 
   console.log(`  Supabase   : ${URL_SUPABASE}`);
-  console.log(`  SITE_URL   : ${SITE || "(kosong — tautan memakai header permintaan)"}`);
   console.log(`  Tujuan uji : ${email}`);
+  console.log("  Metode     : kode OTP (tanpa tautan/redirect)");
 
-  const redirectTo = `${(SITE || "http://localhost:3000").replace(/\/+$/, "")}/admin/sandi-baru`;
-
+  /*
+   * Tidak ada redirect_to: alur pemulihan memakai kode angka yang diketik di
+   * halaman /admin/lupa-sandi, bukan tautan. Mengirim redirect_to justru
+   * membuat email berisi tautan bila template belum diubah.
+   */
   console.log("\n  Mengirim permintaan ke Supabase…");
 
   let respons;
@@ -57,7 +58,7 @@ async function main() {
         Authorization: `Bearer ${KUNCI}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ email, redirect_to: redirectTo }),
+      body: JSON.stringify({ email }),
     });
   } catch (e) {
     gagal(`Tidak bisa menghubungi Supabase: ${e.message}`);

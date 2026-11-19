@@ -66,7 +66,8 @@ apa pun di Supabase. Hasilnya:
 - [ ] Username = alamat Gmail lengkap
 - [ ] **Sender email sama persis** dengan Username
 - [ ] Sudah klik **Save** di halaman SMTP Settings
-- [ ] Redirect URL `.../admin/sandi-baru` sudah ditambahkan
+- [ ] Template **Reset Password** memakai `{{ .Token }}` (bukan
+      `{{ .ConfirmationURL }}`) — lihat `docs/template-email-kode.md`
 
 ## 5. Catatan penting
 

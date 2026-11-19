@@ -93,6 +93,10 @@ Tanpa SMTP, Supabase memakai pengirim bawaan yang hanya mengizinkan **2 email
 per jam** dan hanya bisa mengirim ke alamat anggota project. Akibatnya email
 pemulihan kata sandi untuk admin sekolah tidak akan pernah sampai.
 
+Alur pemulihan memakai **kode angka** yang diketik di halaman yang sama, bukan
+tautan. Jadi tidak ada redirect URL yang perlu cocok dan tidak masalah bila
+email dibuka di ponsel sementara kode diminta dari laptop.
+
 #### Gmail SMTP
 
 1. **Aktifkan verifikasi 2 langkah** di akun Google yang akan dipakai
@@ -116,18 +120,23 @@ pemulihan kata sandi untuk admin sekolah tidak akan pernah sampai.
 4. Di **Authentication → URL Configuration → Redirect URLs**, tambahkan:
 
    ```
-   http://localhost:3000/admin/sandi-baru
-   https://<domain-sekolah>/admin/sandi-baru
+   http://localhost:3000/admin/lupa-sandi
+   https://<domain-sekolah>/admin/lupa-sandi
    ```
 
-5. Isi `NEXT_PUBLIC_SITE_URL` di `.env.local` dengan alamat situs produksi agar
-   tautan pemulihan menunjuk ke domain yang benar:
+5. Isi `NEXT_PUBLIC_SITE_URL` di `.env.local` dengan alamat situs produksi:
 
    ```
    NEXT_PUBLIC_SITE_URL=https://<domain-sekolah>
    ```
 
-6. Periksa hasilnya: `npm run cek:smtp -- alamat-tujuan@gmail.com`
+6. **Tempel template email kode** di **Authentication → Emails → Reset Password**.
+   Tanpa langkah ini email berisi **tautan**, bukan kode, sehingga alur
+   pemulihan tidak bisa diselesaikan. Teks lengkapnya ada di
+   [`docs/template-email-kode.md`](docs/template-email-kode.md) — intinya
+   gunakan `{{ .Token }}`, bukan `{{ .ConfirmationURL }}`.
+
+7. Periksa hasilnya: `npm run cek:smtp -- alamat-tujuan@gmail.com`
 
 Batasan Gmail yang perlu diketahui:
 

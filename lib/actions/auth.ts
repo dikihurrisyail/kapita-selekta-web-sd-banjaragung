@@ -371,11 +371,42 @@ export async function simpanSandiBaru(
 
   if (error) {
     catatErrorSupabase("simpan kata sandi baru", error);
+
+    /*
+     * Jangan tampilkan error.message mentah: isinya bahasa Inggris dan
+     * menyebut istilah internal ("New password should be different from the
+     * old password"). Petakan kasus yang paling mungkin ke kalimat Indonesia
+     * yang bisa ditindaklanjuti.
+     */
+    const pesanMentah = (error.message ?? "").toLowerCase();
+
+    if (pesanMentah.includes("different from the old password")) {
+      return {
+        ok: false,
+        pesan:
+          "Kata sandi baru harus berbeda dari kata sandi sebelumnya. Silakan pilih kata sandi lain.",
+      };
+    }
+
+    if (pesanMentah.includes("password should be at least")) {
+      return {
+        ok: false,
+        pesan: `Kata sandi minimal ${MIN_SANDI} karakter.`,
+      };
+    }
+
+    if (pesanMentah.includes("weak") || pesanMentah.includes("strength")) {
+      return {
+        ok: false,
+        pesan:
+          "Kata sandi terlalu mudah ditebak. Gunakan kombinasi huruf, angka, dan simbol.",
+      };
+    }
+
     return {
       ok: false,
       pesan:
-        error.message ||
-        "Kata sandi gagal disimpan. Silakan minta kode pemulihan baru.",
+        "Kata sandi gagal disimpan. Silakan minta kode pemulihan baru lalu coba lagi.",
     };
   }
 

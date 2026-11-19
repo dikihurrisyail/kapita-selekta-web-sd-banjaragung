@@ -1,5 +1,6 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
+import { io } from "next/cache";
 import {
   fetchDenganBatasWaktu,
   OPSI_DB_SUPABASE,
@@ -17,8 +18,22 @@ import type { Database } from "./types";
  *
  * `global.fetch` diganti versi berbatas waktu dan `db.retry` dimatikan agar
  * query tidak menggantung ketika Supabase tidak dapat dijangkau.
+ *
+ * `await io()` WAJIB ada di sini. Saat createServerClient dipanggil, auth-js
+ * membaca sesi dari cookie dan membandingkan `expires_at` dengan Date.now().
+ * Dengan cacheComponents aktif, Date.now() dianggap nilai tidak stabil sehingga
+ * prerender gagal ("Next.js encountered the unstable value `Date.now()`").
+ * io() menandai bahwa kode setelahnya adalah runtime, sehingga pemeriksaan itu
+ * diizinkan dan halaman tetap bisa dirender sebagian (Partial Prerender).
  */
 export async function createClient() {
+  /*
+   * io() harus dipanggil SEBELUM cookies(). Saat prerender, cookies() baru
+   * menolak ketika prerender selesai (Hanging Promise); kalau io() lebih dulu,
+   * prerender berhenti di sini dan cookies() tidak pernah dieksekusi pada
+   * tahap itu — sehingga tidak ada error "cookies() rejects" di log build.
+   */
+  await io();
   const cookieStore = await cookies();
 
   return createServerClient<Database>(SUPABASE_URL, SUPABASE_ANON_KEY, {

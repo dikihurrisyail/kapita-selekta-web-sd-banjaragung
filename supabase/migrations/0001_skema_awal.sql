@@ -319,6 +319,29 @@ create policy guru_baca_publik on public.guru
   using (publik = true or public.is_admin());
 
 -- ---------------------------------------------------------------------------
+-- 5b. GRANT untuk role Supabase
+-- ---------------------------------------------------------------------------
+-- RLS hanya menyaring baris; ia TIDAK memberi izin akses tabel. Tanpa GRANT
+-- di bawah, PostgREST menolak semua query dengan error 42501
+-- "permission denied for table ..." meskipun policy-nya sudah benar.
+--
+-- Penting: di proyek Supabase baru, default privileges schema public hanya
+-- memberi anon/authenticated Dxtm (TRUNCATE/TRIGGER/REFERENCES) — bukan
+-- SELECT/INSERT/UPDATE/DELETE. Karena itu grant eksplisit ini wajib.
+--
+-- Cakupan sengaja luas (SELECT untuk anon, semua operasi untuk authenticated);
+-- pembatasan sebenarnya tetap ditentukan policy RLS di atas.
+grant usage on schema public to anon, authenticated;
+
+grant select on all tables in schema public to anon;
+grant select, insert, update, delete on all tables in schema public to authenticated;
+
+-- Agar tabel yang dibuat setelah migrasi ini ikut mendapat izin yang sama.
+alter default privileges in schema public grant select on tables to anon;
+alter default privileges in schema public
+  grant select, insert, update, delete on tables to authenticated;
+
+-- ---------------------------------------------------------------------------
 -- 6. Storage bucket untuk foto
 -- ---------------------------------------------------------------------------
 -- Satu bucket publik "media" dengan subfolder per jenis konten.

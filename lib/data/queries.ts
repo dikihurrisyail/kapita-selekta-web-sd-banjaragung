@@ -28,6 +28,29 @@ function keFoto(url: string | null, label: string): Foto {
   return { src: url, label };
 }
 
+/**
+ * True bila error terjadi karena prerender sudah selesai.
+ *
+ * Dengan cacheComponents, io()/cookies() melempar "Hanging Promise rejection"
+ * saat prerender ditutup. Itu bukan kegagalan nyata — React hanya memberi tahu
+ * bahwa bagian dinamis tidak ikut diprerender. Query cukup memakai data
+ * cadangan tanpa perlu mencetak error ke log build.
+ */
+function errorPrerender(error: unknown): boolean {
+  const pesan = error instanceof Error ? error.message : String(error);
+  return (
+    pesan.includes("prerender is complete") ||
+    pesan.includes("HANGING_PROMISE_REJECTION") ||
+    pesan.includes("During prerendering")
+  );
+}
+
+/** Catat kegagalan, kecuali kegagalan yang wajar saat prerender. */
+function catat(label: string, error: unknown): void {
+  if (errorPrerender(error)) return;
+  catatErrorSupabase(label, error);
+}
+
 /* ------------------------------------------------------------------ Profil */
 
 export async function getProfil(): Promise<ProfilSekolah> {
@@ -67,7 +90,7 @@ export async function getProfil(): Promise<ProfilSekolah> {
       petaUrl: data.peta_url,
     };
   } catch (error) {
-    catatErrorSupabase("profil_sekolah", error);
+    catat("profil_sekolah", error);
     return fallbackProfil();
   }
 }
@@ -121,7 +144,7 @@ export async function getGuru(opsi?: { hanyaPublik?: boolean }): Promise<Guru[]>
       nip: row.nip ?? undefined,
     }));
   } catch (error) {
-    catatErrorSupabase("guru", error);
+    catat("guru", error);
     return fallbackGuru(hanyaPublik);
   }
 }
@@ -166,7 +189,7 @@ export async function getPengumuman(opsi?: {
       status: row.status,
     }));
   } catch (error) {
-    catatErrorSupabase("pengumuman", error);
+    catat("pengumuman", error);
     let hasil = fallback.pengumuman;
     if (hanyaTerbit) hasil = hasil.filter((p) => p.status !== "Draf");
     return opsi?.limit ? hasil.slice(0, opsi.limit) : [...hasil];
@@ -221,7 +244,7 @@ export async function getBerita(opsi?: {
       status: row.status,
     }));
   } catch (error) {
-    catatErrorSupabase("berita", error);
+    catat("berita", error);
     let hasil = fallback.berita;
     if (hanyaTerbit) hasil = hasil.filter((b) => b.status !== "Draf");
     return opsi?.limit ? hasil.slice(0, opsi.limit) : [...hasil];
@@ -271,7 +294,7 @@ export async function getAlbum(): Promise<Album[]> {
       };
     });
   } catch (error) {
-    catatErrorSupabase("album", error);
+    catat("album", error);
     return fallbackAlbum();
   }
 }
@@ -300,7 +323,7 @@ export async function getFasilitas(): Promise<Fasilitas[]> {
       foto: keFoto(row.foto_url, `Foto dokumentasi — ${row.judul}`),
     }));
   } catch (error) {
-    catatErrorSupabase("fasilitas", error);
+    catat("fasilitas", error);
     return fallback.fasilitas.map((f) => ({ ...f }));
   }
 }
@@ -321,7 +344,7 @@ export async function getStruktur(): Promise<StrukturItem[]> {
 
     return (data ?? []).map((row) => ({ jabatan: row.jabatan, nama: row.nama }));
   } catch (error) {
-    catatErrorSupabase("struktur_organisasi", error);
+    catat("struktur_organisasi", error);
     return fallbackStruktur();
   }
 }
@@ -369,7 +392,7 @@ export async function getPpdb(): Promise<PpdbInfo> {
       })),
     };
   } catch (error) {
-    catatErrorSupabase("ppdb", error);
+    catat("ppdb", error);
     return fallbackPpdb();
   }
 }
@@ -440,7 +463,7 @@ export async function getRingkasanDashboard() {
       album: album.count ?? 0,
     };
   } catch (error) {
-    catatErrorSupabase("ringkasan dashboard", error);
+    catat("ringkasan dashboard", error);
     return {
       pengumuman: 0,
       pengumumanTerbit: 0,

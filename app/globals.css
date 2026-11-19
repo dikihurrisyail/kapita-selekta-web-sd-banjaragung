@@ -1,0 +1,85 @@
+@import "tailwindcss";
+
+/*
+  Design tokens — hasil ekstraksi Figma "Untitled" (file key Ye5Db7gg9yPwCmcox8DOmo).
+  File Figma tidak memiliki Variables/Styles, sehingga token di bawah ini
+  direkonstruksi dari nilai yang berulang di seluruh 24 frame.
+*/
+@theme {
+  /* Brand */
+  --color-brand: #1e3a8a;
+  --color-brand-deep: #1e293b;
+  --color-brand-ink: #0f172a;
+  --color-accent: #d97706;
+  --color-accent-ink: #b45309;
+
+  /* Text */
+  --color-body: #334155;
+  --color-muted: #64748b;
+
+  /* Surface & lines */
+  --color-surface: #ffffff;
+  --color-page: #f8fafc;
+  --color-page-alt: #f1f5f9;
+  --color-line: #e2e8f0;
+  --color-line-soft: #cbd5e1;
+  --color-line-dark: #334155;
+
+  /* Status */
+  --color-success: #15803d;
+  --color-success-bg: #f0fdf4;
+  --color-success-line: #bbf7d0;
+  --color-warning: #a16207;
+  --color-warning-bg: #fefce8;
+  --color-danger: #b91c1c;
+  --color-danger-bg: #fef2f2;
+
+  /* Radius (6 / 8 / 12 / 100 / 18 / 4) */
+  --radius-btn: 6px;
+  --radius-img: 8px;
+  --radius-card: 12px;
+  --radius-panel: 18px;
+  --radius-pill: 100px;
+
+  /* Typography */
+  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-newsreader), ui-serif, Georgia, serif;
+
+  /* Layout */
+  --spacing-container: 1200px;
+  --spacing-gutter: 120px;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-page);
+    color: var(--color-body);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  /* Desain tidak memakai shadow sama sekali — kedalaman dari border 1px. */
+  * {
+    box-shadow: none;
+  }
+}
+
+@utility container-page {
+  width: 100%;
+  max-width: calc(var(--spacing-container) + 2 * var(--spacing-gutter));
+  margin-inline: auto;
+  padding-inline: 1rem;
+
+  @media (min-width: 834px) {
+    padding-inline: 1.5rem;
+  }
+
+  @media (min-width: 1024px) {
+    padding-inline: var(--spacing-gutter);
+  }
+}

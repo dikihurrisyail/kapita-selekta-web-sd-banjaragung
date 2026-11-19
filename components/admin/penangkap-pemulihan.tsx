@@ -19,49 +19,70 @@ type HasilTukar = { email: string } | { pesan: string };
  * Penukaran token disimpan di tingkat modul, bukan di dalam komponen.
  *
  * Alasannya: pada mode pengembangan React menjalankan useEffect dua kali
- * (StrictMode). Kalau penukaran dijalankan dua kali dengan refresh token yang
- * sama, panggilan kedua gagal — Supabase memutar (rotate) refresh token setiap
- * kali dipakai, jadi token yang sama tidak bisa ditukar dua kali. Dengan satu
- * promise bersama, kedua jalankan menunggu hasil yang sama dan hanya ada satu
- * permintaan ke Supabase.
+ * (StrictMode). Kalau penukaran dijalankan dua kali dengan token yang sama,
+ * panggilan kedua gagal — Supabase memutar (rotate) token setiap kali dipakai,
+ * dan kode PKCE hanya boleh ditukar sekali. Dengan satu promise bersama, kedua
+ * jalankan menunggu hasil yang sama dan hanya ada satu permintaan ke Supabase.
  */
 let janjiTukar: Promise<HasilTukar> | null = null;
 
-/** Ambil token dari fragment URL, lalu bersihkan dari address bar. */
-function bacaFragment() {
+/**
+ * Tukar tautan pemulihan menjadi sesi.
+ *
+ * Supabase bisa mengirim DUA bentuk tautan, tergantung alur yang dipakai:
+ *
+ *   1. PKCE (yang dipakai aplikasi ini, karena @supabase/ssr memakai
+ *      flowType "pkce" untuk Server Action):
+ *        /admin/sandi-baru?code=xxxxxxxx
+ *      Kode ditukar memakai code_verifier yang tersimpan di cookie browser.
+ *
+ *   2. Implicit (tautan bawaan dashboard / template email lama):
+ *        /admin/sandi-baru#access_token=...&refresh_token=...
+ *      Token ada di fragment, ditukar langsung lewat setSession().
+ *
+ * Keduanya ditangani supaya alur tidak bergantung pada template email mana
+ * yang sedang dipakai di dashboard.
+ */
+async function tukarToken(): Promise<HasilTukar> {
+  const supabase = createClient();
+
+  /* ---------------------------------------------------------- Bentuk PKCE */
+  const kode = new URLSearchParams(window.location.search).get("code");
+
+  if (kode) {
+    const { data, error } = await supabase.auth.exchangeCodeForSession(kode);
+
+    /* Bersihkan ?code= dari address bar agar tidak ikut tersalin/dibagikan. */
+    window.history.replaceState(null, "", window.location.pathname);
+
+    if (error || !data.user) {
+      return {
+        pesan:
+          "Tautan pemulihan gagal diproses. Kemungkinan sudah kedaluwarsa atau dibuka di browser/perangkat yang berbeda dari saat meminta tautan. Silakan minta tautan baru dari browser ini.",
+      };
+    }
+
+    return { email: data.user.email ?? "" };
+  }
+
+  /* ------------------------------------------------------ Bentuk implicit */
   const hash = window.location.hash.startsWith("#")
     ? window.location.hash.slice(1)
     : "";
   const params = new URLSearchParams(hash);
-
-  return {
-    adaToken: Boolean(params.get("access_token") && params.get("refresh_token")),
-    accessToken: params.get("access_token"),
-    refreshToken: params.get("refresh_token"),
-    galat: params.get("error_description") ?? params.get("error"),
-    hash,
-  };
-}
-
-/** Buang token dari address bar agar tidak tertinggal di riwayat browser. */
-function bersihkanFragment(hash: string) {
-  if (hash) window.history.replaceState(null, "", window.location.pathname);
-}
-
-async function tukarToken(): Promise<HasilTukar> {
-  const { adaToken, accessToken, refreshToken, galat, hash } = bacaFragment();
-
-  const supabase = createClient();
+  const accessToken = params.get("access_token");
+  const refreshToken = params.get("refresh_token");
+  const galat = params.get("error_description") ?? params.get("error");
 
   if (galat) {
-    bersihkanFragment(hash);
+    window.history.replaceState(null, "", window.location.pathname);
     return {
       pesan:
         "Tautan pemulihan tidak berlaku atau sudah kedaluwarsa. Silakan minta tautan baru.",
     };
   }
 
-  if (adaToken && accessToken && refreshToken) {
+  if (accessToken && refreshToken) {
     const { data, error } = await supabase.auth.setSession({
       access_token: accessToken,
       refresh_token: refreshToken,
@@ -71,7 +92,7 @@ async function tukarToken(): Promise<HasilTukar> {
      * Fragment baru dibersihkan setelah penukaran berhasil. Kalau dibersihkan
      * lebih dulu dan penukaran gagal, tokennya hilang tanpa pernah terpakai.
      */
-    bersihkanFragment(hash);
+    window.history.replaceState(null, "", window.location.pathname);
 
     if (error || !data.user) {
       return {
@@ -84,8 +105,8 @@ async function tukarToken(): Promise<HasilTukar> {
   }
 
   /*
-   * Tidak ada token di fragment. Bisa jadi halaman dimuat ulang setelah token
-   * ditukar, jadi periksa sesi yang sudah ada di cookie.
+   * Tidak ada kode maupun token. Bisa jadi halaman dimuat ulang setelah sesi
+   * terbentuk, jadi periksa sesi yang sudah ada di cookie.
    */
   const {
     data: { user },
@@ -102,13 +123,8 @@ async function tukarToken(): Promise<HasilTukar> {
 /**
  * Penangkap sesi dari tautan pemulihan kata sandi.
  *
- * Supabase mengirim tautan yang mengarah kembali ke aplikasi dengan token di
- * FRAGMENT URL (#access_token=...&refresh_token=...). Fragment tidak pernah
- * dikirim ke server, jadi hanya JavaScript di browser yang bisa membacanya.
- *
- * Setelah setSession() dipanggil, @supabase/ssr menulis cookie sesi sehingga
- * Server Action `simpanSandiBaru` dapat memverifikasinya di server. Verifikasi
- * yang sesungguhnya tetap di server — komponen ini hanya menyiapkan sesi.
+ * Verifikasi sesi yang sesungguhnya tetap dilakukan di server, di dalam
+ * Server Action `simpanSandiBaru`. Komponen ini hanya menyiapkan sesi.
  */
 export function PenangkapPemulihan() {
   const [keadaan, setKeadaan] = useState<Keadaan>({ tahap: "memeriksa" });

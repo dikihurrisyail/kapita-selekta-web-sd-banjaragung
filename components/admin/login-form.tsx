@@ -16,7 +16,13 @@ import { loginAdmin } from "@/lib/actions/auth";
  *
  * Form terhubung ke Server Action loginAdmin (Supabase Auth).
  */
-export function LoginForm({ lanjut }: { lanjut: string }) {
+export function LoginForm({
+  lanjut,
+  baruDipulihkan = false,
+}: {
+  lanjut: string;
+  baruDipulihkan?: boolean;
+}) {
   const [state, formAction, pending] = useActionState(loginAdmin, null);
 
   return (
@@ -58,6 +64,12 @@ export function LoginForm({ lanjut }: { lanjut: string }) {
             </p>
           </div>
 
+          {baruDipulihkan && !state?.pesan ? (
+            <Alert tone="sukses">
+              Kata sandi berhasil diperbarui. Silakan masuk dengan kata sandi baru.
+            </Alert>
+          ) : null}
+
           {state?.pesan ? <Alert tone="bahaya">{state.pesan}</Alert> : null}
 
           <form action={formAction} className="flex flex-col gap-5">
@@ -95,7 +107,7 @@ export function LoginForm({ lanjut }: { lanjut: string }) {
           </form>
 
           <Link
-            href="/admin/login"
+            href="/admin/lupa-sandi"
             className="text-sm font-semibold leading-[1.5] text-brand hover:underline"
           >
             Lupa kata sandi?

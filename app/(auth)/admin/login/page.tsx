@@ -4,7 +4,7 @@ import { LoginForm } from "@/components/admin/login-form";
 
 export const metadata: Metadata = { title: "Masuk Admin" };
 
-type Props = { searchParams: Promise<{ lanjut?: string }> };
+type Props = { searchParams: Promise<{ lanjut?: string; pulih?: string }> };
 
 /**
  * Halaman login admin.
@@ -22,12 +22,12 @@ export default function LoginPage({ searchParams }: Props) {
 }
 
 async function LoginDinamis({ searchParams }: Props) {
-  const { lanjut } = await searchParams;
+  const { lanjut, pulih } = await searchParams;
 
   /* Hanya izinkan tujuan internal /admin untuk mencegah open redirect. */
   const tujuan = lanjut?.startsWith("/admin") ? lanjut : "/admin";
 
-  return <LoginForm lanjut={tujuan} />;
+  return <LoginForm lanjut={tujuan} baruDipulihkan={pulih === "1"} />;
 }
 
 /** Kerangka dua kolom dengan proporsi sama seperti form asli. */

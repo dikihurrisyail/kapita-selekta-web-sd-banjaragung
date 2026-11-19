@@ -57,6 +57,16 @@ export async function proxy(request: NextRequest) {
 
   const halamanLogin = pathname === "/admin/login";
 
+  /*
+   * Halaman pemulihan kata sandi harus tetap terbuka tanpa login — justru
+   * karena penggunanya belum bisa masuk. Tanpa pengecualian ini, tautan dari
+   * email akan langsung terlempar ke halaman login.
+   */
+  const halamanPemulihan =
+    pathname === "/admin/lupa-sandi" || pathname === "/admin/sandi-baru";
+
+  if (halamanPemulihan) return response;
+
   try {
     /* getUser() memvalidasi token ke server Supabase (bukan sekadar baca cookie). */
     const {

@@ -252,6 +252,120 @@ function namaBerkasAman(nama: string): string {
   return bersih || "foto";
 }
 
+/** Kategori album yang tersedia di filter galeri publik. */
+const KATEGORI_ALBUM = new Set(["Kegiatan", "Akademik", "Lingkungan"]);
+
+/**
+ * Ambil jalur berkas di bucket `media` dari URL publiknya.
+ * Mengembalikan null bila URL bukan milik bucket kita.
+ */
+function jalurStorage(url: string | null | undefined): string | null {
+  if (!url) return null;
+  const penanda = "/storage/v1/object/public/media/";
+  const idx = url.indexOf(penanda);
+  if (idx === -1) return null;
+  return decodeURIComponent(url.slice(idx + penanda.length));
+}
+
+/**
+ * Buat album baru.
+ *
+ * Slug dibuat dari judul, lalu dijamin unik: bila sudah dipakai, diberi
+ * akhiran -2, -3, dan seterusnya. Tanpa ini insert gagal karena kolom slug
+ * memakai constraint unique.
+ */
+export async function simpanAlbum(
+  _sebelumnya: HasilAksi | null,
+  formData: FormData,
+): Promise<HasilAksi> {
+  await wajibLogin();
+  if (!isSupabaseConfigured()) return MODE_DEMO;
+
+  const judul = teks(formData, "judul");
+  const kategori = teks(formData, "kategori") || "Kegiatan";
+  const tanggal = teks(formData, "tanggal");
+
+  if (!judul) return { ok: false, pesan: "Judul album wajib diisi." };
+  if (!KATEGORI_ALBUM.has(kategori)) {
+    return { ok: false, pesan: "Kategori album tidak dikenali." };
+  }
+
+  const supabase = await createClient();
+
+  const dasar = slugify(judul);
+  if (!dasar) return { ok: false, pesan: "Judul album tidak bisa dijadikan slug." };
+
+  /* Cari slug yang belum terpakai. */
+  let slug = dasar;
+  for (let n = 2; n <= 50; n++) {
+    const { data: ada } = await supabase
+      .from("album")
+      .select("id")
+      .eq("slug", slug)
+      .maybeSingle();
+
+    if (!ada) break;
+    slug = `${dasar}-${n}`;
+  }
+
+  const { error } = await supabase.from("album").insert({
+    slug,
+    judul,
+    kategori,
+    ...(tanggal ? { tanggal } : {}),
+  });
+
+  if (error) return { ok: false, pesan: `Gagal membuat album: ${error.message}` };
+
+  segarkanPublik("/galeri");
+  revalidatePath("/admin/galeri");
+  return { ok: true, pesan: `Album "${judul}" berhasil dibuat.` };
+}
+
+/**
+ * Hapus album beserta seluruh fotonya.
+ *
+ * Baris foto_galeri ikut terhapus lewat `on delete cascade`, tetapi berkas
+ * di Storage TIDAK — cascade hanya berlaku di database. Jadi berkasnya
+ * dikumpulkan lebih dulu lalu dihapus manual, supaya tidak ada file yatim
+ * yang tetap bisa diakses lewat URL publik.
+ */
+export async function hapusAlbum(id: string): Promise<HasilAksi> {
+  await wajibLogin();
+  if (!isSupabaseConfigured()) return MODE_DEMO;
+
+  const supabase = await createClient();
+
+  const { data: album } = await supabase
+    .from("album")
+    .select("judul, sampul_url")
+    .eq("id", id)
+    .maybeSingle();
+
+  /* Kumpulkan semua berkas milik album ini sebelum barisnya dihapus. */
+  const { data: foto } = await supabase
+    .from("foto_galeri")
+    .select("foto_url")
+    .eq("album_id", id);
+
+  const jalur = [
+    ...(foto ?? []).map((f) => jalurStorage(f.foto_url)),
+    jalurStorage(album?.sampul_url),
+  ].filter((j): j is string => Boolean(j));
+
+  const { error } = await supabase.from("album").delete().eq("id", id);
+  if (error) return { ok: false, pesan: `Gagal menghapus album: ${error.message}` };
+
+  /* Berkas dihapus setelah baris pasti terhapus. */
+  if (jalur.length > 0) {
+    await supabase.storage.from("media").remove([...new Set(jalur)]);
+  }
+
+  segarkanPublik("/galeri");
+  revalidatePath("/admin/galeri");
+  return { ok: true, pesan: `Album "${album?.judul ?? "tersebut"}" dihapus.` };
+}
+
 /**
  * Unggah foto ke bucket `media` lalu catat di tabel foto_galeri.
  *
@@ -361,13 +475,9 @@ export async function hapusFoto(id: string): Promise<HasilAksi> {
   if (error) return { ok: false, pesan: `Gagal menghapus: ${error.message}` };
 
   /* Hapus berkas fisik bila URL menunjuk ke bucket kita sendiri. */
-  if (foto?.foto_url) {
-    const penanda = "/storage/v1/object/public/media/";
-    const idx = foto.foto_url.indexOf(penanda);
-    if (idx !== -1) {
-      const jalur = decodeURIComponent(foto.foto_url.slice(idx + penanda.length));
-      await supabase.storage.from("media").remove([jalur]);
-    }
+  const jalurFoto = jalurStorage(foto?.foto_url);
+  if (jalurFoto) {
+    await supabase.storage.from("media").remove([jalurFoto]);
   }
 
   /*

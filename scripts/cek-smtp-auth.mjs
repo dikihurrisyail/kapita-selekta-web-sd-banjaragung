@@ -47,6 +47,39 @@ if (!USER || !PASS) {
   );
 }
 
+/*
+ * Deteksi nilai contoh yang belum diganti. Tanpa ini, skrip tetap mencoba
+ * login dengan alamat palsu dan berakhir pada pesan "535 ditolak" yang
+ * menyesatkan — padahal masalahnya cuma nilai contoh belum diubah.
+ */
+const PLACEHOLDER = [
+  "alamatgmailanda",
+  "alamat@gmail.com",
+  "email@gmail.com",
+  "contoh@gmail.com",
+  "apppassword16char",
+  "apppassword",
+  "ganti-ini",
+  "xxxx",
+];
+
+const pakaiPlaceholder = PLACEHOLDER.filter(
+  (p) =>
+    USER.toLowerCase().includes(p) ||
+    FROM.toLowerCase().includes(p) ||
+    PASS.toLowerCase().includes(p),
+);
+
+if (pakaiPlaceholder.length > 0) {
+  gagal(
+    `Nilai contoh belum diganti: "${pakaiPlaceholder.join('", "')}".`,
+    "Ganti dengan data asli Anda, lalu jalankan ulang:\n" +
+      '    $env:SMTP_USER="alamatgmailaslianda@gmail.com"\n' +
+      '    $env:SMTP_PASS="16karakterapppassword"\n' +
+      '    $env:SMTP_FROM="alamatgmailaslianda@gmail.com"',
+  );
+}
+
 if (USER !== FROM) {
   console.log(
     `\n  Catatan: Sender (${FROM}) berbeda dari Username (${USER}).\n` +

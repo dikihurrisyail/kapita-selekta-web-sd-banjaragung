@@ -41,6 +41,7 @@ export type Guru = {
 };
 
 export type Album = {
+  id: string;
   slug: string;
   kategori: string;
   judul: string;

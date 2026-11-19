@@ -237,6 +237,171 @@ export async function hapusBerita(slug: string): Promise<HasilAksi> {
 
 /* ------------------------------------------------------------------ Galeri */
 
+/** Batas ukuran satu berkas foto (5 MB) — sama dengan keterangan di UI. */
+const BATAS_UKURAN_FOTO = 5 * 1024 * 1024;
+
+/** Tipe berkas yang diterima. */
+const TIPE_FOTO = new Set(["image/jpeg", "image/png", "image/webp"]);
+
+/** Ubah nama berkas menjadi aman dipakai di URL storage. */
+function namaBerkasAman(nama: string): string {
+  const bersih = nama
+    .toLowerCase()
+    .replace(/[^a-z0-9._-]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+  return bersih || "foto";
+}
+
+/**
+ * Unggah foto ke bucket `media` lalu catat di tabel foto_galeri.
+ *
+ * Alur:
+ *   1. wajibLogin() — Server Action tidak selalu lewat proxy.
+ *   2. Validasi tipe & ukuran di server (jangan percaya validasi browser).
+ *   3. Upload ke Storage (policy RLS membatasi ke admin).
+ *   4. Simpan baris foto_galeri. Bila gagal, berkas dihapus lagi agar
+ *      tidak ada file yatim di storage.
+ */
+export async function unggahFoto(
+  _sebelumnya: HasilAksi | null,
+  formData: FormData,
+): Promise<HasilAksi> {
+  await wajibLogin();
+  if (!isSupabaseConfigured()) return MODE_DEMO;
+
+  const albumId = teks(formData, "album_id");
+  const keterangan = teks(formData, "keterangan");
+  const berkas = formData.get("berkas");
+
+  if (!albumId) return { ok: false, pesan: "Pilih album tujuan terlebih dahulu." };
+  if (!(berkas instanceof File) || berkas.size === 0) {
+    return { ok: false, pesan: "Pilih berkas foto yang akan diunggah." };
+  }
+  if (!TIPE_FOTO.has(berkas.type)) {
+    return { ok: false, pesan: "Format harus JPG, PNG, atau WebP." };
+  }
+  if (berkas.size > BATAS_UKURAN_FOTO) {
+    return { ok: false, pesan: "Ukuran foto maksimal 5 MB." };
+  }
+
+  const supabase = await createClient();
+
+  /* Pastikan album tujuan benar-benar ada sebelum menyimpan berkas. */
+  const { data: album, error: albumError } = await supabase
+    .from("album")
+    .select("id, judul")
+    .eq("id", albumId)
+    .maybeSingle();
+
+  if (albumError) return { ok: false, pesan: `Gagal membaca album: ${albumError.message}` };
+  if (!album) return { ok: false, pesan: "Album tujuan tidak ditemukan." };
+
+  /* Nama unik agar dua unggahan dengan nama sama tidak saling menimpa. */
+  const jalur = `galeri/${albumId}/${Date.now()}-${namaBerkasAman(berkas.name)}`;
+
+  const { error: unggahError } = await supabase.storage
+    .from("media")
+    .upload(jalur, berkas, { contentType: berkas.type, upsert: false });
+
+  if (unggahError) return { ok: false, pesan: `Gagal mengunggah: ${unggahError.message}` };
+
+  const {
+    data: { publicUrl },
+  } = supabase.storage.from("media").getPublicUrl(jalur);
+
+  /* Urutan berikutnya di album ini. */
+  const { count } = await supabase
+    .from("foto_galeri")
+    .select("id", { count: "exact", head: true })
+    .eq("album_id", albumId);
+
+  const { error: simpanError } = await supabase.from("foto_galeri").insert({
+    album_id: albumId,
+    keterangan,
+    foto_url: publicUrl,
+    urutan: count ?? 0,
+  });
+
+  if (simpanError) {
+    /* Bersihkan berkas agar storage tidak menyimpan file tanpa baris tabel. */
+    await supabase.storage.from("media").remove([jalur]);
+    return { ok: false, pesan: `Gagal menyimpan data foto: ${simpanError.message}` };
+  }
+
+  /* Sampul album diisi foto pertama bila belum ada. */
+  const { data: albumPenuh } = await supabase
+    .from("album")
+    .select("sampul_url")
+    .eq("id", albumId)
+    .maybeSingle();
+
+  if (albumPenuh && !albumPenuh.sampul_url) {
+    await supabase.from("album").update({ sampul_url: publicUrl }).eq("id", albumId);
+  }
+
+  segarkanPublik("/galeri");
+  revalidatePath("/admin/galeri");
+  return { ok: true, pesan: `Foto berhasil diunggah ke album "${album.judul}".` };
+}
+
+/** Hapus satu foto dari album beserta berkasnya di storage. */
+export async function hapusFoto(id: string): Promise<HasilAksi> {
+  await wajibLogin();
+  if (!isSupabaseConfigured()) return MODE_DEMO;
+
+  const supabase = await createClient();
+
+  const { data: foto } = await supabase
+    .from("foto_galeri")
+    .select("foto_url, album_id")
+    .eq("id", id)
+    .maybeSingle();
+
+  const { error } = await supabase.from("foto_galeri").delete().eq("id", id);
+  if (error) return { ok: false, pesan: `Gagal menghapus: ${error.message}` };
+
+  /* Hapus berkas fisik bila URL menunjuk ke bucket kita sendiri. */
+  if (foto?.foto_url) {
+    const penanda = "/storage/v1/object/public/media/";
+    const idx = foto.foto_url.indexOf(penanda);
+    if (idx !== -1) {
+      const jalur = decodeURIComponent(foto.foto_url.slice(idx + penanda.length));
+      await supabase.storage.from("media").remove([jalur]);
+    }
+  }
+
+  /*
+   * Bila yang dihapus adalah foto sampul, ganti sampul dengan foto tersisa
+   * (atau kosongkan) supaya galeri publik tidak menampilkan gambar rusak.
+   */
+  if (foto?.album_id) {
+    const { data: album } = await supabase
+      .from("album")
+      .select("id, sampul_url")
+      .eq("id", foto.album_id)
+      .maybeSingle();
+
+    if (album && album.sampul_url && album.sampul_url === foto.foto_url) {
+      const { data: sisa } = await supabase
+        .from("foto_galeri")
+        .select("foto_url")
+        .eq("album_id", foto.album_id)
+        .order("urutan", { ascending: true })
+        .limit(1)
+        .maybeSingle();
+
+      await supabase
+        .from("album")
+        .update({ sampul_url: sisa?.foto_url ?? null })
+        .eq("id", foto.album_id);
+    }
+  }
+
+  segarkanPublik("/galeri");
+  revalidatePath("/admin/galeri");
+  return { ok: true, pesan: "Foto dihapus." };
+}
+
 export async function simpanKeteranganFoto(
   _sebelumnya: HasilAksi | null,
   formData: FormData,

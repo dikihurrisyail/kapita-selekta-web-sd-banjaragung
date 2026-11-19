@@ -285,6 +285,7 @@ export async function getAlbum(): Promise<Album[]> {
         ? (row.foto_galeri[0] as { count: number } | undefined)?.count ?? 0
         : 0;
       return {
+        id: row.id,
         slug: row.slug,
         kategori: row.kategori,
         judul: row.judul,
@@ -301,6 +302,72 @@ export async function getAlbum(): Promise<Album[]> {
 
 function fallbackAlbum(): Album[] {
   return fallback.album.map((a) => ({ ...a }));
+}
+
+/** Satu foto di dalam album, dipakai panel admin. */
+export type FotoAlbum = {
+  id: string;
+  keterangan: string;
+  url: string;
+  urutan: number;
+};
+
+/**
+ * Daftar foto milik satu album (untuk panel admin).
+ * Hanya dipakai di area admin, jadi tidak ada fallback data contoh.
+ */
+export async function getFotoAlbum(albumId: string): Promise<FotoAlbum[]> {
+  if (!isSupabaseConfigured()) return [];
+
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("foto_galeri")
+      .select("id, keterangan, foto_url, urutan")
+      .eq("album_id", albumId)
+      .order("urutan", { ascending: true });
+
+    if (error) throw error;
+
+    return (data ?? []).map((row) => ({
+      id: row.id,
+      keterangan: row.keterangan,
+      url: row.foto_url,
+      urutan: row.urutan,
+    }));
+  } catch (error) {
+    catat("foto_galeri", error);
+    return [];
+  }
+}
+
+/** Semua foto dari semua album, dikelompokkan per album_id. */
+export async function getSemuaFoto(): Promise<Record<string, FotoAlbum[]>> {
+  if (!isSupabaseConfigured()) return {};
+
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("foto_galeri")
+      .select("id, album_id, keterangan, foto_url, urutan")
+      .order("urutan", { ascending: true });
+
+    if (error) throw error;
+
+    const hasil: Record<string, FotoAlbum[]> = {};
+    for (const row of data ?? []) {
+      (hasil[row.album_id] ??= []).push({
+        id: row.id,
+        keterangan: row.keterangan,
+        url: row.foto_url,
+        urutan: row.urutan,
+      });
+    }
+    return hasil;
+  } catch (error) {
+    catat("foto_galeri", error);
+    return {};
+  }
 }
 
 /* -------------------------------------------------------------- Fasilitas */

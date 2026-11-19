@@ -42,6 +42,7 @@ export type Guru = {
 };
 
 export type Album = {
+  id: string;
   slug: string;
   kategori: string;
   judul: string;
@@ -391,6 +392,7 @@ export const kategoriGaleri = ["Semua", "Kegiatan", "Akademik", "Lingkungan"];
 
 export const album: Album[] = [
   {
+    id: "album-1",
     slug: "pekan-literasi",
     kategori: "Kegiatan",
     judul: "Pekan Literasi",
@@ -399,6 +401,7 @@ export const album: Album[] = [
     foto: foto("Album pekan literasi"),
   },
   {
+    id: "album-2",
     slug: "kebun-sekolah",
     kategori: "Lingkungan",
     judul: "Kebun sekolah",
@@ -407,6 +410,7 @@ export const album: Album[] = [
     foto: foto("Album kebun sekolah"),
   },
   {
+    id: "album-3",
     slug: "karya-seni",
     kategori: "Kegiatan",
     judul: "Karya seni bersama",
@@ -415,6 +419,7 @@ export const album: Album[] = [
     foto: foto("Album karya seni"),
   },
   {
+    id: "album-4",
     slug: "jumat-sehat",
     kategori: "Kegiatan",
     judul: "Jumat sehat",
@@ -423,6 +428,7 @@ export const album: Album[] = [
     foto: foto("Album jumat sehat"),
   },
   {
+    id: "album-5",
     slug: "kelas-alam",
     kategori: "Lingkungan",
     judul: "Kelas alam",
@@ -431,6 +437,7 @@ export const album: Album[] = [
     foto: foto("Album kelas alam"),
   },
   {
+    id: "album-6",
     slug: "perpustakaan",
     kategori: "Akademik",
     judul: "Ruang baca sekolah",

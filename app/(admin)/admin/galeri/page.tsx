@@ -1,13 +1,16 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { UploadCloud } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import { Alert } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Panel } from "@/components/ui/card";
-import { Field, Input, SearchField } from "@/components/ui/input";
+import { SearchField } from "@/components/ui/input";
 import { Foto } from "@/components/ui/foto";
 import { JudulAdmin } from "@/components/admin/kerangka";
-import { getAlbum } from "@/lib/data/queries";
+import { FormUnggahFoto } from "@/components/admin/form-unggah-foto";
+import { TombolHapus } from "@/components/admin/form-aksi";
+import { hapusFoto } from "@/lib/actions/konten";
+import { getAlbum, getSemuaFoto } from "@/lib/data/queries";
 
 export const metadata: Metadata = { title: "Galeri Admin" };
 
@@ -24,33 +27,36 @@ export default function AdminGaleriPage({ searchParams }: Props) {
 
       <div className="grid gap-6 xl:grid-cols-2">
         <Panel judul="Unggah dokumentasi">
-          <div className="flex flex-col items-center gap-3 rounded-card border border-dashed border-line-soft bg-page px-6 py-10 text-center">
-            <UploadCloud className="size-7 text-line-soft" aria-hidden />
-            <p className="text-sm font-semibold text-brand-ink">
-              Tarik berkas ke sini atau pilih dari perangkat
-            </p>
-            <p className="text-xs text-muted">JPG atau PNG, maksimal 5 MB per foto.</p>
-            <Button type="button" variant="outline" size="sm" disabled>
-              Pilih berkas
-            </Button>
-            <p className="text-[11px] text-muted">
-              Unggah foto aktif setelah Supabase Storage terhubung.
-            </p>
-          </div>
+          <Suspense fallback={<FormKerangka />}>
+            <FormUnggah searchParams={searchParams} />
+          </Suspense>
         </Panel>
 
-        <Panel judul="Album tujuan">
-          <div className="flex flex-col gap-5">
-            <Field label="Album" htmlFor="album">
-              <Input id="album" placeholder="Pekan Literasi" disabled />
-            </Field>
-            <Field label="Kategori" htmlFor="kategori">
-              <Input id="kategori" placeholder="Kegiatan" disabled />
-            </Field>
-            <p className="text-xs text-muted">
-              Pilih album yang sudah ada atau buat album baru. Form ini aktif setelah
-              Supabase terhubung.
+        <Panel judul="Panduan unggah">
+          <div className="flex flex-col gap-3">
+            <p className="text-sm leading-[1.6] text-body">
+              Foto yang diunggah langsung tampil di halaman galeri publik dan
+              masuk ke album yang dipilih.
             </p>
+            <ul className="flex flex-col gap-2">
+              {[
+                "Format JPG, PNG, atau WebP.",
+                "Ukuran maksimal 5 MB per foto.",
+                "Foto pertama otomatis menjadi sampul album.",
+                "Keterangan membantu penelusuran dan aksesibilitas.",
+              ].map((p) => (
+                <li
+                  key={p}
+                  className="flex gap-2.5 text-sm leading-[1.5] text-body"
+                >
+                  <span
+                    aria-hidden
+                    className="mt-2 size-1.5 shrink-0 rounded-pill bg-accent"
+                  />
+                  {p}
+                </li>
+              ))}
+            </ul>
           </div>
         </Panel>
       </div>
@@ -75,11 +81,38 @@ export default function AdminGaleriPage({ searchParams }: Props) {
   );
 }
 
+/** Ambil daftar album (dengan id) untuk form unggah. */
+async function FormUnggah({ searchParams }: Props) {
+  await searchParams;
+  const album = await getAlbum();
+
+  return (
+    <FormUnggahFoto
+      album={album.map((a) => ({
+        id: a.id,
+        judul: a.judul,
+        kategori: a.kategori,
+      }))}
+    />
+  );
+}
+
+function FormKerangka() {
+  return (
+    <div className="flex flex-col gap-5" aria-busy="true">
+      <span className="sr-only">Memuat form unggah…</span>
+      <div className="h-16 rounded-btn bg-page-alt" />
+      <div className="h-16 rounded-btn bg-page-alt" />
+      <div className="h-11 w-40 rounded-btn bg-page-alt" />
+    </div>
+  );
+}
+
 async function DaftarAlbum({ searchParams }: Props) {
   const { q } = await searchParams;
   const kataKunci = (q ?? "").trim().toLowerCase();
 
-  const semua = await getAlbum();
+  const [semua, semuaFoto] = await Promise.all([getAlbum(), getSemuaFoto()]);
   const tampil = kataKunci
     ? semua.filter(
         (a) =>
@@ -96,23 +129,55 @@ async function DaftarAlbum({ searchParams }: Props) {
             Tidak ada album yang cocok.
           </p>
         ) : (
-          tampil.map((item) => (
-            <Panel key={item.slug} bodyClassName="px-5 py-5">
-              <div className="flex flex-col gap-4">
-                <Foto
-                  src={item.foto.src}
-                  label={item.foto.label}
-                  className="h-[160px] w-full"
-                />
-                <div className="flex flex-col gap-1">
-                  <p className="text-sm font-semibold text-brand-ink">{item.judul}</p>
-                  <p className="text-xs text-muted">
-                    {item.kategori} • {item.jumlahFoto} foto
-                  </p>
+          tampil.map((item) => {
+            const foto = semuaFoto[item.id] ?? [];
+            return (
+              <Panel key={item.slug} bodyClassName="px-5 py-5">
+                <div className="flex flex-col gap-4">
+                  <Foto
+                    src={item.foto.src}
+                    label={item.foto.label}
+                    className="h-[160px] w-full"
+                  />
+                  <div className="flex flex-col gap-1">
+                    <p className="text-sm font-semibold text-brand-ink">{item.judul}</p>
+                    <p className="text-xs text-muted">
+                      {item.kategori} • {foto.length} foto
+                    </p>
+                  </div>
+
+                  {foto.length > 0 ? (
+                    <ul className="flex flex-col gap-2 border-t border-line-soft pt-3">
+                      {foto.map((f) => (
+                        <li key={f.id} className="flex items-center gap-2">
+                          <Foto
+                            src={f.url}
+                            label={f.keterangan || "Foto galeri"}
+                            ringkas
+                            className="size-10 shrink-0"
+                          />
+                          <span className="min-w-0 flex-1 truncate text-xs text-body">
+                            {f.keterangan || "(tanpa keterangan)"}
+                          </span>
+                          <TombolHapus
+                            action={hapusFoto}
+                            id={f.id}
+                            label={`foto "${f.keterangan || "tanpa keterangan"}"`}
+                          >
+                            <Trash2 className="size-4" aria-hidden />
+                          </TombolHapus>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="border-t border-line-soft pt-3 text-xs text-muted">
+                      Belum ada foto di album ini.
+                    </p>
+                  )}
                 </div>
-              </div>
-            </Panel>
-          ))
+              </Panel>
+            );
+          })
         )}
       </div>
 

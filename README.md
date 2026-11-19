@@ -87,6 +87,67 @@ mengakses konten draf.
 
 Buka `/admin`, lalu masuk dengan email dan kata sandi yang dibuat pada langkah 4.
 
+### 6. Atur SMTP (agar "Lupa kata sandi" berfungsi)
+
+Tanpa SMTP, Supabase memakai pengirim bawaan yang hanya mengizinkan **2 email
+per jam** dan hanya bisa mengirim ke alamat anggota project. Akibatnya email
+pemulihan kata sandi untuk admin sekolah tidak akan pernah sampai.
+
+#### Gmail SMTP
+
+1. **Aktifkan verifikasi 2 langkah** di akun Google yang akan dipakai
+   (myaccount.google.com → Security → 2-Step Verification). App Password tidak
+   bisa dibuat tanpa ini.
+2. Buka **myaccount.google.com/apppasswords** → buat App Password baru
+   (nama bebas, mis. `Supabase SD Banjaragung`). Google menampilkan
+   **16 karakter**; salin tanpa spasi. Sandi Gmail biasa **tidak akan bekerja**.
+3. Di Supabase: **Authentication → Emails → SMTP Settings**, aktifkan
+   *Enable Custom SMTP*, lalu isi:
+
+   | Kolom | Nilai |
+   |---|---|
+   | Host | `smtp.gmail.com` |
+   | Port | `587` (STARTTLS) — atau `465` bila 587 diblokir jaringan |
+   | Username | alamat Gmail lengkap, mis. `sdbajaragung@gmail.com` |
+   | Password | App Password 16 karakter (tanpa spasi) |
+   | Sender email | **harus sama** dengan alamat Gmail di atas |
+   | Sender name | `SD Banjaragung` |
+
+4. Di **Authentication → URL Configuration → Redirect URLs**, tambahkan:
+
+   ```
+   http://localhost:3000/admin/sandi-baru
+   https://<domain-sekolah>/admin/sandi-baru
+   ```
+
+5. Isi `NEXT_PUBLIC_SITE_URL` di `.env.local` dengan alamat situs produksi agar
+   tautan pemulihan menunjuk ke domain yang benar:
+
+   ```
+   NEXT_PUBLIC_SITE_URL=https://<domain-sekolah>
+   ```
+
+6. Periksa hasilnya: `npm run cek:smtp -- alamat-tujuan@gmail.com`
+
+Batasan Gmail yang perlu diketahui:
+
+- Kuota kirim Gmail ±500 email/hari, dan Supabase juga punya batas sendiri
+  (atur di **Authentication → Rate Limits**).
+- Gmail menulis ulang alamat pengirim menjadi alamat Gmail tersebut.
+- Untuk produksi jangka panjang, penyedia khusus email (Resend/Brevo) lebih
+  andal karena punya record SPF/DKIM sendiri sehingga tidak mudah masuk spam.
+
+#### Penyedia lain
+
+Pola pengisiannya sama, hanya host/username berbeda:
+
+| Penyedia | Host | Username |
+|---|---|---|
+| Gmail | `smtp.gmail.com` | alamat Gmail + App Password |
+| Resend | `smtp.resend.com` | `resend` |
+| Brevo | `smtp-relay.brevo.com` | email akun Brevo |
+| SendGrid | `smtp.sendgrid.net` | `apikey` |
+
 ---
 
 ## Struktur penting

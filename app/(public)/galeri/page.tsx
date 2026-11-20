@@ -3,14 +3,18 @@ import { Suspense } from "react";
 import { PageIntro } from "@/components/ui/page-intro";
 import { AlbumCard } from "@/components/public/album-card";
 import { PublicSection } from "@/components/public/public-section";
-import { getAlbum } from "@/lib/data/queries";
+import Link from "next/link";
+import { Foto } from "@/components/ui/foto";
+import { getAlbum, getFotoAlbum } from "@/lib/data/queries";
+import type { Album } from "@/lib/data/types";
+import { formatTanggal } from "@/lib/utils/format-date";
 import { cn } from "@/lib/utils/cn";
 
 export const metadata: Metadata = { title: "Galeri Kegiatan" };
 
 const kategoriGaleri = ["Semua", "Kegiatan", "Akademik", "Lingkungan", "Lainnya"];
 
-type Props = { searchParams: Promise<{ kategori?: string }> };
+type Props = { searchParams: Promise<{ kategori?: string; album?: string }> };
 
 export default function GaleriPage({ searchParams }: Props) {
   return (
@@ -37,7 +41,8 @@ export default function GaleriPage({ searchParams }: Props) {
 }
 
 async function FilterKategori({ searchParams }: Props) {
-  const { kategori } = await searchParams;
+  const { kategori, album } = await searchParams;
+  if (album) return null;
   const aktif = kategori && kategoriGaleri.includes(kategori) ? kategori : "Semua";
 
   return (
@@ -62,10 +67,11 @@ async function FilterKategori({ searchParams }: Props) {
 }
 
 async function DaftarAlbum({ searchParams }: Props) {
-  const { kategori } = await searchParams;
+  const { kategori, album } = await searchParams;
   const aktif = kategori && kategoriGaleri.includes(kategori) ? kategori : "Semua";
 
   const semua = await getAlbum();
+  if (album) return <DetailAlbum item={semua.find((a) => a.slug === album)} />;
   const tampil = aktif === "Semua" ? semua : semua.filter((a) => a.kategori === aktif);
 
   return (
@@ -86,6 +92,56 @@ async function DaftarAlbum({ searchParams }: Props) {
         Menampilkan {tampil.length} album dokumentasi.
       </p>
     </>
+  );
+}
+
+async function DetailAlbum({ item }: { item?: Album }) {
+  const kembali = (
+    <Link href="/galeri" className="text-sm font-semibold text-brand hover:underline">
+      ← Semua album
+    </Link>
+  );
+
+  if (!item) {
+    return (
+      <div className="flex flex-col gap-4">
+        {kembali}
+        <p className="rounded-card border border-line bg-white px-6 py-10 text-center text-sm text-muted">
+          Album tidak ditemukan.
+        </p>
+      </div>
+    );
+  }
+
+  const foto = await getFotoAlbum(item.id);
+
+  return (
+    <div className="flex flex-col gap-6">
+      {kembali}
+      <div className="flex flex-col gap-1.5">
+        <p className="text-xs leading-[1.4] text-muted">{item.kategori}</p>
+        <h2 className="text-2xl font-semibold leading-[1.35] text-brand-ink">{item.judul}</h2>
+        <p className="text-xs leading-[1.4] text-muted">
+          {formatTanggal(item.tanggal)} • {foto.length} foto
+        </p>
+      </div>
+      {foto.length === 0 ? (
+        <p className="rounded-card border border-line bg-white px-6 py-10 text-center text-sm text-muted">
+          Belum ada foto pada album ini.
+        </p>
+      ) : (
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {foto.map((f) => (
+            <figure key={f.id} className="flex flex-col gap-2">
+              <Foto src={f.url} label={f.keterangan || item.judul} className="h-[260px] w-full" />
+              {f.keterangan && (
+                <figcaption className="text-xs leading-[1.4] text-muted">{f.keterangan}</figcaption>
+              )}
+            </figure>
+          ))}
+        </div>
+      )}
+    </div>
   );
 }
 

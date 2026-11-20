@@ -35,6 +35,7 @@ export const ctaPpdb = { label: "SPMB Info", href: "/spmb" } as const;
 export const menuAdmin = [
   { label: "Dashboard", href: "/admin", icon: "layout-dashboard" },
   { label: "Profil Sekolah", href: "/admin/profil", icon: "school" },
+  { label: "Fasilitas Sekolah", href: "/admin/fasilitas", icon: "building" },
   { label: "Data Guru", href: "/admin/guru", icon: "users" },
   { label: "Pengumuman", href: "/admin/pengumuman", icon: "megaphone" },
   { label: "Berita", href: "/admin/berita", icon: "newspaper" },

@@ -847,7 +847,7 @@ export async function simpanFasilitas(
   }
 
   segarkanPublik("/profil");
-  revalidatePath("/admin/profil");
+  revalidatePath("/admin/fasilitas");
   return { ok: true, pesan: "Fasilitas sekolah ditambahkan." };
 }
 
@@ -871,7 +871,7 @@ export async function hapusFasilitas(id: string): Promise<HasilAksi> {
   await hapusDariMedia(supabase, fasilitas?.foto_url);
 
   segarkanPublik("/profil");
-  revalidatePath("/admin/profil");
+  revalidatePath("/admin/fasilitas");
   return { ok: true, pesan: "Fasilitas sekolah dihapus." };
 }
 

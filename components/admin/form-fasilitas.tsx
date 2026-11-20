@@ -12,7 +12,7 @@ import { simpanFasilitas, hapusFasilitas } from "@/lib/actions/konten";
 import type { Fasilitas } from "@/lib/data/types";
 
 /**
- * Panel fasilitas sekolah di dalam form profil.
+ * Panel fasilitas sekolah di halaman /admin/fasilitas.
  *
  * Menampilkan daftar fasilitas yang sudah ada dan form tambah baru.
  * Setiap fasilitas memiliki tombol hapus (ikon tempat sampah).

@@ -3,10 +3,9 @@ import { Suspense } from "react";
 import { Panel } from "@/components/ui/card";
 import { Field, Input, Textarea } from "@/components/ui/input";
 import { FormAksi } from "@/components/admin/form-aksi";
-import { FormFasilitas } from "@/components/admin/form-fasilitas";
 import { InputFoto } from "@/components/admin/input-foto";
 import { simpanProfil } from "@/lib/actions/konten";
-import { getFasilitas, getProfil } from "@/lib/data/queries";
+import { getProfil } from "@/lib/data/queries";
 
 export const metadata: Metadata = { title: "Pengelolaan Profil" };
 
@@ -23,7 +22,7 @@ export default function AdminProfilPage() {
 }
 
 async function FormProfil() {
-  const [profil, fasilitas] = await Promise.all([getProfil(), getFasilitas()]);
+  const profil = await getProfil();
 
   return (
     <div className="flex flex-col gap-8">
@@ -35,7 +34,7 @@ async function FormProfil() {
           Pengelolaan Profil
         </h1>
         <p className="text-sm leading-[1.5] text-body">
-          Perbarui identitas, sejarah, visi misi, fasilitas, dan kontak sekolah.
+          Perbarui identitas, sejarah, visi misi, dan kontak sekolah.
         </p>
       </div>
 
@@ -215,8 +214,6 @@ async function FormProfil() {
           </div>
         </Panel>
       </FormAksi>
-
-      <FormFasilitas awal={fasilitas} />
     </div>
   );
 }

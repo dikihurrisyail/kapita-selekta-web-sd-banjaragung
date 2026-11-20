@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";import {
+  Building2,
   ClipboardList,
   Images,
   LayoutDashboard,
@@ -22,6 +23,7 @@ import { cn } from "@/lib/utils/cn";
 const ikonMenu: Record<string, LucideIcon> = {
   "layout-dashboard": LayoutDashboard,
   school: School,
+  building: Building2,
   users: Users,
   megaphone: Megaphone,
   newspaper: Newspaper,

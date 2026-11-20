@@ -85,6 +85,7 @@ await shot("admin-profil", "/admin/profil", { geserKe: "#logo" });
 await shot("admin-guru", "/admin/guru");
 await shot("admin-pengumuman", "/admin/pengumuman");
 await shot("admin-berita", "/admin/berita");
+await shot("admin-fasilitas", "/admin/fasilitas");
 await shot("admin-spmb", "/admin/spmb");
 await shot("admin-galeri", "/admin/galeri");
 

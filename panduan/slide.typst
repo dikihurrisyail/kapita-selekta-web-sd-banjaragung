@@ -1,0 +1,63 @@
+#set page(width: 1920pt, height: 1080pt, margin: 80pt)
+#set text(size: 30pt)
+
+#let judul-slide(judul, subjudul) = {
+  set align(center + horizon)
+  text(size: 54pt, weight: "bold", fill: luma(0))[#judul]
+  v(1em)
+  text(size: 24pt, fill: luma(80))[#subjudul]
+  v(2em)
+  line(length: 60%, stroke: 1pt + luma(0))
+  v(1em)
+  text(size: 18pt, fill: luma(120))[UPTD SD Negeri Banjar Agung]
+}
+
+#let konten-slide(judul, items) = {
+  set align(left + horizon)
+  text(size: 42pt, weight: "bold", fill: luma(0))[#judul]
+  v(1em)
+  for item in items {
+    text(size: 22pt, fill: luma(20))[*#item*]
+    v(0.7em)
+  }
+}
+
+#judul-slide("Website UPTD SD Negeri Banjar Agung", "Sistem Informasi Sekolah & Manajemen SPMB")
+
+#pagebreak()
+
+#konten-slide("Fitur Halaman Publik", (
+  "Beranda — sambutan, pengumuman, berita, galeri, dan tautan SPMB.",
+  "Profil — visi, misi, sejarah, struktur organisasi, dan kontak.",
+  "Guru — daftar pendidik dan jabatan.",
+  "Pengumuman — informasi resmi sekolah.",
+  "Berita — cerita kegiatan belajar dan bermain.",
+  "Galeri — dokumentasi kegiatan per album.",
+  "SPMB — informasi penerimaan murid baru.",
+  "Kontak — formulir dan layanan panitia.",
+))
+
+#pagebreak()
+
+#konten-slide("Halaman Admin", (
+  "Dashboard — ringkasan data publik.",
+  "Manajemen Profil — logo, foto hero, dan info sekolah.",
+  "Guru — tambah, ubah, hapus data guru.",
+  "Pengumuman & Berita — publish, edit, hapus konten.",
+  "Fasilitas & Galeri — kelola fasilitas dan foto kegiatan.",
+  "SPMB — 6 panel untuk mengubah seluruh teks halaman.",
+))
+
+#pagebreak()
+
+#konten-slide("Teknologi", (
+  "Next.js 16 (App Router) + React + Tailwind CSS.",
+  "Supabase (PostgreSQL + Storage bucket media).",
+  "Server Actions untuk simpan, hapus, dan upload foto.",
+  "Navigasi: spinner pending + progress bar global.",
+  "Layout responsif dan fluid tanpa max-width publik.",
+))
+
+#pagebreak()
+
+#judul-slide("Terima Kasih", "UPTD SD Negeri Banjar Agung")

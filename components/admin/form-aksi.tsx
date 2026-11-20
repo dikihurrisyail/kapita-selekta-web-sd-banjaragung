@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { Alert } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
@@ -37,13 +37,27 @@ export function FormAksi({
 }) {
   const [state, formAction, pending] = useActionState(action, null);
   const router = useRouter();
+  const umpanBalikRef = useRef<HTMLDivElement>(null);
+
+  /*
+   * Pesan hasil simpan berada di bawah seluruh isian, jadi bila admin menyimpan
+   * dari bagian atas halaman pesannya tidak terlihat. Gulirkan ke pesan itu
+   * begitu hasil aksi datang.
+   */
+  useEffect(() => {
+    if (state?.pesan) {
+      umpanBalikRef.current?.scrollIntoView({ block: "nearest", behavior: "smooth" });
+    }
+  }, [state]);
 
   return (
     <form action={formAction} className={cn("flex flex-col gap-6", className)} id={id}>
       {children}
 
       {state?.pesan ? (
-        <Alert tone={state.ok ? "sukses" : "bahaya"}>{state.pesan}</Alert>
+        <div ref={umpanBalikRef} className="scroll-mb-28">
+          <Alert tone={state.ok ? "sukses" : "bahaya"}>{state.pesan}</Alert>
+        </div>
       ) : null}
 
       <div className="sticky bottom-[76px] flex flex-wrap items-center justify-between gap-4 rounded-card border border-line bg-white px-6 py-4 lg:bottom-0">

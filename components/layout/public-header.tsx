@@ -26,8 +26,8 @@ export function PublicHeader({ logoUrl }: { logoUrl?: string | null }) {
       <div className="container-page flex h-[84px] items-center justify-between gap-6">
         <SchoolIdentity logoUrl={logoUrl} />
 
-        {/* Menu desktop — tersembunyi di bawah 1024px (frame 390 memakai tombol menu). */}
-        <nav aria-label="Navigasi utama" className="hidden items-center gap-5 lg:flex">
+        {/* Menu desktop — tersembunyi di bawah 1280px (frame 390 memakai tombol menu). */}
+        <nav aria-label="Navigasi utama" className="hidden items-center gap-5 xl:flex">
           {menuPublik.map((item) => {
             const isAktif = aktif(item.href);
             return (
@@ -60,7 +60,7 @@ export function PublicHeader({ logoUrl }: { logoUrl?: string | null }) {
           </Link>
         </nav>
 
-        <div className="flex items-center gap-3 lg:hidden">
+        <div className="flex shrink-0 items-center gap-3 xl:hidden">
           <Link
             href={ctaPpdb.href}
             className="hidden min-h-11 items-center justify-center rounded-btn border border-accent bg-accent px-4 py-2.5 text-sm font-semibold leading-[1.5] text-brand-ink sm:inline-flex"
@@ -84,7 +84,7 @@ export function PublicHeader({ logoUrl }: { logoUrl?: string | null }) {
         <nav
           id="menu-mobile"
           aria-label="Navigasi utama (seluler)"
-          className="border-t border-line bg-white lg:hidden"
+          className="border-t border-line bg-white xl:hidden"
         >
           <ul className="container-page flex flex-col py-2">
             {[...menuPublik, ctaPpdb].map((item) => (

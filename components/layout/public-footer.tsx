@@ -14,7 +14,7 @@ export function PublicFooter({ profil }: { profil: ProfilSekolah }) {
     <footer className="w-full bg-brand-ink">
       <div className="container-page flex flex-col gap-8 pt-12 pb-7">
         <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:gap-8">
-          <div className="flex w-full flex-col gap-4.5 lg:w-[440px] lg:shrink-0">
+          <div className="flex w-full flex-col gap-4.5 lg:w-[37%] lg:shrink-0">
             <SchoolIdentity variant="dark" logoUrl={logoUrl} />
             <p className="text-sm leading-[1.5] text-line-soft">
               Ruang informasi dan kabar sekolah untuk orang tua, guru, dan
@@ -22,7 +22,7 @@ export function PublicFooter({ profil }: { profil: ProfilSekolah }) {
             </p>
           </div>
 
-          <nav aria-label="Tautan footer" className="flex w-full flex-col gap-3 lg:w-[180px] lg:shrink-0">
+          <nav aria-label="Tautan footer" className="flex w-full flex-col gap-3 lg:w-[15%] lg:min-w-[160px] lg:shrink-0">
             <h2 className="text-base font-semibold leading-[1.4] text-white">
               Jelajahi sekolah
             </h2>

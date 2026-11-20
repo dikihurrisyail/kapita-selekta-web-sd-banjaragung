@@ -15,7 +15,7 @@ export function NewsCard({ item }: { item: Berita }) {
       <Foto
         src={item.foto.src}
         label={item.foto.label}
-        className="h-[216px] w-full rounded-none rounded-t-[11px]"
+        className="aspect-video w-full rounded-none rounded-t-[11px]"
       />
       <div className="flex flex-1 flex-col gap-3 p-5">
         <p className="text-xs leading-[1.4] text-muted">

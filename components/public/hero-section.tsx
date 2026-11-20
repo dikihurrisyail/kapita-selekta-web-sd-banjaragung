@@ -19,14 +19,14 @@ export function HeroSection({ profil }: { profil: ProfilSekolah }) {
     <section className="bg-page-alt">
       <div className="container-page py-12">
         <div className="flex flex-col overflow-hidden rounded-none bg-brand lg:flex-row">
-          <div className="flex w-full flex-col gap-6 p-6 sm:p-10 lg:w-[540px] lg:shrink-0">
+          <div className="flex w-full flex-col gap-6 p-6 sm:p-10 lg:w-[45%] lg:shrink-0">
             <p className="text-xs font-bold leading-[1.4] tracking-wide text-white uppercase">
               Selamat datang di {profil.nama}
             </p>
             <h1 className="font-display text-[36px] font-bold leading-[1.15] text-white sm:text-[48px]">
               Tempat tumbuh, belajar, dan menjadi berarti.
             </h1>
-            <p className="text-base leading-[1.6] text-white">
+            <p className="max-w-[52ch] text-base leading-[1.6] text-white">
               {profil.tagline ||
                 "Mendampingi setiap anak dengan pembelajaran yang bermakna, karakter yang kuat, dan lingkungan yang peduli."}
             </p>
@@ -39,11 +39,13 @@ export function HeroSection({ profil }: { profil: ProfilSekolah }) {
               </ButtonLink>
             </div>
           </div>
-          <Foto
-            src={profil.heroUrl}
-            label="Foto dokumentasi ilustratif — suasana sekolah"
-            className="h-[260px] w-full rounded-none sm:h-[340px] lg:h-[472px] lg:w-[660px] lg:shrink-0"
-          />
+          <div className="relative h-[260px] w-full sm:h-[340px] lg:h-auto lg:min-h-[clamp(472px,32vw,900px)] lg:flex-1">
+            <Foto
+              src={profil.heroUrl}
+              label="Foto dokumentasi ilustratif — suasana sekolah"
+              className="h-full w-full rounded-none lg:absolute lg:inset-0"
+            />
+          </div>
         </div>
 
         <ul className="flex flex-col gap-2 border-b border-line-soft py-5 text-xs font-semibold leading-[1.4] text-brand sm:flex-row sm:flex-wrap sm:gap-8">
@@ -64,7 +66,7 @@ export function SchoolIntroduction({ profil }: { profil: ProfilSekolah }) {
 
   return (
     <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:gap-16">
-      <div className="flex w-full flex-col gap-2.5 lg:w-[380px] lg:shrink-0">
+      <div className="flex w-full flex-col gap-2.5 lg:w-[32%] lg:shrink-0">
         <p className="text-xs font-bold leading-[1.4] tracking-wide text-accent-ink uppercase">
           Mengenal sekolah
         </p>

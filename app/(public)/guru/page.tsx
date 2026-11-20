@@ -69,7 +69,7 @@ async function DaftarGuru({ searchParams }: Props) {
           Tidak ada pendidik yang cocok dengan pencarian Anda.
         </p>
       ) : (
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
           {tampil.map((item) => (
             <TeacherCard key={item.id} item={item} />
           ))}
@@ -81,7 +81,7 @@ async function DaftarGuru({ searchParams }: Props) {
 
 function DaftarKerangka() {
   return (
-    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4" aria-busy="true">
+    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5" aria-busy="true">
       {Array.from({ length: 4 }).map((_, i) => (
         <div key={i} className="overflow-hidden rounded-card border border-line bg-white">
           <div className="aspect-[3/4] w-full bg-page-alt" />

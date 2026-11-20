@@ -8,7 +8,7 @@ export default function PublicLoading() {
         <div className="h-10 w-full max-w-[560px] rounded-btn bg-page-alt" />
         <div className="h-4 w-full max-w-[480px] rounded-btn bg-page-alt" />
       </div>
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {Array.from({ length: 3 }).map((_, i) => (
           <div key={i} className="flex flex-col gap-4 rounded-card border border-line bg-white p-6">
             <div className="h-40 w-full rounded-img bg-page-alt" />

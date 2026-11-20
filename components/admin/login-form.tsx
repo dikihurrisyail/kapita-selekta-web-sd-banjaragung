@@ -29,7 +29,7 @@ export function LoginForm({
   return (
     <div className="flex min-h-screen flex-col lg:flex-row">
       {/* Panel identitas layanan admin (660px) */}
-      <section className="flex w-full flex-col gap-8 bg-brand px-8 py-10 lg:w-[660px] lg:shrink-0 lg:px-16 lg:py-16">
+      <section className="flex w-full flex-col gap-8 bg-brand px-8 py-10 lg:w-[46%] lg:shrink-0 lg:px-16 lg:py-16">
         <SchoolIdentity variant="dark" logoUrl={logoUrl} />
         <div className="flex flex-col gap-4">
           <h1 className="font-display text-[32px] font-semibold leading-[1.15] text-white lg:text-[40px]">

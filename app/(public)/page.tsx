@@ -54,7 +54,7 @@ async function IsiBeranda() {
               tautan="Semua pengumuman →"
               href="/pengumuman"
             />
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {pengumuman.map((item) => (
                 <AnnouncementCard key={item.slug} item={item} />
               ))}
@@ -69,7 +69,7 @@ async function IsiBeranda() {
               tautan="Semua berita →"
               href="/berita"
             />
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {berita.map((item) => (
                 <NewsCard key={item.slug} item={item} />
               ))}
@@ -87,7 +87,7 @@ async function IsiBeranda() {
               <Foto
                 src={fasilitas.find((f) => f.foto.src)?.foto.src ?? null}
                 label="Foto dokumentasi ilustratif — ruang belajar"
-                className="h-[280px] w-full"
+                className="aspect-[2/1] w-full"
               />
               <h3 className="text-2xl font-bold leading-[1.25] text-brand-ink">
                 Ruang yang mendukung rasa ingin tahu
@@ -108,7 +108,7 @@ async function IsiBeranda() {
               <Foto
                 src={guru[0]?.foto.src ?? null}
                 label={guru[0]?.foto.label ?? "Foto dokumentasi ilustratif — pendidik"}
-                className="h-[280px] w-full"
+                className="aspect-[2/1] w-full"
               />
               <h3 className="text-2xl font-bold leading-[1.25] text-brand-ink">
                 Guru yang mendampingi dengan hati
@@ -152,7 +152,7 @@ async function IsiBeranda() {
           <h2 className="text-[32px] font-bold leading-[1.15] text-white sm:text-[36px]">
             Mari mengenal sekolah lebih dekat.
           </h2>
-          <p className="max-w-[900px] text-base leading-[1.6] text-white">
+          <p className="lg:max-w-[75%] text-base leading-[1.6] text-white">
             {ppdb.deskripsi}
           </p>
           <div className="flex flex-wrap gap-3">
@@ -179,7 +179,7 @@ function BerandaKerangka() {
       <section className="bg-page-alt">
         <div className="container-page py-12">
           <div className="flex flex-col overflow-hidden bg-brand lg:flex-row">
-            <div className="flex w-full flex-col gap-6 p-6 sm:p-10 lg:w-[540px] lg:shrink-0">
+            <div className="flex w-full flex-col gap-6 p-6 sm:p-10 lg:w-[45%] lg:shrink-0">
               <div className="h-3 w-48 rounded-pill bg-white/25" />
               <div className="h-12 w-full rounded-btn bg-white/20" />
               <div className="h-12 w-4/5 rounded-btn bg-white/20" />
@@ -189,7 +189,7 @@ function BerandaKerangka() {
                 <div className="h-11 w-40 rounded-btn bg-white/20" />
               </div>
             </div>
-            <div className="h-[260px] w-full bg-white/10 sm:h-[340px] lg:h-[472px] lg:w-[660px] lg:shrink-0" />
+            <div className="h-[260px] w-full bg-white/10 sm:h-[340px] lg:min-h-[clamp(472px,32vw,900px)] lg:flex-1" />
           </div>
           <div className="flex gap-8 py-5">
             <div className="h-3 w-40 rounded-pill bg-line" />
@@ -201,7 +201,7 @@ function BerandaKerangka() {
 
       {/* Isi */}
       <div className="container-page py-14">
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {Array.from({ length: 3 }).map((_, i) => (
             <div
               key={i}

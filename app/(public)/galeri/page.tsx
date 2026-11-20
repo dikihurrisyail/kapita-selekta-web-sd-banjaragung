@@ -81,7 +81,7 @@ async function DaftarAlbum({ searchParams }: Props) {
           Belum ada album pada kategori ini.
         </p>
       ) : (
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {tampil.map((item) => (
             <AlbumCard key={item.slug} item={item} />
           ))}
@@ -130,10 +130,10 @@ async function DetailAlbum({ item }: { item?: Album }) {
           Belum ada foto pada album ini.
         </p>
       ) : (
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {foto.map((f) => (
             <figure key={f.id} className="flex flex-col gap-2">
-              <Foto src={f.url} label={f.keterangan || item.judul} className="h-[260px] w-full" />
+              <Foto src={f.url} label={f.keterangan || item.judul} className="aspect-[4/3] w-full" />
               {f.keterangan && (
                 <figcaption className="text-xs leading-[1.4] text-muted">{f.keterangan}</figcaption>
               )}
@@ -157,10 +157,10 @@ function FilterKerangka() {
 
 function DaftarKerangka() {
   return (
-    <div className="grid gap-6 md:grid-cols-2" aria-busy="true">
+    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" aria-busy="true">
       {Array.from({ length: 4 }).map((_, i) => (
         <div key={i} className="overflow-hidden rounded-card border border-line bg-white">
-          <div className="h-[358px] w-full bg-page-alt" />
+          <div className="aspect-[16/10] w-full bg-page-alt" />
           <div className="flex flex-col gap-2 p-5">
             <div className="h-3 w-20 rounded-pill bg-page-alt" />
             <div className="h-5 w-3/4 rounded-btn bg-page-alt" />

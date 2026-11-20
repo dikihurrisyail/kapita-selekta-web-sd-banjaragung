@@ -43,12 +43,12 @@ async function IsiProfil() {
           <Foto
             src={profil.heroUrl}
             label="Foto dokumentasi ilustratif — gedung sekolah"
-            className="h-[260px] w-full lg:h-[380px]"
+            className="h-[260px] w-full lg:h-[clamp(380px,26vw,720px)]"
           />
 
           {/* Sejarah dan identitas — 720 / 416 */}
           <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:gap-16">
-            <div className="flex w-full flex-col gap-4 lg:w-[720px]">
+            <div className="mx-auto flex w-full flex-col gap-4 lg:max-w-[80ch] lg:flex-1">
               <p className="text-xs font-bold leading-[1.4] tracking-wide text-accent-ink uppercase">
                 Sejarah sekolah
               </p>
@@ -62,7 +62,7 @@ async function IsiProfil() {
               ))}
             </div>
 
-            <div className="w-full lg:w-[416px] lg:shrink-0">
+            <div className="w-full lg:w-[35%] lg:shrink-0">
               <Panel judul="Identitas sekolah">
                 <dl className="flex flex-col gap-3">
                   {[
@@ -89,7 +89,7 @@ async function IsiProfil() {
 
           {/* Visi dan misi — 470 / 698 */}
           <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:gap-8">
-            <div className="flex w-full flex-col gap-4 rounded-card border border-line bg-white p-6 lg:w-[470px] lg:shrink-0">
+            <div className="flex w-full flex-col gap-4 rounded-card border border-line bg-white p-6 lg:w-[40%] lg:shrink-0">
               <p className="text-xs font-bold leading-[1.4] tracking-wide text-accent-ink uppercase">
                 Visi
               </p>
@@ -121,7 +121,7 @@ async function IsiProfil() {
           {/* Fasilitas */}
           <div className="flex flex-col gap-6">
             <SectionHeading eyebrow="Fasilitas sekolah" judul="Ruang yang dirawat bersama" />
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {fasilitas.map((item) => (
                 <FacilityCard key={item.judul} item={item} />
               ))}
@@ -144,7 +144,7 @@ function ProfilKerangka() {
         <div className="h-4 w-full max-w-[680px] rounded-btn bg-page-alt" />
       </div>
       <div className="mt-10 h-[300px] w-full rounded-img bg-page-alt" />
-      <div className="mt-10 grid gap-8 lg:grid-cols-[720px_1fr]">
+      <div className="mt-10 grid gap-8 lg:grid-cols-[minmax(0,1.7fr)_minmax(0,1fr)]">
         <div className="flex flex-col gap-3">
           <div className="h-4 w-full rounded-pill bg-page-alt" />
           <div className="h-4 w-5/6 rounded-pill bg-page-alt" />

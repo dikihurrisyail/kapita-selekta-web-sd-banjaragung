@@ -50,8 +50,8 @@ export default async function DetailPengumumanPage({ params }: Props) {
           className="mb-6"
         />
 
-        <div className="grid gap-10 lg:grid-cols-[1fr_336px]">
-          <article className="flex flex-col gap-6">
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(280px,26%)]">
+          <article className="mx-auto flex max-w-[80ch] flex-col gap-6">
             <Badge className="w-fit">{item.kategori}</Badge>
             <h1 className="text-[32px] font-bold leading-[1.2] text-brand-ink sm:text-[40px]">
               {item.judul}

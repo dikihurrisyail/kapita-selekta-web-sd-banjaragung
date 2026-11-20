@@ -14,7 +14,7 @@ export function AlbumCard({ item }: { item: Album }) {
       <Foto
         src={item.foto.src}
         label={item.foto.label}
-        className="h-[358px] w-full rounded-none"
+        className="aspect-[16/10] w-full rounded-none"
       />
       <div className="flex flex-col gap-1.5 p-5">
         <p className="text-xs leading-[1.4] text-muted">{item.kategori}</p>

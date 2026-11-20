@@ -23,7 +23,7 @@ export function SchoolIdentity({
   return (
     <Link
       href="/"
-      className={cn("flex items-center gap-3", className)}
+      className={cn("flex min-w-0 items-center gap-3", className)}
       aria-label={`${site.nama} — beranda`}
     >
       {logoUrl ? (
@@ -43,10 +43,10 @@ export function SchoolIdentity({
           <BookOpen className="size-[26px] text-white" aria-hidden />
         </span>
       )}
-      <span className="flex flex-col gap-0.5">
+      <span className="flex min-w-0 flex-col gap-0.5">
         <span
           className={cn(
-            "text-xl font-bold leading-[1.35] whitespace-nowrap",
+            "text-base font-bold leading-[1.35] sm:text-xl sm:whitespace-nowrap",
             dark ? "text-white" : "text-brand",
           )}
         >
@@ -54,7 +54,7 @@ export function SchoolIdentity({
         </span>
         <span
           className={cn(
-            "text-[11px] leading-[1.4] whitespace-nowrap",
+            "line-clamp-2 text-[11px] leading-[1.4] sm:line-clamp-none sm:whitespace-nowrap",
             dark ? "text-line-soft" : "text-muted",
           )}
         >

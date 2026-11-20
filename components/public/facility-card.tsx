@@ -9,7 +9,7 @@ export function FacilityCard({ item }: { item: Fasilitas }) {
       <Foto
         src={item.foto.src}
         label={item.foto.label}
-        className="h-[220px] w-full"
+        className="aspect-video w-full"
       />
       <div className="flex flex-col gap-2">
         <h3 className="text-xl font-bold leading-[1.25] text-brand-ink">

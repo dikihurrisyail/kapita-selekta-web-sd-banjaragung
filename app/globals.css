@@ -45,9 +45,6 @@
   --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-newsreader), ui-serif, Georgia, serif;
 
-  /* Layout */
-  --spacing-container: 1200px;
-  --spacing-gutter: 120px;
 }
 
 @layer base {
@@ -69,19 +66,10 @@
   }
 }
 
+/* Selebar viewport; hanya padding samping yang ikut membesar (fluid, tanpa max-width). */
 @utility container-page {
   width: 100%;
-  max-width: calc(var(--spacing-container) + 2 * var(--spacing-gutter));
-  margin-inline: auto;
-  padding-inline: 1rem;
-
-  @media (min-width: 834px) {
-    padding-inline: 1.5rem;
-  }
-
-  @media (min-width: 1024px) {
-    padding-inline: var(--spacing-gutter);
-  }
+  padding-inline: clamp(1rem, 6vw, 10rem);
 }
 
 .progres-navigasi {

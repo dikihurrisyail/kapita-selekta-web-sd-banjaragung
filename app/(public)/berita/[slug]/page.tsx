@@ -48,7 +48,7 @@ export default async function DetailBeritaPage({ params }: Props) {
           className="mb-6"
         />
 
-        <header className="flex max-w-[850px] flex-col gap-4">
+        <header className="flex lg:max-w-[75%] flex-col gap-4">
           <Badge className="w-fit">{item.kategori}</Badge>
           <h1 className="text-[32px] font-bold leading-[1.15] text-brand-ink sm:text-[40px]">
             {item.judul}
@@ -62,14 +62,14 @@ export default async function DetailBeritaPage({ params }: Props) {
         <Foto
           src={item.foto.src}
           label={item.foto.label}
-          className="mt-8 h-[260px] w-full lg:h-[540px]"
+          className="mt-8 h-[260px] w-full lg:h-[clamp(540px,38vw,1000px)]"
         />
         <p className="mt-3 text-xs leading-[1.4] text-muted">
           {item.foto.label} — dokumentasi kegiatan sekolah.
         </p>
 
-        <div className="mt-10 grid gap-10 lg:grid-cols-[800px_1fr] lg:gap-16">
-          <article className="flex flex-col gap-6">
+        <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,2.4fr)_minmax(0,1fr)] lg:gap-16">
+          <article className="mx-auto flex max-w-[80ch] flex-col gap-6">
             {paragraf.map((p, i) => (
               <p key={i} className="text-base leading-[1.7] text-body">
                 {p}
@@ -103,7 +103,7 @@ export default async function DetailBeritaPage({ params }: Props) {
         {terkait.length > 0 ? (
           <div className="mt-16 flex flex-col gap-6">
             <SectionHeading judul="Berita terkait" tautan="Semua berita →" href="/berita" />
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {terkait.map((b) => (
                 <NewsCard key={b.slug} item={b} />
               ))}

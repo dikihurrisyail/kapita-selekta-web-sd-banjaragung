@@ -42,7 +42,7 @@ async function IsiPpdb() {
         <div className="flex flex-col gap-14">
           {/* Pengantar SPMB — 560 / 608 */}
           <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:gap-8">
-            <div className="flex w-full flex-col gap-5 lg:w-[560px] lg:shrink-0">
+            <div className="flex w-full flex-col gap-5 lg:w-[46%] lg:shrink-0">
               <p className="text-xs font-bold leading-[1.4] tracking-wide text-accent-ink uppercase">
                 Informasi penerimaan
               </p>
@@ -68,7 +68,7 @@ async function IsiPpdb() {
             <Foto
               src={null}
               label="Foto dokumentasi ilustratif — penerimaan murid"
-              className="h-[240px] w-full lg:h-[320px] lg:flex-1"
+              className="h-[240px] w-full lg:h-[clamp(320px,22vw,640px)] lg:flex-1"
             />
           </div>
 

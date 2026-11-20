@@ -58,8 +58,8 @@ function FooterKerangka() {
     <footer className="w-full bg-brand-ink" aria-hidden>
       <div className="container-page flex flex-col gap-8 pt-12 pb-7">
         <div className="flex flex-col gap-8 lg:flex-row">
-          <div className="h-28 w-full rounded-card bg-brand-deep lg:w-[440px]" />
-          <div className="h-28 w-full rounded-card bg-brand-deep lg:w-[180px]" />
+          <div className="h-28 w-full rounded-card bg-brand-deep lg:w-[37%]" />
+          <div className="h-28 w-full rounded-card bg-brand-deep lg:w-[15%]" />
           <div className="h-28 w-full flex-1 rounded-card bg-brand-deep" />
         </div>
         <div className="h-14 rounded-card bg-brand-deep" />

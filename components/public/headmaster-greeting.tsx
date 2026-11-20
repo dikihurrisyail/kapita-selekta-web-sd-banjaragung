@@ -31,7 +31,7 @@ export function HeadmasterGreeting({
       <Foto
         src={foto.src}
         label={foto.label}
-        className="h-[340px] w-full shrink-0 lg:h-[350px] lg:w-[280px]"
+        className="h-[340px] w-full shrink-0 lg:aspect-[4/5] lg:h-auto lg:w-[22%] lg:min-w-[280px]"
       />
       <div className="flex flex-1 flex-col gap-5">
         <p className="text-xs font-bold leading-[1.4] tracking-wide text-accent-ink uppercase">

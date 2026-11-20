@@ -14,7 +14,7 @@ export function GalleryThumb({
       <Foto
         src={item.foto.src}
         label={item.foto.label}
-        className="h-[230px] w-full"
+        className="aspect-[16/10] w-full"
       />
       <figcaption className="text-xs leading-[1.4] text-muted">
         {item.judul}

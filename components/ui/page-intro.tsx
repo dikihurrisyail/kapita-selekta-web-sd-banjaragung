@@ -28,13 +28,13 @@ export function PageIntro({
           </p>
         ) : null}
         <div className="flex flex-wrap items-end justify-between gap-4">
-          <h1 className="max-w-[900px] text-[40px] font-bold leading-[1.15] text-brand-ink">
+          <h1 className="lg:max-w-[75%] text-[40px] font-bold leading-[1.15] text-brand-ink">
             {judul}
           </h1>
           {aksi}
         </div>
         {deskripsi ? (
-          <p className="max-w-[760px] text-base leading-[1.6] text-body">
+          <p className="lg:max-w-[70ch] text-base leading-[1.6] text-body">
             {deskripsi}
           </p>
         ) : null}

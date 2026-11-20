@@ -45,9 +45,9 @@ async function IsiKontak() {
 
       <PublicSection>
         <div className="flex flex-col gap-8">
-          <div className="grid gap-8 lg:grid-cols-[450px_1fr] lg:gap-8">
+          <div className="grid gap-8 lg:grid-cols-[minmax(0,38%)_minmax(0,1fr)] lg:gap-8">
             {/* Saluran sekolah — 450px */}
-            <div className="flex w-full flex-col gap-6 lg:w-[450px] lg:shrink-0">
+            <div className="flex w-full flex-col gap-6">
               <Panel judul="Kontak resmi sekolah">
                 <div className="flex flex-col gap-5">
                   {saluran.map((s) => (
@@ -78,7 +78,7 @@ async function IsiKontak() {
               <MapPlaceholder
                 namaSekolah={profil.nama}
                 petaUrl={profil.petaUrl}
-                className="h-[300px] w-full lg:h-[420px]"
+                className="h-[300px] w-full lg:h-[clamp(420px,30vw,800px)]"
               />
               {petaTautan(profil.petaUrl) ? (
                 <div>
@@ -111,7 +111,7 @@ function KontakKerangka() {
         <div className="h-9 w-full max-w-[460px] rounded-btn bg-page-alt" />
         <div className="h-4 w-full max-w-[620px] rounded-btn bg-page-alt" />
       </div>
-      <div className="mt-10 grid gap-8 lg:grid-cols-[450px_1fr]">
+      <div className="mt-10 grid gap-8 lg:grid-cols-[minmax(0,38%)_minmax(0,1fr)]">
         <div className="h-[280px] rounded-card bg-page-alt" />
         <div className="h-[420px] rounded-img bg-page-alt" />
       </div>

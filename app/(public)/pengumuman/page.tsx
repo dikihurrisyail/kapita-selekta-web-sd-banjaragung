@@ -69,7 +69,7 @@ async function DaftarPengumuman({ searchParams }: Props) {
           Tidak ada pengumuman yang cocok dengan pencarian Anda.
         </p>
       ) : (
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {tampil.map((item) => (
             <AnnouncementCard key={item.slug} item={item} />
           ))}
@@ -81,7 +81,7 @@ async function DaftarPengumuman({ searchParams }: Props) {
 
 function DaftarKerangka() {
   return (
-    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3" aria-busy="true">
+    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" aria-busy="true">
       {Array.from({ length: 3 }).map((_, i) => (
         <div
           key={i}

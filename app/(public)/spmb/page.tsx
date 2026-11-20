@@ -33,9 +33,9 @@ async function IsiPpdb() {
   return (
     <>
       <PageIntro
-        eyebrow="Penerimaan murid baru"
-        judul={`Informasi SPMB ${ppdb.tahunAjaran}`}
-        deskripsi="Pelajari persyaratan, tahapan, dan cara memperoleh petunjuk pendaftaran sebelum mendaftar ke sekolah."
+        eyebrow={ppdb.eyebrow}
+        judul={ppdb.judul}
+        deskripsi={ppdb.introDeskripsi}
       />
 
       <PublicSection>
@@ -44,48 +44,43 @@ async function IsiPpdb() {
           <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:gap-8">
             <div className="flex w-full flex-col gap-5 lg:w-[46%] lg:shrink-0">
               <p className="text-xs font-bold leading-[1.4] tracking-wide text-accent-ink uppercase">
-                Informasi penerimaan
+                {ppdb.pengantarEyebrow}
               </p>
               <h2 className="text-[32px] font-bold leading-[1.25] text-brand-ink">
-                Mari mengenal sekolah lebih dekat.
+                {ppdb.pengantarJudul}
               </h2>
               <p className="text-base leading-[1.6] text-body">{ppdb.deskripsi}</p>
               <p className="text-sm leading-[1.5] text-body">
-                Periode pendaftaran: {ppdb.periode}. Seluruh proses dilakukan
-                tanpa biaya pendaftaran.
+                Periode pendaftaran: {ppdb.periode}.
+                {ppdb.periodeCatatan ? ` ${ppdb.periodeCatatan}` : null}
               </p>
               <div className="flex flex-wrap gap-3">
-                <ButtonLink href="/kontak" variant="accent">
-                  Hubungi panitia →
+                <ButtonLink href={ppdb.tombolKontakUrl} variant="accent">
+                  {ppdb.tombolKontakLabel} →
                 </ButtonLink>
                 {ppdb.tautanAktif && ppdb.tautanUrl ? (
                   <ButtonLink href={ppdb.tautanUrl} variant="outline">
-                    Daftar daring
+                    {ppdb.tombolDaftarLabel}
                   </ButtonLink>
                 ) : null}
               </div>
             </div>
             <Foto
-              src={null}
-              label="Foto dokumentasi ilustratif — penerimaan murid"
+              src={ppdb.fotoUrl}
+              label={`Foto ${ppdb.judul}`}
               className="h-[240px] w-full lg:h-[clamp(320px,22vw,640px)] lg:flex-1"
             />
           </div>
 
           {/* Persyaratan dan berkas — 588 / 588 */}
           <div className="grid gap-6 lg:grid-cols-2">
-            <Panel judul="Siapa yang dapat mendaftar?">
+            <Panel judul={ppdb.syaratJudul}>
               <div className="flex flex-col gap-3">
                 <p className="text-sm leading-[1.5] text-body">
-                  Calon peserta didik yang telah memenuhi usia minimal masuk
-                  sekolah dasar pada tahun ajaran berjalan.
+                  {ppdb.syaratDeskripsi}
                 </p>
                 <ul className="flex flex-col gap-2">
-                  {[
-                    "Berdomisili di wilayah layanan sekolah atau sekitarnya.",
-                    "Memiliki dokumen kependudukan yang sah dan dapat diverifikasi.",
-                    "Sehat jasmani dan rohani serta siap mengikuti kegiatan pembelajaran.",
-                  ].map((p) => (
+                  {ppdb.syaratButir.map((p) => (
                     <li key={p} className="flex gap-2.5 text-sm leading-[1.5] text-body">
                       <span
                         aria-hidden
@@ -95,14 +90,15 @@ async function IsiPpdb() {
                     </li>
                   ))}
                 </ul>
-                <p className="text-xs leading-[1.4] text-muted">
-                  Ketentuan lengkap dapat berubah mengikuti kebijakan resmi sekolah
-                  dan dinas pendidikan.
-                </p>
+                {ppdb.syaratCatatan ? (
+                  <p className="text-xs leading-[1.4] text-muted">
+                    {ppdb.syaratCatatan}
+                  </p>
+                ) : null}
               </div>
             </Panel>
 
-            <Panel judul="Daftar berkas yang disiapkan">
+            <Panel judul={ppdb.berkasJudul}>
               <div className="flex flex-col gap-4">
                 <RequirementChecklist butir={ppdb.berkas} />
                 {ppdb.catatan ? (
@@ -115,7 +111,7 @@ async function IsiPpdb() {
           {/* Tahapan SPMB */}
           {ppdb.tahapan.length > 0 ? (
             <div className="flex flex-col gap-8">
-              <SectionHeading eyebrow="Tahapan SPMB" judul="Langkah menuju sekolah" />
+              <SectionHeading eyebrow={ppdb.tahapanEyebrow} judul={ppdb.tahapanJudul} />
               <ol className="flex flex-col">
                 {ppdb.tahapan.map((t, i) => (
                   <PpdbStep
@@ -134,11 +130,10 @@ async function IsiPpdb() {
           {/* Layanan panitia */}
           <div className="flex flex-col gap-3 rounded-card border border-line bg-page-alt p-8">
             <h2 className="text-xl font-bold leading-[1.4] text-brand-ink">
-              Layanan panitia
+              {ppdb.layananJudul}
             </h2>
             <p className="text-sm leading-[1.6] text-body">
-              Panitia SPMB siap membantu menjelaskan persyaratan, alur pendaftaran,
-              dan hal lain yang diperlukan calon peserta didik.
+              {ppdb.layananDeskripsi}
             </p>
             {ppdb.telepon ? (
               <p className="text-sm leading-[1.5] text-body">Telepon: {ppdb.telepon}</p>

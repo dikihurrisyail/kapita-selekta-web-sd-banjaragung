@@ -95,6 +95,33 @@ export type PpdbInfo = {
   tautanUrl: string | null;
   tautanAktif: boolean;
   tahapan: TahapanPpdb[];
+  /** Teks pembuka halaman (PageIntro). */
+  eyebrow: string;
+  introDeskripsi: string;
+  /** Blok pengantar. */
+  pengantarEyebrow: string;
+  pengantarJudul: string;
+  periodeCatatan: string;
+  fotoUrl: string | null;
+  /** Panel persyaratan. */
+  syaratJudul: string;
+  syaratDeskripsi: string;
+  syaratButir: string[];
+  syaratCatatan: string;
+  /** Judul panel berkas. */
+  berkasJudul: string;
+  /** Judul bagian tahapan. */
+  tahapanEyebrow: string;
+  tahapanJudul: string;
+  /** Blok layanan panitia. */
+  layananJudul: string;
+  layananDeskripsi: string;
+  /** Label dan tujuan tombol. */
+  tombolKontakLabel: string;
+  tombolKontakUrl: string;
+  tombolDaftarLabel: string;
+  /** False bila kolom teks lengkap belum ada di database (migrasi 0002 belum jalan). */
+  skemaLengkap: boolean;
 };
 
 export type StrukturItem = { jabatan: string; nama: string };

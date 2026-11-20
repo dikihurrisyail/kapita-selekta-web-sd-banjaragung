@@ -886,6 +886,16 @@ export async function simpanPpdb(
 
   const supabase = await createClient();
 
+  /* Foto pengantar (opsional) — JPG/PNG/WebP ≤5 MB. */
+  const foto = await unggahFotoForm(supabase, formData, "foto", "spmb");
+  if (!foto.ok) return { ok: false, pesan: foto.pesan };
+
+  const { data: lama } = await supabase
+    .from("ppdb_info")
+    .select("foto_url")
+    .eq("id", 1)
+    .maybeSingle();
+
   const { error: infoError } = await supabase
     .from("ppdb_info")
     .update({
@@ -899,10 +909,41 @@ export async function simpanPpdb(
       email: teks(formData, "email") || null,
       tautan_url: teks(formData, "tautan_url") || null,
       tautan_aktif: boolean(formData, "tautan_aktif"),
+      eyebrow: teks(formData, "eyebrow"),
+      intro_deskripsi: teks(formData, "intro_deskripsi"),
+      pengantar_eyebrow: teks(formData, "pengantar_eyebrow"),
+      pengantar_judul: teks(formData, "pengantar_judul"),
+      periode_catatan: teks(formData, "periode_catatan"),
+      syarat_judul: teks(formData, "syarat_judul"),
+      syarat_deskripsi: teks(formData, "syarat_deskripsi"),
+      syarat_butir: barisTeks(formData, "syarat_butir"),
+      syarat_catatan: teks(formData, "syarat_catatan"),
+      berkas_judul: teks(formData, "berkas_judul"),
+      tahapan_eyebrow: teks(formData, "tahapan_eyebrow"),
+      tahapan_judul: teks(formData, "tahapan_judul"),
+      layanan_judul: teks(formData, "layanan_judul"),
+      layanan_deskripsi: teks(formData, "layanan_deskripsi"),
+      tombol_kontak_label: teks(formData, "tombol_kontak_label"),
+      tombol_kontak_url: teks(formData, "tombol_kontak_url") || "/kontak",
+      tombol_daftar_label: teks(formData, "tombol_daftar_label"),
+      ...(foto.url ? { foto_url: foto.url } : {}),
     })
     .eq("id", 1);
 
-  if (infoError) return { ok: false, pesan: `Gagal menyimpan: ${infoError.message}` };
+  if (infoError) {
+    if (foto.url) await hapusDariMedia(supabase, foto.url);
+    if (infoError.code === "42703" || /column|schema cache/i.test(infoError.message)) {
+      return {
+        ok: false,
+        pesan:
+          "Kolom baru belum ada di database. Jalankan migrasi supabase/migrations/0002_ppdb_konten_lengkap.sql lewat SQL Editor Supabase, lalu simpan lagi.",
+      };
+    }
+    return { ok: false, pesan: `Gagal menyimpan: ${infoError.message}` };
+  }
+
+  /* Foto lama dihapus hanya setelah foto baru benar-benar tersimpan. */
+  if (foto.url && lama?.foto_url) await hapusDariMedia(supabase, lama.foto_url);
 
   /*
    * Tahapan dikirim sebagai isian berulang (satu rangkap per baris). Nomor

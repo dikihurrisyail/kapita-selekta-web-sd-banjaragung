@@ -3,6 +3,7 @@ import { cache } from "react";
 import { createClient } from "@/lib/supabase/server";
 import { catatErrorSupabase, isSupabaseConfigured } from "@/lib/supabase/config";
 import * as fallback from "@/lib/data/fallback";
+import { SPMB_DEFAULT } from "@/lib/data/default-spmb";
 import type {
   Album,
   Berita,
@@ -461,6 +462,31 @@ export async function getPpdb(): Promise<PpdbInfo> {
       email: infoRes.data.email,
       tautanUrl: infoRes.data.tautan_url,
       tautanAktif: infoRes.data.tautan_aktif,
+      eyebrow: infoRes.data.eyebrow ?? SPMB_DEFAULT.eyebrow,
+      introDeskripsi: infoRes.data.intro_deskripsi ?? SPMB_DEFAULT.introDeskripsi,
+      pengantarEyebrow:
+        infoRes.data.pengantar_eyebrow ?? SPMB_DEFAULT.pengantarEyebrow,
+      pengantarJudul: infoRes.data.pengantar_judul ?? SPMB_DEFAULT.pengantarJudul,
+      periodeCatatan: infoRes.data.periode_catatan ?? SPMB_DEFAULT.periodeCatatan,
+      fotoUrl: infoRes.data.foto_url ?? null,
+      syaratJudul: infoRes.data.syarat_judul ?? SPMB_DEFAULT.syaratJudul,
+      syaratDeskripsi:
+        infoRes.data.syarat_deskripsi ?? SPMB_DEFAULT.syaratDeskripsi,
+      syaratButir: infoRes.data.syarat_butir ?? SPMB_DEFAULT.syaratButir,
+      syaratCatatan: infoRes.data.syarat_catatan ?? SPMB_DEFAULT.syaratCatatan,
+      berkasJudul: infoRes.data.berkas_judul ?? SPMB_DEFAULT.berkasJudul,
+      tahapanEyebrow: infoRes.data.tahapan_eyebrow ?? SPMB_DEFAULT.tahapanEyebrow,
+      tahapanJudul: infoRes.data.tahapan_judul ?? SPMB_DEFAULT.tahapanJudul,
+      layananJudul: infoRes.data.layanan_judul ?? SPMB_DEFAULT.layananJudul,
+      layananDeskripsi:
+        infoRes.data.layanan_deskripsi ?? SPMB_DEFAULT.layananDeskripsi,
+      tombolKontakLabel:
+        infoRes.data.tombol_kontak_label ?? SPMB_DEFAULT.tombolKontakLabel,
+      tombolKontakUrl:
+        infoRes.data.tombol_kontak_url ?? SPMB_DEFAULT.tombolKontakUrl,
+      tombolDaftarLabel:
+        infoRes.data.tombol_daftar_label ?? SPMB_DEFAULT.tombolDaftarLabel,
+      skemaLengkap: "eyebrow" in infoRes.data,
       tahapan: (tahapRes.data ?? []).map((t) => ({
         nomor: t.nomor,
         judul: t.judul,
@@ -486,6 +512,25 @@ function fallbackPpdb(): PpdbInfo {
     email: fallback.kontak.saluran[2].nilai,
     tautanUrl: null,
     tautanAktif: false,
+    eyebrow: fallback.ppdbIntro.eyebrow,
+    introDeskripsi: fallback.ppdbIntro.deskripsi,
+    pengantarEyebrow: fallback.ppdbPengantar.label,
+    pengantarJudul: fallback.ppdbPengantar.judul,
+    periodeCatatan: SPMB_DEFAULT.periodeCatatan,
+    fotoUrl: null,
+    syaratJudul: fallback.ppdbSiapa.judul,
+    syaratDeskripsi: fallback.ppdbSiapa.paragraf[0],
+    syaratButir: fallback.ppdbSiapa.paragraf.slice(1),
+    syaratCatatan: fallback.ppdbSiapa.catatan,
+    berkasJudul: fallback.ppdbBerkas.judul,
+    tahapanEyebrow: fallback.ppdbTahapan.eyebrow,
+    tahapanJudul: fallback.ppdbTahapan.judul,
+    layananJudul: fallback.ppdbLayanan.judul,
+    layananDeskripsi: fallback.ppdbLayanan.isi,
+    tombolKontakLabel: SPMB_DEFAULT.tombolKontakLabel,
+    tombolKontakUrl: SPMB_DEFAULT.tombolKontakUrl,
+    tombolDaftarLabel: SPMB_DEFAULT.tombolDaftarLabel,
+    skemaLengkap: true,
     tahapan: fallback.ppdbTahapan.tahap.map((t) => ({
       nomor: t.no,
       judul: t.judul,

@@ -7,6 +7,7 @@ import {
   ClipboardList,
   Images,
   LayoutDashboard,
+  Lock,
   LogOut,
   Megaphone,
   Newspaper,
@@ -28,6 +29,7 @@ const ikonMenu: Record<string, LucideIcon> = {
   newspaper: Newspaper,
   images: Images,
   "clipboard-list": ClipboardList,
+  lock: Lock,
 };
 
 /**

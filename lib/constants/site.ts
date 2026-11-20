@@ -31,7 +31,7 @@ export const menuPublik = [
 
 export const ctaPpdb = { label: "SPMB Info", href: "/spmb" } as const;
 
-/** Menu sidebar admin — 7 item + keluar. */
+/** Menu sidebar admin — 8 item + keluar. */
 export const menuAdmin = [
   { label: "Dashboard", href: "/admin", icon: "layout-dashboard" },
   { label: "Profil Sekolah", href: "/admin/profil", icon: "school" },
@@ -41,6 +41,7 @@ export const menuAdmin = [
   { label: "Berita", href: "/admin/berita", icon: "newspaper" },
   { label: "Galeri", href: "/admin/galeri", icon: "images" },
   { label: "Informasi SPMB", href: "/admin/spmb", icon: "clipboard-list" },
+  { label: "Ubah Kata Sandi", href: "/admin/sandi", icon: "lock" },
 ] as const;
 
 /** Tautan footer — 4 item. */

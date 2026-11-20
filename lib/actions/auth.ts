@@ -6,11 +6,18 @@ import { cookies } from "next/headers";
 import { createClient } from "@/lib/supabase/server";
 import { createClientOtp } from "@/lib/supabase/otp";
 import { catatErrorSupabase, isSupabaseConfigured } from "@/lib/supabase/config";
+import { wajibLogin } from "@/lib/supabase/auth";
 
 export type HasilAksi = { ok: boolean; pesan?: string };
 
 /** Panjang minimal kata sandi baru. */
 const MIN_SANDI = 8;
+
+const MODE_DEMO: HasilAksi = {
+  ok: false,
+  pesan:
+    "Supabase belum dikonfigurasi, jadi perubahan tidak disimpan. Isi kredensial di .env.local untuk mengaktifkan penyimpanan.",
+};
 
 /**
  * Cookie penanda bahwa kode OTP sudah terverifikasi.
@@ -107,6 +114,86 @@ export async function logoutAdmin() {
     const supabase = await createClient();
     await supabase.auth.signOut();
   }
+  revalidatePath("/", "layout");
+  refresh();
+  redirect("/admin/login");
+}
+
+export async function ubahSandiAdmin(
+  _sebelumnya: HasilAksi | null,
+  formData: FormData,
+): Promise<HasilAksi> {
+  await wajibLogin();
+  if (!isSupabaseConfigured()) return MODE_DEMO;
+
+  const lama = String(formData.get("sandi_lama") ?? "").trim();
+  const baru = String(formData.get("sandi_baru") ?? "").trim();
+  const ulangi = String(formData.get("sandi_ulangi") ?? "").trim();
+
+  if (!lama || !baru || !ulangi) {
+    return { ok: false, pesan: "Semua kolom wajib diisi." };
+  }
+  if (baru.length < MIN_SANDI) {
+    return { ok: false, pesan: `Kata sandi minimal ${MIN_SANDI} karakter.` };
+  }
+  if (baru !== ulangi) {
+    return { ok: false, pesan: "Kata sandi baru dan konfirmasi belum sama." };
+  }
+
+  const supabase = await createClient();
+
+  /* Ambil user yang sedang login dari sesi aktif. */
+  const { data: { user} } = await supabase.auth.getUser();
+  if (!user) {
+    return { ok: false, pesan: "Sesi admin tidak ditemukan. Silakan login kembali." };
+  }
+
+  /* Cek password lama. Jika salah, server action gagal tanpa reveal password lama. */
+  const { error: authError } = await supabase.auth.signInWithPassword({
+    email: user.email ?? "",
+    password: lama,
+  });
+
+  if (authError) {
+    return { ok: false, pesan: "Kata sandi lama tidak sesuai. Silakan coba lagi." };
+  }
+
+  /* Ganti password. */
+  const { error } = await supabase.auth.updateUser({ password: baru });
+
+  if (error) {
+    catatErrorSupabase("ubah sandi admin", error);
+
+    const pesanMentah = (error.message ?? "").toLowerCase();
+    if (pesanMentah.includes("different from the old password")) {
+      return {
+        ok: false,
+        pesan:
+          "Kata sandi baru harus berbeda dari kata sandi sebelumnya. Silakan pilih kata sandi lain.",
+      };
+    }
+    if (pesanMentah.includes("password should be at least")) {
+      return {
+        ok: false,
+        pesan: `Kata sandi minimal ${MIN_SANDI} karakter.`,
+      };
+    }
+    if (pesanMentah.includes("weak") || pesanMentah.includes("strength")) {
+      return {
+        ok: false,
+        pesan:
+          "Kata sandi terlalu mudah ditebak. Gunakan kombinasi huruf, angka, dan simbol.",
+      };
+    }
+    return { ok: false, pesan: "Gagal mengubah kata sandi. Coba lagi." };
+  }
+
+  /* Bersihkan penanda OTP lama dan keluar supaya login ulang. */
+  const jar = await cookies();
+  jar.set(COOKIE_TERVERIFIKASI, "", { maxAge: 0, path: "/" });
+  jar.set(COOKIE_EMAIL_PEMULIHAN, "", { maxAge: 0, path: "/" });
+
+  await supabase.auth.signOut();
   revalidatePath("/", "layout");
   refresh();
   redirect("/admin/login");

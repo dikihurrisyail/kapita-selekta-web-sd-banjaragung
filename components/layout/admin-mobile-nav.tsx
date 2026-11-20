@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";import {
   ClipboardList,
   Images,
   LayoutDashboard,
+  Lock,
   LogOut,
   Megaphone,
   Menu,
@@ -30,6 +31,7 @@ const ikonMenu: Record<string, LucideIcon> = {
   newspaper: Newspaper,
   images: Images,
   "clipboard-list": ClipboardList,
+  lock: Lock,
 };
 
 /** Item yang tampil langsung di bottom nav (4 menu + tombol Menu). */

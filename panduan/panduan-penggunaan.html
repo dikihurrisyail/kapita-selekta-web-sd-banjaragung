@@ -619,8 +619,9 @@
 
 <p>
   Berisi alamat sekolah, nomor telepon, alamat email, jam layanan administrasi,
-  serta peta lokasi. Peta bersifat ilustratif; gunakan tombol
-  <strong>Buka di peta</strong> bila tersedia untuk navigasi.
+  serta peta lokasi. Bila tautan peta sudah diisi admin, peta Google tampil
+  langsung; bila belum, yang tampil gambar ilustratif. Tombol
+  <strong>Buka di peta</strong> membuka navigasi.
 </p>
 
 <h3>2.10 Membuka website di ponsel</h3>
@@ -901,9 +902,13 @@
   <span class="judul-kotak">Misi, logo, dan tautan peta</span>
   Isi kolom <strong>Misi</strong> dengan <strong>satu butir per baris</strong> —
   setiap baris baru tampil sebagai butir terpisah di website. Logo yang diunggah
-  langsung tampil di header dan footer seluruh halaman. Tautan peta diisi dengan
-  alamat Google Maps; bila diisi, tombol <strong>Buka di peta</strong> muncul di
-  halaman Kontak.
+  langsung tampil di header dan footer seluruh halaman. Tautan peta: di Google
+  Maps, klik kanan titik sekolah, klik angka koordinat untuk menyalinnya, lalu
+  tulis <code>https://www.google.com/maps?q=</code> diikuti koordinat itu, mis.
+  <code>https://www.google.com/maps?q=-5.3420,105.3481</code>. Peta tampil di halaman
+  Kontak beserta tombol <strong>Buka di peta</strong>. Tautan pendek
+  (<code>maps.app.goo.gl</code>) tidak memuat koordinat, jadi hanya memunculkan
+  tombol.
 </div>
 
 <!-- ============================ 6. GURU ============================ -->
@@ -1314,9 +1319,8 @@
     <tr>
       <td>Peta lokasi</td>
       <td>
-        Gambar peta pada halaman Kontak masih ilustratif. Tombol
-        <strong>Buka di peta</strong> sudah berfungsi bila tautan peta diisi pada
-        menu Profil Sekolah.
+        Sudah aktif. Peta Google dan tombol <strong>Buka di peta</strong> tampil
+        bila tautan peta (berisi koordinat) diisi pada menu Profil Sekolah.
       </td>
     </tr>
     <tr>

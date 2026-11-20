@@ -8,13 +8,35 @@ import { MapPin } from "lucide-react";
  * Bila sekolah punya tautan peta resmi, komponen ini menampilkan tautan
  * tersebut di bawah denah (lihat /kontak).
  */
+/** Ambil koordinat dari tautan Google Maps panjang (…@lat,lng / ?q=lat,lng). */
+export function petaEmbedUrl(url?: string | null) {
+  const m = url?.match(/(-?\d{1,3}\.\d+),\s*(-?\d{1,3}\.\d+)/);
+  return m
+    ? `https://maps.google.com/maps?q=${m[1]},${m[2]}&z=17&output=embed`
+    : null;
+}
+
 export function MapPlaceholder({
   className,
   namaSekolah = "Sekolah",
+  petaUrl,
 }: {
   className?: string;
   namaSekolah?: string;
+  petaUrl?: string | null;
 }) {
+  const embed = petaEmbedUrl(petaUrl);
+  if (embed) {
+    return (
+      <iframe
+        src={embed}
+        title={`Peta lokasi ${namaSekolah}`}
+        loading="lazy"
+        referrerPolicy="no-referrer-when-downgrade"
+        className={`rounded-img border border-line-soft ${className ?? ""}`}
+      />
+    );
+  }
   return (
     <div
       role="img"

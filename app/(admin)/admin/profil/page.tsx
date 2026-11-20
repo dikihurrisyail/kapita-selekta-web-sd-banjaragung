@@ -175,7 +175,7 @@ async function FormProfil() {
             <Field
               label="Tautan peta lokasi"
               htmlFor="peta_url"
-              petunjuk="Alamat Google Maps. Bila diisi, tombol “Buka di peta” muncul di halaman Kontak."
+              petunjuk="Alamat Google Maps yang memuat koordinat, mis. https://www.google.com/maps?q=-5.34,105.34. Peta tampil di halaman Kontak. Tautan pendek (maps.app.goo.gl) hanya memunculkan tombol “Buka di peta”."
             >
               <Input
                 id="peta_url"

@@ -5,7 +5,7 @@ import { Alert } from "@/components/ui/alert";
 import { ButtonLink } from "@/components/ui/button";
 import { Panel } from "@/components/ui/card";
 import { ContactChannel } from "@/components/public/contact-channel";
-import { MapPlaceholder } from "@/components/public/map-placeholder";
+import { MapPlaceholder, petaEmbedUrl } from "@/components/public/map-placeholder";
 import { PublicSection } from "@/components/public/public-section";
 import { getProfil } from "@/lib/data/queries";
 
@@ -82,11 +82,14 @@ async function IsiKontak() {
             <div className="flex flex-col gap-5">
               <MapPlaceholder
                 namaSekolah={profil.nama}
+                petaUrl={profil.petaUrl}
                 className="h-[300px] w-full lg:h-[420px]"
               />
-              <p className="text-xs leading-[1.4] text-muted">
-                Peta lokasi bersifat ilustratif. Gunakan tautan di bawah untuk navigasi.
-              </p>
+              {petaEmbedUrl(profil.petaUrl) ? null : (
+                <p className="text-xs leading-[1.4] text-muted">
+                  Peta lokasi bersifat ilustratif. Gunakan tautan di bawah untuk navigasi.
+                </p>
+              )}
               {profil.petaUrl ? (
                 <div>
                   <ButtonLink href={profil.petaUrl} variant="outline">

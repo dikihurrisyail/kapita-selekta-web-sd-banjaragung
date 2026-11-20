@@ -16,6 +16,7 @@ import { useEffect, useState } from "react";import {
   X,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { LinkPending } from "@/components/ui/link-pending";
 import { logoutAdmin } from "@/lib/actions/auth";
 import { menuAdmin, site } from "@/lib/constants/site";
 import { cn } from "@/lib/utils/cn";
@@ -82,12 +83,13 @@ export function AdminMobileNav({
               href={item.href}
               aria-current={isAktif ? "page" : undefined}
               className={cn(
-                "flex flex-1 flex-col items-center justify-center gap-1 px-1 text-[10px] font-semibold leading-[1.2]",
+                "relative flex flex-1 flex-col items-center justify-center gap-1 px-1 text-[10px] font-semibold leading-[1.2]",
                 isAktif ? "text-brand" : "text-muted",
               )}
             >
               <Icon className="size-[22px]" aria-hidden />
               <span className="max-w-full truncate">{item.label}</span>
+              <LinkPending className="absolute right-2 top-2 size-3" />
             </Link>
           );
         })}

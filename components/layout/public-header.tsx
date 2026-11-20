@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
+import { LinkPending } from "@/components/ui/link-pending";
 import { ctaPpdb, menuPublik } from "@/lib/constants/site";
 import { cn } from "@/lib/utils/cn";
 import { SchoolIdentity } from "./school-identity";
@@ -41,11 +42,12 @@ export function PublicHeader({ logoUrl }: { logoUrl?: string | null }) {
                   href={item.href}
                   aria-current={isAktif ? "page" : undefined}
                   className={cn(
-                    "text-sm font-semibold leading-[1.5] whitespace-nowrap",
+                    "relative text-sm font-semibold leading-[1.5] whitespace-nowrap",
                     isAktif ? "text-brand" : "text-body hover:text-brand",
                   )}
                 >
                   {item.label}
+                  <LinkPending className="absolute -right-5 top-1/2 size-3 -translate-y-1/2" />
                 </Link>
               </div>
             );

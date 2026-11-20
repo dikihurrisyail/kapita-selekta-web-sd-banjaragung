@@ -14,6 +14,7 @@ import {
   Users,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { LinkPending } from "@/components/ui/link-pending";
 import { logoutAdmin } from "@/lib/actions/auth";
 import { menuAdmin, site } from "@/lib/constants/site";
 import { cn } from "@/lib/utils/cn";
@@ -79,6 +80,7 @@ export function AdminSidebar({ logoUrl }: { logoUrl?: string | null }) {
               >
                 <Icon className="size-5 shrink-0" aria-hidden />
                 {item.label}
+                <LinkPending className="ml-auto" />
               </Link>
             );
           })}

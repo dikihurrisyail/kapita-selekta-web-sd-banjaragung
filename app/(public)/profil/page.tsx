@@ -1,4 +1,4 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import { Suspense } from "react";
 import { PageIntro } from "@/components/ui/page-intro";
 import { SectionHeading } from "@/components/ui/section-heading";
@@ -42,11 +42,11 @@ async function IsiProfil() {
         <div className="flex flex-col gap-14">
           <Foto
             src={profil.heroUrl}
-            label="Foto dokumentasi ilustratif â€” gedung sekolah"
+            label="Foto dokumentasi ilustratif — gedung sekolah"
             className="h-[260px] w-full lg:h-[380px]"
           />
 
-          {/* Sejarah dan identitas â€” 720 / 416 */}
+          {/* Sejarah dan identitas — 720 / 416 */}
           <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:gap-16">
             <div className="flex w-full flex-col gap-4 lg:w-[720px]">
               <p className="text-xs font-bold leading-[1.4] tracking-wide text-accent-ink uppercase">
@@ -68,9 +68,9 @@ async function IsiProfil() {
                   {[
                     { label: "Nama sekolah", nilai: profil.nama },
                     { label: "NPSN", nilai: profil.npsn ?? "—" },
-                    { label: "Status", nilai: profil.statusSekolah ?? "â€”" },
+                    { label: "Status", nilai: profil.statusSekolah ?? "—" },
                     { label: "Akreditasi", nilai: profil.akreditasi ?? "[Akreditasi resmi]" },
-                    { label: "Kepala sekolah", nilai: profil.kepalaSekolah ?? "â€”" },
+                    { label: "Kepala sekolah", nilai: profil.kepalaSekolah ?? "—" },
                   ].map((item) => (
                     <div
                       key={item.label}
@@ -87,7 +87,7 @@ async function IsiProfil() {
             </div>
           </div>
 
-          {/* Visi dan misi â€” 470 / 698 */}
+          {/* Visi dan misi — 470 / 698 */}
           <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:gap-8">
             <div className="flex w-full flex-col gap-4 rounded-card border border-line bg-white p-6 lg:w-[470px] lg:shrink-0">
               <p className="text-xs font-bold leading-[1.4] tracking-wide text-accent-ink uppercase">
@@ -137,7 +137,7 @@ async function IsiProfil() {
 function ProfilKerangka() {
   return (
     <div className="container-page py-14" aria-busy="true">
-      <span className="sr-only">Memuat profil sekolahâ€¦</span>
+      <span className="sr-only">Memuat profil sekolah…</span>
       <div className="flex flex-col gap-3">
         <div className="h-3 w-32 rounded-pill bg-page-alt" />
         <div className="h-9 w-full max-w-[560px] rounded-btn bg-page-alt" />

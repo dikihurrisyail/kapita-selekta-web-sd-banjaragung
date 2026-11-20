@@ -51,7 +51,7 @@ async function IsiBeranda() {
             <SectionHeading
               eyebrow="Papan informasi"
               judul="Pengumuman terbaru"
-              tautan="Semua pengumuman â†’"
+              tautan="Semua pengumuman →"
               href="/pengumuman"
             />
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -66,7 +66,7 @@ async function IsiBeranda() {
             <SectionHeading
               eyebrow="Berita & kegiatan"
               judul="Cerita dari sekolah"
-              tautan="Semua berita â†’"
+              tautan="Semua berita →"
               href="/berita"
             />
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -86,7 +86,7 @@ async function IsiBeranda() {
             <article className="flex flex-col gap-5">
               <Foto
                 src={fasilitas.find((f) => f.foto.src)?.foto.src ?? null}
-                label="Foto dokumentasi ilustratif â€” ruang belajar"
+                label="Foto dokumentasi ilustratif — ruang belajar"
                 className="h-[280px] w-full"
               />
               <h3 className="text-2xl font-bold leading-[1.25] text-brand-ink">
@@ -100,14 +100,14 @@ async function IsiBeranda() {
                 href="/profil"
                 className="text-sm font-semibold leading-[1.5] text-brand hover:underline"
               >
-                Jelajahi fasilitas â†’
+                Jelajahi fasilitas →
               </Link>
             </article>
 
             <article className="flex flex-col gap-5">
               <Foto
                 src={guru[0]?.foto.src ?? null}
-                label={guru[0]?.foto.label ?? "Foto dokumentasi ilustratif â€” pendidik"}
+                label={guru[0]?.foto.label ?? "Foto dokumentasi ilustratif — pendidik"}
                 className="h-[280px] w-full"
               />
               <h3 className="text-2xl font-bold leading-[1.25] text-brand-ink">
@@ -121,7 +121,7 @@ async function IsiBeranda() {
                 href="/guru"
                 className="text-sm font-semibold leading-[1.5] text-brand hover:underline"
               >
-                Kenali para guru â†’
+                Kenali para guru →
               </Link>
             </article>
           </div>
@@ -131,7 +131,7 @@ async function IsiBeranda() {
             <SectionHeading
               eyebrow="Galeri sekolah"
               judul="Momen kebersamaan"
-              tautan="Lihat galeri â†’"
+              tautan="Lihat galeri →"
               href="/galeri"
             />
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -157,7 +157,7 @@ async function IsiBeranda() {
           </p>
           <div className="flex flex-wrap gap-3">
             <ButtonLink href="/spmb" variant="accent">
-              Lihat Informasi SPMB â†’
+              Lihat Informasi SPMB →
             </ButtonLink>
             <ButtonLink href="/kontak" variant="light">
               Kontak Sekolah
@@ -169,11 +169,11 @@ async function IsiBeranda() {
   );
 }
 
-/** Kerangka pemuatan beranda â€” meniru tinggi hero agar tidak ada lompatan. */
+/** Kerangka pemuatan beranda — meniru tinggi hero agar tidak ada lompatan. */
 function BerandaKerangka() {
   return (
     <div aria-busy="true">
-      <span className="sr-only">Memuat berandaâ€¦</span>
+      <span className="sr-only">Memuat beranda…</span>
 
       {/* Hero */}
       <section className="bg-page-alt">

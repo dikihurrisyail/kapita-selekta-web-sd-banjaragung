@@ -60,7 +60,7 @@ async function DaftarGuru({ searchParams }: Props) {
     <>
       <p className="text-sm leading-[1.5] text-muted">
         {kataKunci
-          ? `Menampilkan ${tampil.length} pendidik untuk â€œ${q}â€`
+          ? `Menampilkan ${tampil.length} pendidik untuk “${q}”`
           : `Menampilkan ${tampil.length} pendidik`}
       </p>
 

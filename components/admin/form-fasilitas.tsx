@@ -102,7 +102,7 @@ export function FormFasilitas({ awal }: { awal: Fasilitas[] }) {
           />
           <div>
             <Button type="submit" variant="accent" size="sm" disabled={pending}>
-              {pending ? "Menyimpanâ€¦" : "Tambah fasilitas"}
+              {pending ? "Menyimpan…" : "Tambah fasilitas"}
             </Button>
           </div>
         </form>

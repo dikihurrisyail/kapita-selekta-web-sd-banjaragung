@@ -196,7 +196,7 @@ async function FormProfil() {
                 id="jam_layanan"
                 name="jam_layanan"
                 defaultValue={profil.jamLayanan ?? ""}
-                placeholder="Seninâ€“Jumat â€¢ 07.30â€“14.00 WIB"
+                placeholder="Senin–Jumat • 07.30–14.00 WIB"
               />
             </Field>
             <Field
@@ -225,7 +225,7 @@ async function FormProfil() {
 function FormKerangka() {
   return (
     <div className="flex flex-col gap-6" aria-busy="true">
-      <span className="sr-only">Memuat profil sekolahâ€¦</span>
+      <span className="sr-only">Memuat profil sekolah…</span>
       <div className="h-3 w-24 rounded-pill bg-page-alt" />
       <div className="h-8 w-64 rounded-btn bg-page-alt" />
       <div className="grid gap-6 xl:grid-cols-2">

@@ -1,22 +1,22 @@
-﻿import { Foto } from "@/components/ui/foto";
+import { Foto } from "@/components/ui/foto";
 import type { Foto as FotoTipe, ProfilSekolah } from "@/lib/data/types";
 
 /**
  * Sambutan kepala sekolah (layer "Sambutan kepala sekolah"):
  * kartu putih border #E2E8F0, radius 12, padding 32, gap 40.
- * Foto 280Ã—350 radius 8 + pesan (eyebrow, kutipan Newsreader 36, isi, penanda tangan).
+ * Foto 280×350 radius 8 + pesan (eyebrow, kutipan Newsreader 36, isi, penanda tangan).
  */
 export function HeadmasterGreeting({
   profil,
   fotoKepala,
 }: {
   profil: ProfilSekolah;
-  /** Foto kepala sekolah dari data guru â€” dipakai agar sama dengan halaman /guru. */
+  /** Foto kepala sekolah dari data guru — dipakai agar sama dengan halaman /guru. */
   fotoKepala?: FotoTipe;
 }) {
   const nama = profil.kepalaSekolah ?? "Kepala Sekolah";
   const kutipan =
-    profil.kutipanKepala ?? "â€œSetiap anak membawa potensi yang layak kita rawat bersama.â€";
+    profil.kutipanKepala ?? "“Setiap anak membawa potensi yang layak kita rawat bersama.”";
   const isi =
     profil.sambutanKepala ??
     "Selamat datang di ruang informasi sekolah. Melalui website ini, kami ingin menjaga komunikasi yang terbuka dengan keluarga dan masyarakat.";

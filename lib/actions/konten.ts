@@ -12,7 +12,7 @@ import type { HasilAksi } from "./auth";
  * Server Actions untuk mengubah konten.
  *
  * Semua aksi:
- *   * memanggil wajibLogin() â€” proxy tidak cukup untuk Server Action
+ *   * memanggil wajibLogin() — proxy tidak cukup untuk Server Action
  *   * memakai RLS Supabase sebagai lapisan kedua
  *   * mengembalikan { ok, pesan } agar bisa ditampilkan di form
  */
@@ -98,7 +98,7 @@ async function hapusDariMedia(supabase: Klien, url: string | null | undefined) {
 /**
  * Unggah foto dari form bila ada berkas baru.
  *
- * Mengembalikan { ok, url } â€” url bernilai null bila tidak ada berkas baru
+ * Mengembalikan { ok, url } — url bernilai null bila tidak ada berkas baru
  * (form dibiarkan kosong). Pesan galat dikembalikan bila berkas ditolak.
  */
 async function unggahFotoForm(
@@ -134,7 +134,7 @@ export async function simpanProfil(
 
   const supabase = await createClient();
 
-  /* Logo baru (opsional) â€” divalidasi di server, bukan di browser. */
+  /* Logo baru (opsional) — divalidasi di server, bukan di browser. */
   const logo = formData.get("logo");
   let logoBaru: string | null = null;
   if (logo instanceof File && logo.size > 0) {
@@ -150,7 +150,7 @@ export async function simpanProfil(
     logoBaru = hasil.url;
   }
 
-  /* Hero (foto gedung/suasana sekolah) â€” opsional, JPG/PNG/WebP â‰¤5 MB. */
+  /* Hero (foto gedung/suasana sekolah) — opsional, JPG/PNG/WebP ≤5 MB. */
   const hero = formData.get("hero");
   let heroBaru: string | null = null;
   if (hero instanceof File && hero.size > 0) {
@@ -174,7 +174,7 @@ export async function simpanProfil(
     if (!src) {
       if (logoBaru) await hapusDariMedia(supabase, logoBaru);
       if (heroBaru) await hapusDariMedia(supabase, heroBaru);
-      return { ok: false, pesan: "Kode sematan harus dari Google Maps (Bagikan â†’ Sematkan peta)." };
+      return { ok: false, pesan: "Kode sematan harus dari Google Maps (Bagikan → Sematkan peta)." };
     }
     petaUrl = src;
   }
@@ -267,7 +267,7 @@ export async function simpanGuru(
 
   const supabase = await createClient();
 
-  /* Foto baru (opsional) â€” divalidasi di server, bukan di browser. */
+  /* Foto baru (opsional) — divalidasi di server, bukan di browser. */
   const foto = formData.get("foto");
   let fotoBaru: string | null = null;
   if (foto instanceof File && foto.size > 0) {
@@ -415,7 +415,7 @@ export async function simpanBerita(
 
   const supabase = await createClient();
 
-  /* Sampul baru (opsional) â€” divalidasi di server, bukan di browser. */
+  /* Sampul baru (opsional) — divalidasi di server, bukan di browser. */
   const sampul = formData.get("sampul");
   let sampulBaru: string | null = null;
   if (sampul instanceof File && sampul.size > 0) {
@@ -504,7 +504,7 @@ export async function hapusBerita(slug: string): Promise<HasilAksi> {
 
 /* ------------------------------------------------------------------ Galeri */
 
-/** Batas ukuran satu berkas foto (5 MB) â€” sama dengan keterangan di UI. */
+/** Batas ukuran satu berkas foto (5 MB) — sama dengan keterangan di UI. */
 const BATAS_UKURAN_FOTO = 5 * 1024 * 1024;
 
 /** Tipe berkas yang diterima. */
@@ -593,7 +593,7 @@ export async function simpanAlbum(
  * Hapus album beserta seluruh fotonya.
  *
  * Baris foto_galeri ikut terhapus lewat `on delete cascade`, tetapi berkas
- * di Storage TIDAK â€” cascade hanya berlaku di database. Jadi berkasnya
+ * di Storage TIDAK — cascade hanya berlaku di database. Jadi berkasnya
  * dikumpulkan lebih dulu lalu dihapus manual, supaya tidak ada file yatim
  * yang tetap bisa diakses lewat URL publik.
  */
@@ -637,7 +637,7 @@ export async function hapusAlbum(id: string): Promise<HasilAksi> {
  * Unggah foto ke bucket `media` lalu catat di tabel foto_galeri.
  *
  * Alur:
- *   1. wajibLogin() â€” Server Action tidak selalu lewat proxy.
+ *   1. wajibLogin() — Server Action tidak selalu lewat proxy.
  *   2. Validasi tipe & ukuran di server (jangan percaya validasi browser).
  *   3. Upload ke Storage (policy RLS membatasi ke admin).
  *   4. Simpan baris foto_galeri. Bila gagal, berkas dihapus lagi agar

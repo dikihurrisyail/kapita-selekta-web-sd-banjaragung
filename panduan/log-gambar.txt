@@ -1,0 +1,16 @@
+﻿Γ£ô beranda.png
+Γ£ô profil-publik.png
+Γ£ô guru-publik.png
+Γ£ô pengumuman-publik.png
+Γ£ô berita-publik.png
+Γ£ô galeri-publik.png
+Γ£ô spmb-publik.png
+Γ£ô kontak-publik.png
+Γ£ô admin-beranda.png
+Γ£ô admin-profil.png
+Γ£ô admin-guru.png
+Γ£ô admin-pengumuman.png
+Γ£ô admin-berita.png
+Γ£ô admin-spmb.png
+Γ£ô admin-galeri.png
+Selesai. Gambar tersimpan di D:\Kuliah\Tugas\KSI\web-sd-banjaragung\panduan\gambar

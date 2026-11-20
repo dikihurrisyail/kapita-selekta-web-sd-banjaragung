@@ -287,6 +287,27 @@
     color: var(--abu);
   }
 
+  /* ---------- Screenshot ---------- */
+  figure.tangkapan {
+    margin: 4mm 0;
+    page-break-inside: avoid;
+    text-align: center;
+  }
+
+  figure.tangkapan img {
+    width: 100%;
+    border: 1px solid var(--garis);
+    border-radius: 2mm;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+  }
+
+  figure.tangkapan figcaption {
+    font-size: 8.5pt;
+    color: var(--abu);
+    margin-top: 1.5mm;
+    line-height: 1.4;
+  }
+
   /*
    * Setiap bagian utama dimulai di halaman baru. Tanpa ini, judul bagian
    * bisa tertinggal sendirian di dasar halaman sebelumnya.
@@ -534,6 +555,11 @@
 
 <h3>2.2 Beranda</h3>
 
+<figure class="tangkapan">
+  <img src="gambar/beranda.png" alt="Tampilan beranda website" />
+  <figcaption>Gambar 1 — Halaman beranda menampilkan sambutan, pengumuman, berita, galeri, dan ajakan SPMB.</figcaption>
+</figure>
+
 <p>Halaman pertama yang muncul saat website dibuka. Isinya:</p>
 
 <ul class="ringkas">
@@ -552,12 +578,22 @@
 
 <h3>2.3 Profil sekolah</h3>
 
+<figure class="tangkapan">
+  <img src="gambar/profil-publik.png" alt="Tampilan halaman profil sekolah" />
+  <figcaption>Gambar 2 — Halaman profil memuat sejarah, identitas, visi misi, dan struktur sekolah.</figcaption>
+</figure>
+
 <p>
   Memuat sejarah sekolah, identitas, visi dan misi, sambutan kepala sekolah,
   daftar fasilitas, serta struktur organisasi sekolah.
 </p>
 
 <h3>2.4 Data guru</h3>
+
+<figure class="tangkapan">
+  <img src="gambar/guru-publik.png" alt="Tampilan daftar guru" />
+  <figcaption>Gambar 3 — Kartu guru memuat foto, nama, dan jabatan setiap pendidik.</figcaption>
+</figure>
 
 <p>
   Menampilkan kartu berisi foto, nama, dan jabatan setiap pendidik dan tenaga
@@ -566,6 +602,11 @@
 
 <h3>2.5 Pengumuman</h3>
 
+<figure class="tangkapan">
+  <img src="gambar/pengumuman-publik.png" alt="Tampilan daftar pengumuman" />
+  <figcaption>Gambar 4 — Hanya pengumuman berstatus Terbit yang tampil di papan informasi.</figcaption>
+</figure>
+
 <p>
   Papan informasi sekolah. Setiap pengumuman dapat dibuka untuk membaca isi
   lengkapnya. Hanya pengumuman berstatus <strong>Terbit</strong> yang tampil di
@@ -573,6 +614,11 @@
 </p>
 
 <h3>2.6 Berita dan kegiatan</h3>
+
+<figure class="tangkapan">
+  <img src="gambar/berita-publik.png" alt="Tampilan daftar berita" />
+  <figcaption>Gambar 5 — Daftar berita dilengkapi kotak pencarian dan saringan kategori.</figcaption>
+</figure>
 
 <p>
   Kabar terbaru seputar kegiatan belajar, prestasi, dan keseharian sekolah.
@@ -592,6 +638,11 @@
 
 <h3>2.7 Galeri</h3>
 
+<figure class="tangkapan">
+  <img src="gambar/galeri-publik.png" alt="Tampilan galeri foto" />
+  <figcaption>Gambar 6 — Album foto dapat disaring menurut kategori kegiatan.</figcaption>
+</figure>
+
 <p>
   Kumpulan dokumentasi kegiatan dalam bentuk album foto. Album dapat disaring
   menggunakan tombol kategori: <strong>Semua</strong>,
@@ -600,6 +651,11 @@
 </p>
 
 <h3>2.8 Informasi SPMB</h3>
+
+<figure class="tangkapan">
+  <img src="gambar/spmb-publik.png" alt="Tampilan halaman informasi SPMB" />
+  <figcaption>Gambar 7 — Halaman SPMB memuat persyaratan, berkas, dan tahapan pendaftaran.</figcaption>
+</figure>
 
 <p>
   Halaman penerimaan murid baru. Isinya meliputi periode pendaftaran,
@@ -616,6 +672,11 @@
 </div>
 
 <h3>2.9 Kontak dan lokasi</h3>
+
+<figure class="tangkapan">
+  <img src="gambar/kontak-publik.png" alt="Tampilan halaman kontak dan peta lokasi" />
+  <figcaption>Gambar 8 — Peta lokasi sekolah tampil langsung dari kode sematan Google Maps.</figcaption>
+</figure>
 
 <p>
   Berisi alamat sekolah, nomor telepon, alamat email, jam layanan administrasi,
@@ -652,6 +713,11 @@
 </div>
 
 <h3>3.2 Cara masuk</h3>
+
+<figure class="tangkapan">
+  <img src="gambar/admin-login.png" alt="Halaman masuk panel admin" />
+  <figcaption>Gambar 16 — Halaman masuk panel admin: isi email dan kata sandi lalu tekan Masuk.</figcaption>
+</figure>
 
 <ol class="langkah">
   <li>Buka alamat <code>/admin/login</code>.</li>
@@ -728,6 +794,11 @@
 <h2 class="bagian">4. Mengenal Panel Admin</h2>
 
 <h3>4.1 Menu panel</h3>
+
+<figure class="tangkapan">
+  <img src="gambar/admin-beranda.png" alt="Tampilan dashboard panel admin" />
+  <figcaption>Gambar 9 — Dashboard panel admin: ringkasan jumlah konten dan menu di sisi kiri.</figcaption>
+</figure>
 
 <p>
   Menu berada di sisi kiri dan berisi tujuh pilihan berikut:
@@ -850,6 +921,11 @@
 
 <h3>5.1 Bagian yang dapat diubah</h3>
 
+<figure class="tangkapan">
+  <img src="gambar/admin-profil.png" alt="Formulir profil sekolah di panel admin" />
+  <figcaption>Gambar 10 — Formulir profil sekolah, termasuk unggah logo dan kolom peta lokasi.</figcaption>
+</figure>
+
 <table>
   <thead>
     <tr>
@@ -922,6 +998,11 @@
 
 <h3>6.1 Menambah data guru</h3>
 
+<figure class="tangkapan">
+  <img src="gambar/admin-guru.png" alt="Tabel daftar guru di panel admin" />
+  <figcaption>Gambar 11 — Tabel Data Guru dengan ikon pensil untuk mengubah dan ikon tempat sampah untuk menghapus.</figcaption>
+</figure>
+
 <ol class="langkah">
   <li>Buka menu <strong>Data Guru</strong>, lalu tekan <strong>Tambah guru</strong>.</li>
   <li>Isi kolom <strong>Nama lengkap</strong> dan <strong>Jabatan</strong> (wajib).</li>
@@ -940,6 +1021,11 @@
   </li>
   <li>Tekan <strong>Tambah guru</strong> pada bar di bawah halaman.</li>
 </ol>
+
+<figure class="tangkapan">
+  <img src="gambar/admin-guru-edit.png" alt="Formulir tambah dan ubah data guru" />
+  <figcaption>Gambar 17 — Formulir guru: isian identitas di kiri dan panel unggah foto di kanan.</figcaption>
+</figure>
 
 <h3>6.2 Mengubah data guru</h3>
 
@@ -995,6 +1081,11 @@
 
 <h3>7.1 Menulis pengumuman baru</h3>
 
+<figure class="tangkapan">
+  <img src="gambar/admin-pengumuman.png" alt="Daftar pengumuman di panel admin" />
+  <figcaption>Gambar 12 — Daftar pengumuman dan tombol Buat pengumuman.</figcaption>
+</figure>
+
 <ol class="langkah">
   <li>Buka menu <strong>Pengumuman</strong>, lalu tekan <strong>Buat pengumuman</strong>.</li>
   <li>
@@ -1018,6 +1109,11 @@
   </li>
   <li>Tekan <strong>Simpan draf</strong> atau <strong>Simpan pengumuman</strong>.</li>
 </ol>
+
+<figure class="tangkapan">
+  <img src="gambar/admin-pengumuman-edit.png" alt="Formulir tambah dan ubah pengumuman" />
+  <figcaption>Gambar 19 — Formulir pengumuman: judul, kategori, status publikasi, dan isi lengkap.</figcaption>
+</figure>
 
 <h3>7.2 Mengubah dan menghapus pengumuman</h3>
 
@@ -1046,6 +1142,11 @@
 
 <h3>8.1 Menulis berita baru</h3>
 
+<figure class="tangkapan">
+  <img src="gambar/admin-berita.png" alt="Daftar berita di panel admin" />
+  <figcaption>Gambar 13 — Daftar berita dengan status Draf atau Terbit, dan tombol Tulis berita.</figcaption>
+</figure>
+
 <ol class="langkah">
   <li>Buka menu <strong>Berita</strong>.</li>
   <li>Tekan tombol <strong>Tulis berita</strong>.</li>
@@ -1062,6 +1163,12 @@
     Tulis isi berita pada kotak <strong>Isi berita</strong>. Pisahkan paragraf
     dengan menekan Enter.
   </li>
+</ol>
+
+<figure class="tangkapan">
+  <img src="gambar/admin-berita-edit.png" alt="Formulir tambah dan ubah berita" />
+  <figcaption>Gambar 18 — Formulir berita: isian judul, kategori, sampul, dan isi artikel.</figcaption>
+</figure>
   <li>
     Pada panel <strong>Publikasi</strong>, pilih <strong>Status</strong>:
     <strong>Draf</strong> bila belum siap tayang, atau <strong>Terbit</strong>
@@ -1119,6 +1226,11 @@
 </p>
 
 <h3>9.1 Membuat album baru</h3>
+
+<figure class="tangkapan">
+  <img src="gambar/admin-galeri.png" alt="Panel galeri di admin" />
+  <figcaption>Gambar 14 — Panel Galeri: membuat album baru di kiri dan daftar album di kanan.</figcaption>
+</figure>
 
 <ol class="langkah">
   <li>Buka menu <strong>Galeri</strong>.</li>
@@ -1250,6 +1362,11 @@
 </table>
 
 <h3>10.2 Cara memperbarui informasi SPMB</h3>
+
+<figure class="tangkapan">
+  <img src="gambar/admin-spmb.png" alt="Formulir informasi SPMB di panel admin" />
+  <figcaption>Gambar 15 — Formulir Informasi SPMB: periode, persyaratan, berkas, tahapan, dan kontak panitia.</figcaption>
+</figure>
 
 <ol class="langkah">
   <li>Buka menu <strong>Informasi SPMB</strong>.</li>

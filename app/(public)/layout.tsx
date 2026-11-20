@@ -19,7 +19,9 @@ import { getProfil } from "@/lib/data/queries";
 export default function PublicLayout({ children }: LayoutProps<"/">) {
   return (
     <div className="flex min-h-full flex-col">
-      <TopBar />
+      <Suspense fallback={<TopBar />}>
+        <TopBarDinamis />
+      </Suspense>
       <Suspense fallback={<HeaderKerangka />}>
         <HeaderDinamis />
       </Suspense>
@@ -31,6 +33,10 @@ export default function PublicLayout({ children }: LayoutProps<"/">) {
   );
 }
 
+async function TopBarDinamis() {
+  return <TopBar profil={await getProfil()} />;
+}
+
 async function HeaderDinamis() {
   const profil = await getProfil();
   return <PublicHeader logoUrl={profil.logoUrl} />;
@@ -38,7 +44,7 @@ async function HeaderDinamis() {
 
 async function FooterDinamis() {
   const profil = await getProfil();
-  return <PublicFooter logoUrl={profil.logoUrl} />;
+  return <PublicFooter profil={profil} />;
 }
 
 /** Kerangka header tanpa penanda menu aktif — tinggi sama (84px) agar stabil. */

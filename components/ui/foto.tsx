@@ -43,7 +43,7 @@ export function FotoPlaceholder({
       />
       {ringkas ? null : (
         <span className="relative max-w-[85%] px-3 text-[11px] leading-[1.4] text-muted">
-          {label}
+          Foto belum tersedia
         </span>
       )}
     </div>

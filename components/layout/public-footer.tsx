@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { ProfilSekolah } from "@/lib/data/types";
 import { site, tautanFooter } from "@/lib/constants/site";
 import { SchoolIdentity } from "./school-identity";
 
@@ -7,7 +8,8 @@ import { SchoolIdentity } from "./school-identity";
  * Kolom: identitas 440 · tautan cepat 180 · kontak (flex-1). Gap 32.
  * Catatan konten dipisah border-t #334155, pt 24.
  */
-export function PublicFooter({ logoUrl }: { logoUrl?: string | null }) {
+export function PublicFooter({ profil }: { profil: ProfilSekolah }) {
+  const logoUrl = profil.logoUrl;
   return (
     <footer className="w-full bg-brand-ink">
       <div className="container-page flex flex-col gap-8 pt-12 pb-7">
@@ -39,17 +41,20 @@ export function PublicFooter({ logoUrl }: { logoUrl?: string | null }) {
             <h2 className="text-base font-semibold leading-[1.4] text-white">
               Hubungi sekolah
             </h2>
-            <p className="text-sm leading-[1.5] text-line-soft">{site.alamat}</p>
+            {profil.alamat ? (
+              <p className="text-sm leading-[1.5] text-line-soft">{profil.alamat}</p>
+            ) : null}
             <div className="text-sm leading-[1.5] text-line-soft">
-              <p>{site.email}</p>
-              <p>Telepon: {site.telepon}</p>
+              {profil.email ? <p>{profil.email}</p> : null}
+              {profil.telepon ? <p>Telepon: {profil.telepon}</p> : null}
             </div>
-            <p className="text-xs leading-[1.4] text-line-soft">{site.jamLayanan}</p>
+            <p className="text-xs leading-[1.4] text-line-soft">
+              {profil.jamLayanan ?? site.jamLayanan}
+            </p>
           </div>
         </div>
 
         <div className="flex flex-col gap-2 border-t border-line-dark pt-6 text-xs leading-[1.4] text-line-soft">
-          <p>{site.catatanKonten}</p>
           <p className="flex flex-wrap items-center gap-x-3 gap-y-1 text-muted">
             <span>{site.hakCipta}</span>
             <span aria-hidden>|</span>

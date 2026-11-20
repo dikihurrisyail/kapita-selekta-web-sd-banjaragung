@@ -14,9 +14,8 @@ export const site = {
   alamatRingkas: "Jl. Pendidikan No. 01 • Alamat contoh",
   jamLayanan: "Senin–Jumat • 07.30–14.00 WIB",
   tahunAjaran: "2026/2027",
-  catatanKonten:
-    "Contoh konten — sesuaikan dengan data resmi sekolah. Nama, foto, jadwal, dan informasi bersifat ilustratif.",
-  hakCipta: "© 2026 UPTD SD Negeri Banjar Agung • Contoh situs informasi sekolah",
+  catatanKonten: "",
+  hakCipta: "© 2026 UPTD SD Negeri Banjar Agung",
 } as const;
 
 /** Menu publik — 7 tautan + 1 CTA (sesuai desain header). */

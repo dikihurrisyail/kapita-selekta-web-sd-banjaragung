@@ -4,6 +4,7 @@ import { io } from "next/cache";
 import { AdminHeader } from "@/components/layout/admin-header";
 import { AdminMobileNav } from "@/components/layout/admin-mobile-nav";
 import { AdminSidebar } from "@/components/layout/admin-sidebar";
+import { getProfil } from "@/lib/data/queries";
 import { getSesiAdmin, type SesiAdmin } from "@/lib/supabase/auth";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
 
@@ -20,7 +21,9 @@ import { isSupabaseConfigured } from "@/lib/supabase/config";
 export default function AdminLayout({ children }: LayoutProps<"/admin">) {
   return (
     <div className="flex min-h-screen bg-page">
-      <AdminSidebar />
+      <Suspense fallback={<AdminSidebar />}>
+        <SidebarDinamis />
+      </Suspense>
       <div className="flex min-w-0 flex-1 flex-col">
         <Suspense fallback={<HeaderKerangka />}>
           <HeaderDinamis />
@@ -35,9 +38,21 @@ export default function AdminLayout({ children }: LayoutProps<"/admin">) {
           </Suspense>
         </main>
       </div>
-      <AdminMobileNav />
+      <Suspense fallback={<AdminMobileNav />}>
+        <NavDinamis />
+      </Suspense>
     </div>
   );
+}
+
+async function SidebarDinamis() {
+  const profil = await getProfil();
+  return <AdminSidebar logoUrl={profil.logoUrl} />;
+}
+
+async function NavDinamis() {
+  const profil = await getProfil();
+  return <AdminMobileNav logoUrl={profil.logoUrl} />;
 }
 
 /** Header tanpa data sesi — dipakai sebagai fallback saat Suspense. */

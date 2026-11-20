@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { PageIntro } from "@/components/ui/page-intro";
-import { Alert } from "@/components/ui/alert";
 import { ButtonLink } from "@/components/ui/button";
 import { Panel } from "@/components/ui/card";
 import { Foto } from "@/components/ui/foto";
@@ -41,11 +40,6 @@ async function IsiPpdb() {
 
       <PublicSection>
         <div className="flex flex-col gap-14">
-          <Alert>
-            Jadwal dan ketentuan pada halaman ini dapat berubah. Informasi resmi
-            akan diumumkan melalui kanal sekolah.
-          </Alert>
-
           {/* Pengantar SPMB — 560 / 608 */}
           <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:gap-8">
             <div className="flex w-full flex-col gap-5 lg:w-[560px] lg:shrink-0">
@@ -152,10 +146,6 @@ async function IsiPpdb() {
             {ppdb.email ? (
               <p className="text-sm leading-[1.5] text-body">Email: {ppdb.email}</p>
             ) : null}
-            <p className="text-xs leading-[1.4] text-muted">
-              Jadwal pada halaman ini merupakan contoh, bukan pengumuman penerimaan
-              resmi.
-            </p>
           </div>
         </div>
       </PublicSection>

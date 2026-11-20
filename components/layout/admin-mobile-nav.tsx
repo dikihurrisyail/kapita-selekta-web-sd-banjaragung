@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";import {
   X,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { logoutAdmin } from "@/lib/actions/auth";
 import { menuAdmin, site } from "@/lib/constants/site";
 import { cn } from "@/lib/utils/cn";
 
@@ -36,7 +37,15 @@ const pintasanMobile = ["/admin", "/admin/guru", "/admin/berita", "/admin/galeri
  * Mengikuti frame "Responsif — Dashboard Admin Mobile 390":
  * bottom nav 76px ("Navigasi admin ringkas") + panel akun 76px ("Akun admin mobile").
  */
-export function AdminMobileNav({ nama, email }: { nama?: string; email?: string }) {
+export function AdminMobileNav({
+  nama,
+  email,
+  logoUrl,
+}: {
+  nama?: string;
+  email?: string;
+  logoUrl?: string | null;
+}) {
   const pathname = usePathname();
   const [buka, setBuka] = useState(false);
 
@@ -115,9 +124,14 @@ export function AdminMobileNav({ nama, email }: { nama?: string; email?: string 
                   onClick={() => setBuka(false)}
                   className="flex items-center gap-3"
                 >
-                  <span className="flex h-11 w-11 items-center justify-center rounded-btn bg-brand">
-                    <School className="size-[22px] text-white" aria-hidden />
-                  </span>
+                  {logoUrl ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={logoUrl} alt="Logo sekolah" className="h-11 w-11 shrink-0 rounded-btn object-contain" />
+          ) : (
+            <span className="flex h-11 w-11 items-center justify-center rounded-btn bg-brand">
+              <School className="size-[22px] text-white" aria-hidden />
+            </span>
+          )}
                   <span className="flex flex-col gap-1">
                     <span className="text-sm font-bold leading-[1.3] text-white">
                       {site.nama}
@@ -180,13 +194,15 @@ export function AdminMobileNav({ nama, email }: { nama?: string; email?: string 
                   </span>
                 </span>
               </div>
-              <Link
-                href="/admin/login"
-                aria-label="Keluar"
-                className="inline-flex size-9 shrink-0 items-center justify-center rounded-btn text-line-soft hover:bg-brand-deep hover:text-white"
-              >
-                <LogOut className="size-5" aria-hidden />
-              </Link>
+              <form action={logoutAdmin}>
+                <button
+                  type="submit"
+                  aria-label="Keluar"
+                  className="inline-flex size-9 shrink-0 items-center justify-center rounded-btn text-line-soft hover:bg-brand-deep hover:text-white"
+                >
+                  <LogOut className="size-5" aria-hidden />
+                </button>
+              </form>
             </div>
           </div>
         </div>

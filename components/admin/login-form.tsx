@@ -6,7 +6,6 @@ import { ShieldCheck } from "lucide-react";
 import { Alert } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Field, Input } from "@/components/ui/input";
-import { Foto } from "@/components/ui/foto";
 import { SchoolIdentity } from "@/components/layout/school-identity";
 import { loginAdmin } from "@/lib/actions/auth";
 
@@ -19,9 +18,11 @@ import { loginAdmin } from "@/lib/actions/auth";
 export function LoginForm({
   lanjut,
   baruDipulihkan = false,
+  logoUrl,
 }: {
   lanjut: string;
   baruDipulihkan?: boolean;
+  logoUrl?: string | null;
 }) {
   const [state, formAction, pending] = useActionState(loginAdmin, null);
 
@@ -29,7 +30,7 @@ export function LoginForm({
     <div className="flex min-h-screen flex-col lg:flex-row">
       {/* Panel identitas layanan admin (660px) */}
       <section className="flex w-full flex-col gap-8 bg-brand px-8 py-10 lg:w-[660px] lg:shrink-0 lg:px-16 lg:py-16">
-        <SchoolIdentity variant="dark" />
+        <SchoolIdentity variant="dark" logoUrl={logoUrl} />
         <div className="flex flex-col gap-4">
           <h1 className="font-display text-[32px] font-semibold leading-[1.15] text-white lg:text-[40px]">
             Satu tempat untuk mengelola informasi sekolah.
@@ -39,11 +40,6 @@ export function LoginForm({
             tanpa menyentuh kode.
           </p>
         </div>
-        <Foto
-          src={null}
-          label="Foto dokumentasi ilustratif — gedung sekolah"
-          className="h-[240px] w-full max-w-[532px] lg:h-[340px]"
-        />
         <p className="text-xs leading-[1.4] text-line-soft">
           Akses terbatas untuk administrator sekolah.
         </p>

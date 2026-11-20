@@ -3,9 +3,10 @@ import { Suspense } from "react";
 import { Panel } from "@/components/ui/card";
 import { Field, Input, Textarea } from "@/components/ui/input";
 import { FormAksi } from "@/components/admin/form-aksi";
+import { FormFasilitas } from "@/components/admin/form-fasilitas";
 import { InputFoto } from "@/components/admin/input-foto";
 import { simpanProfil } from "@/lib/actions/konten";
-import { getProfil } from "@/lib/data/queries";
+import { getFasilitas, getProfil } from "@/lib/data/queries";
 
 export const metadata: Metadata = { title: "Pengelolaan Profil" };
 
@@ -22,7 +23,7 @@ export default function AdminProfilPage() {
 }
 
 async function FormProfil() {
-  const profil = await getProfil();
+  const [profil, fasilitas] = await Promise.all([getProfil(), getFasilitas()]);
 
   return (
     <div className="flex flex-col gap-8">
@@ -117,6 +118,32 @@ async function FormProfil() {
           </div>
         </Panel>
 
+        <Panel judul="Foto gedung dan suasana sekolah">
+          <div className="flex flex-col gap-4">
+            {profil.heroUrl ? (
+              <div className="flex items-center gap-4 rounded-card border border-line bg-page px-4 py-3">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={profil.heroUrl}
+                  alt="Foto gedung sekolah saat ini"
+                  className="h-14 w-20 shrink-0 rounded-btn object-cover"
+                />
+                <p className="text-xs leading-[1.4] text-muted">
+                  Foto saat ini. Pilih berkas baru untuk menggantinya. Tampil di
+                  beranda dan halaman profil.
+                </p>
+              </div>
+            ) : null}
+            <InputFoto
+              name="hero"
+              id="hero"
+              accept="image/jpeg,image/png,image/webp"
+              teksZona="JPG, PNG, atau WebP, maksimal 5 MB"
+              petunjuk="Foto gedung atau suasana sekolah. Tampil di hero beranda dan bagian atas halaman profil."
+            />
+          </div>
+        </Panel>
+
         <Panel judul="Sejarah sekolah">
           <Field
             label="Sejarah"
@@ -169,7 +196,7 @@ async function FormProfil() {
                 id="jam_layanan"
                 name="jam_layanan"
                 defaultValue={profil.jamLayanan ?? ""}
-                placeholder="Senin–Jumat • 07.30–14.00 WIB"
+                placeholder="Seninâ€“Jumat â€¢ 07.30â€“14.00 WIB"
               />
             </Field>
             <Field
@@ -188,6 +215,8 @@ async function FormProfil() {
           </div>
         </Panel>
       </FormAksi>
+
+      <FormFasilitas awal={fasilitas} />
     </div>
   );
 }
@@ -196,7 +225,7 @@ async function FormProfil() {
 function FormKerangka() {
   return (
     <div className="flex flex-col gap-6" aria-busy="true">
-      <span className="sr-only">Memuat profil sekolah…</span>
+      <span className="sr-only">Memuat profil sekolahâ€¦</span>
       <div className="h-3 w-24 rounded-pill bg-page-alt" />
       <div className="h-8 w-64 rounded-btn bg-page-alt" />
       <div className="grid gap-6 xl:grid-cols-2">

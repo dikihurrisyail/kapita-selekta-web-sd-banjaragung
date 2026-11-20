@@ -12,7 +12,7 @@ import type { HasilAksi } from "./auth";
  * Server Actions untuk mengubah konten.
  *
  * Semua aksi:
- *   * memanggil wajibLogin() — proxy tidak cukup untuk Server Action
+ *   * memanggil wajibLogin() â€” proxy tidak cukup untuk Server Action
  *   * memakai RLS Supabase sebagai lapisan kedua
  *   * mengembalikan { ok, pesan } agar bisa ditampilkan di form
  */
@@ -95,6 +95,34 @@ async function hapusDariMedia(supabase: Klien, url: string | null | undefined) {
   if (jalur) await supabase.storage.from("media").remove([jalur]);
 }
 
+/**
+ * Unggah foto dari form bila ada berkas baru.
+ *
+ * Mengembalikan { ok, url } â€” url bernilai null bila tidak ada berkas baru
+ * (form dibiarkan kosong). Pesan galat dikembalikan bila berkas ditolak.
+ */
+async function unggahFotoForm(
+  supabase: Klien,
+  formData: FormData,
+  kunci: string,
+  prefix: string,
+): Promise<{ ok: true; url: string | null } | { ok: false; pesan: string }> {
+  const berkas = formData.get(kunci);
+  if (!(berkas instanceof File) || berkas.size === 0) {
+    return { ok: true, url: null };
+  }
+  if (!TIPE_FOTO.has(berkas.type)) {
+    return { ok: false, pesan: "Format foto harus JPG, PNG, atau WebP." };
+  }
+  if (berkas.size > BATAS_UKURAN_FOTO) {
+    return { ok: false, pesan: "Ukuran foto maksimal 5 MB." };
+  }
+  const jalur = `${prefix}/${Date.now()}-${namaBerkasAman(berkas.name)}`;
+  const hasil = await unggahKeMedia(supabase, jalur, berkas);
+  if (!hasil.ok) return { ok: false, pesan: hasil.pesan };
+  return { ok: true, url: hasil.url };
+}
+
 /* ------------------------------------------------------------------ Profil */
 
 export async function simpanProfil(
@@ -106,7 +134,7 @@ export async function simpanProfil(
 
   const supabase = await createClient();
 
-  /* Logo baru (opsional) — divalidasi di server, bukan di browser. */
+  /* Logo baru (opsional) â€” divalidasi di server, bukan di browser. */
   const logo = formData.get("logo");
   let logoBaru: string | null = null;
   if (logo instanceof File && logo.size > 0) {
@@ -122,6 +150,22 @@ export async function simpanProfil(
     logoBaru = hasil.url;
   }
 
+  /* Hero (foto gedung/suasana sekolah) â€” opsional, JPG/PNG/WebP â‰¤5 MB. */
+  const hero = formData.get("hero");
+  let heroBaru: string | null = null;
+  if (hero instanceof File && hero.size > 0) {
+    if (!TIPE_FOTO.has(hero.type)) {
+      return { ok: false, pesan: "Format foto harus JPG, PNG, atau WebP." };
+    }
+    if (hero.size > BATAS_UKURAN_FOTO) {
+      return { ok: false, pesan: "Ukuran foto maksimal 5 MB." };
+    }
+    const jalur = `hero/sekolah-${Date.now()}-${namaBerkasAman(hero.name)}`;
+    const hasil = await unggahKeMedia(supabase, jalur, hero);
+    if (!hasil.ok) return { ok: false, pesan: hasil.pesan };
+    heroBaru = hasil.url;
+  }
+
   /* Tautan peta dipakai tombol "Buka di peta" di halaman Kontak. */
   let petaUrl = teks(formData, "peta_url");
   /* Kode sematan (HTML <iframe>) hanya diterima bila berasal dari embed resmi Google Maps. */
@@ -129,12 +173,14 @@ export async function simpanProfil(
     const src = srcDariIframe(petaUrl);
     if (!src) {
       if (logoBaru) await hapusDariMedia(supabase, logoBaru);
-      return { ok: false, pesan: "Kode sematan harus dari Google Maps (Bagikan → Sematkan peta)." };
+      if (heroBaru) await hapusDariMedia(supabase, heroBaru);
+      return { ok: false, pesan: "Kode sematan harus dari Google Maps (Bagikan â†’ Sematkan peta)." };
     }
     petaUrl = src;
   }
   if (petaUrl && !/^https?:\/\//i.test(petaUrl)) {
     if (logoBaru) await hapusDariMedia(supabase, logoBaru);
+    if (heroBaru) await hapusDariMedia(supabase, heroBaru);
     return { ok: false, pesan: "Isi tautan Google Maps atau kode sematan petanya." };
   }
   /* Tautan pendek "Bagikan" diurai ke tautan panjang agar koordinatnya terbaca. */
@@ -148,10 +194,10 @@ export async function simpanProfil(
     }
   }
 
-  /* Simpan logo lama untuk membersihkan berkasnya setelah baris tersimpan. */
+  /* Simpan berkas lama untuk dibersihkan setelah baris tersimpan. */
   const { data: lama } = await supabase
     .from("profil_sekolah")
-    .select("logo_url")
+    .select("logo_url, hero_url")
     .eq("id", 1)
     .maybeSingle();
 
@@ -175,17 +221,20 @@ export async function simpanProfil(
       sambutan_kepala: teks(formData, "sambutan_kepala") || null,
       peta_url: petaUrl || null,
       ...(logoBaru ? { logo_url: logoBaru } : {}),
+      ...(heroBaru ? { hero_url: heroBaru } : {}),
     })
     .eq("id", 1);
 
   if (error) {
     /* Bila penyimpanan gagal, buang berkas yang barusan diunggah. */
     if (logoBaru) await hapusDariMedia(supabase, logoBaru);
+    if (heroBaru) await hapusDariMedia(supabase, heroBaru);
     return { ok: false, pesan: `Gagal menyimpan: ${error.message}` };
   }
 
   /* Logo lama dihapus hanya setelah logo baru benar-benar tersimpan. */
   if (logoBaru && lama?.logo_url) await hapusDariMedia(supabase, lama.logo_url);
+  if (heroBaru && lama?.hero_url) await hapusDariMedia(supabase, lama.hero_url);
 
   segarkanPublik("/profil", "/kontak", "/spmb");
   /* Logo tampil di header & footer semua halaman publik. */
@@ -218,7 +267,7 @@ export async function simpanGuru(
 
   const supabase = await createClient();
 
-  /* Foto baru (opsional) — divalidasi di server, bukan di browser. */
+  /* Foto baru (opsional) â€” divalidasi di server, bukan di browser. */
   const foto = formData.get("foto");
   let fotoBaru: string | null = null;
   if (foto instanceof File && foto.size > 0) {
@@ -366,7 +415,7 @@ export async function simpanBerita(
 
   const supabase = await createClient();
 
-  /* Sampul baru (opsional) — divalidasi di server, bukan di browser. */
+  /* Sampul baru (opsional) â€” divalidasi di server, bukan di browser. */
   const sampul = formData.get("sampul");
   let sampulBaru: string | null = null;
   if (sampul instanceof File && sampul.size > 0) {
@@ -455,7 +504,7 @@ export async function hapusBerita(slug: string): Promise<HasilAksi> {
 
 /* ------------------------------------------------------------------ Galeri */
 
-/** Batas ukuran satu berkas foto (5 MB) — sama dengan keterangan di UI. */
+/** Batas ukuran satu berkas foto (5 MB) â€” sama dengan keterangan di UI. */
 const BATAS_UKURAN_FOTO = 5 * 1024 * 1024;
 
 /** Tipe berkas yang diterima. */
@@ -544,7 +593,7 @@ export async function simpanAlbum(
  * Hapus album beserta seluruh fotonya.
  *
  * Baris foto_galeri ikut terhapus lewat `on delete cascade`, tetapi berkas
- * di Storage TIDAK — cascade hanya berlaku di database. Jadi berkasnya
+ * di Storage TIDAK â€” cascade hanya berlaku di database. Jadi berkasnya
  * dikumpulkan lebih dulu lalu dihapus manual, supaya tidak ada file yatim
  * yang tetap bisa diakses lewat URL publik.
  */
@@ -588,7 +637,7 @@ export async function hapusAlbum(id: string): Promise<HasilAksi> {
  * Unggah foto ke bucket `media` lalu catat di tabel foto_galeri.
  *
  * Alur:
- *   1. wajibLogin() — Server Action tidak selalu lewat proxy.
+ *   1. wajibLogin() â€” Server Action tidak selalu lewat proxy.
  *   2. Validasi tipe & ukuran di server (jangan percaya validasi browser).
  *   3. Upload ke Storage (policy RLS membatasi ke admin).
  *   4. Simpan baris foto_galeri. Bila gagal, berkas dihapus lagi agar
@@ -751,6 +800,79 @@ export async function simpanKeteranganFoto(
   segarkanPublik("/galeri");
   revalidatePath("/admin/galeri");
   return { ok: true, pesan: "Keterangan foto disimpan." };
+}
+
+/* -------------------------------------------------------------- Fasilitas */
+
+/**
+ * Tambah satu fasilitas sekolah.
+ *
+ * Fasilitas tampil sebagai kartu di halaman /profil. Foto bersifat opsional:
+ * bila tidak diunggah, kartu memakai gambar ilustratif bawaan.
+ */
+export async function simpanFasilitas(
+  _sebelumnya: HasilAksi | null,
+  formData: FormData,
+): Promise<HasilAksi> {
+  await wajibLogin();
+  if (!isSupabaseConfigured()) return MODE_DEMO;
+
+  const judul = teks(formData, "judul");
+  if (!judul) return { ok: false, pesan: "Nama fasilitas wajib diisi." };
+
+  const supabase = await createClient();
+
+  const foto = await unggahFotoForm(supabase, formData, "foto", "fasilitas");
+  if (!foto.ok) return { ok: false, pesan: foto.pesan };
+
+  /* Urutan placing: taruh di akhir daftar. */
+  const { data: terakhir } = await supabase
+    .from("fasilitas")
+    .select("urutan")
+    .order("urutan", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
+  const { error } = await supabase.from("fasilitas").insert({
+    judul,
+    deskripsi: teks(formData, "deskripsi"),
+    urutan: (terakhir?.urutan ?? 0) + 1,
+    ...(foto.url ? { foto_url: foto.url } : {}),
+  });
+
+  if (error) {
+    /* Jangan tinggalkan berkas tanpa baris tabel. */
+    if (foto.url) await hapusDariMedia(supabase, foto.url);
+    return { ok: false, pesan: `Gagal menyimpan: ${error.message}` };
+  }
+
+  segarkanPublik("/profil");
+  revalidatePath("/admin/profil");
+  return { ok: true, pesan: "Fasilitas sekolah ditambahkan." };
+}
+
+/** Hapus satu fasilitas sekolah beserta fotonya. */
+export async function hapusFasilitas(id: string): Promise<HasilAksi> {
+  await wajibLogin();
+  if (!isSupabaseConfigured()) return MODE_DEMO;
+
+  const supabase = await createClient();
+
+  /* Simpan URL foto sebelum barisnya hilang agar berkasnya bisa ikut dibersihkan. */
+  const { data: fasilitas } = await supabase
+    .from("fasilitas")
+    .select("foto_url")
+    .eq("id", id)
+    .maybeSingle();
+
+  const { error } = await supabase.from("fasilitas").delete().eq("id", id);
+  if (error) return { ok: false, pesan: `Gagal menghapus: ${error.message}` };
+
+  await hapusDariMedia(supabase, fasilitas?.foto_url);
+
+  segarkanPublik("/profil");
+  revalidatePath("/admin/profil");
+  return { ok: true, pesan: "Fasilitas sekolah dihapus." };
 }
 
 /* -------------------------------------------------------------------- SPMB */

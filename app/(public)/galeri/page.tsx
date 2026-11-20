@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { PageIntro } from "@/components/ui/page-intro";
-import { Alert } from "@/components/ui/alert";
 import { AlbumCard } from "@/components/public/album-card";
 import { PublicSection } from "@/components/public/public-section";
 import { getAlbum } from "@/lib/data/queries";
@@ -27,10 +26,6 @@ export default function GaleriPage({ searchParams }: Props) {
           <Suspense fallback={<FilterKerangka />}>
             <FilterKategori searchParams={searchParams} />
           </Suspense>
-
-          <Alert>
-            Album dan foto pada halaman ini merupakan dokumentasi ilustratif.
-          </Alert>
 
           <Suspense fallback={<DaftarKerangka />}>
             <DaftarAlbum searchParams={searchParams} />

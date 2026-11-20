@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Data fallback (mode demo).
  *
  * Dipakai HANYA bila Supabase belum dikonfigurasi atau query gagal, supaya
@@ -51,18 +51,18 @@ export type Album = {
   foto: Foto;
 };
 
-export type Fasilitas = { judul: string; deskripsi: string; foto: Foto };
+export type Fasilitas = { id: string; judul: string; deskripsi: string; foto: Foto };
 
 const foto = (label: string): Foto => ({ src: null, label });
 
 /* ---------------------------------------------------------------- Beranda */
 
-export const heroFoto = foto("Foto dokumentasi ilustratif — suasana sekolah");
-export const kepalaSekolahFoto = foto("Foto dokumentasi ilustratif — kepala sekolah");
+export const heroFoto = foto("Foto dokumentasi ilustratif â€” suasana sekolah");
+export const kepalaSekolahFoto = foto("Foto dokumentasi ilustratif â€” kepala sekolah");
 
 export const infoLayananUtama = [
   "Informasi terbuka untuk semua",
-  "Layanan sekolah • Senin–Jumat",
+  "Layanan sekolah â€¢ Seninâ€“Jumat",
   "Tahun ajaran 2026/2027",
 ];
 
@@ -77,10 +77,10 @@ export const profilRingkas = {
 
 export const sambutanKepalaSekolah = {
   eyebrow: "Sambutan kepala sekolah",
-  kutipan: "“Setiap anak membawa potensi yang layak kita rawat bersama.”",
+  kutipan: "â€œSetiap anak membawa potensi yang layak kita rawat bersama.â€",
   isi: "Selamat datang di ruang informasi UPTD SD Negeri Banjar Agung. Melalui website ini, kami ingin menjaga komunikasi yang terbuka dengan keluarga dan masyarakat. Mari bergandengan tangan menciptakan pengalaman sekolah yang hangat, aman, dan bermakna.",
   nama: "Ratna Wulandari, S.Pd.",
-  jabatan: "Kepala Sekolah • Nama dan foto ilustratif",
+  jabatan: "Kepala Sekolah â€¢ Nama dan foto ilustratif",
 };
 
 export const pengumuman: Pengumuman[] = [
@@ -90,7 +90,7 @@ export const pengumuman: Pengumuman[] = [
     kategori: "Akademik",
     judul: "Jadwal penilaian akhir semester genap",
     ringkasan:
-      "Penilaian dilaksanakan pada 2–6 Juni 2026. Simak jadwal dan persiapan yang perlu diperhatikan.",
+      "Penilaian dilaksanakan pada 2â€“6 Juni 2026. Simak jadwal dan persiapan yang perlu diperhatikan.",
     status: "Terbit",
   },
   {
@@ -150,7 +150,7 @@ export const berita: Berita[] = [
       "Membaca bersama, bertukar cerita, dan merawat rasa ingin tahu melalui kegiatan literasi di sekolah.",
     menitBaca: 4,
     status: "Terbit",
-    foto: foto("Foto dokumentasi ilustratif — pekan literasi"),
+    foto: foto("Foto dokumentasi ilustratif â€” pekan literasi"),
   },
   {
     slug: "kebun-sekolah",
@@ -161,7 +161,7 @@ export const berita: Berita[] = [
       "Kegiatan berkebun mengajak anak mengenal tanaman dan membangun kebiasaan peduli lingkungan.",
     menitBaca: 3,
     status: "Terbit",
-    foto: foto("Foto dokumentasi ilustratif — kebun sekolah"),
+    foto: foto("Foto dokumentasi ilustratif â€” kebun sekolah"),
   },
   {
     slug: "karya-seni",
@@ -172,7 +172,7 @@ export const berita: Berita[] = [
       "Warna, bentuk, dan kerja sama menjadi bagian dari pengalaman belajar yang menyenangkan.",
     menitBaca: 3,
     status: "Terbit",
-    foto: foto("Foto dokumentasi ilustratif — karya seni"),
+    foto: foto("Foto dokumentasi ilustratif â€” karya seni"),
   },
   {
     slug: "jumat-sehat",
@@ -183,7 +183,7 @@ export const berita: Berita[] = [
       "Senam pagi dan permainan tradisional menjadi agenda rutin untuk menjaga kebugaran anak.",
     menitBaca: 2,
     status: "Terbit",
-    foto: foto("Foto dokumentasi ilustratif — jumat sehat"),
+    foto: foto("Foto dokumentasi ilustratif â€” jumat sehat"),
   },
   {
     slug: "kelas-alam",
@@ -194,7 +194,7 @@ export const berita: Berita[] = [
       "Anak-anak belajar langsung dari lingkungan sekitar untuk memperkuat pemahaman materi.",
     menitBaca: 3,
     status: "Terbit",
-    foto: foto("Foto dokumentasi ilustratif — kelas alam"),
+    foto: foto("Foto dokumentasi ilustratif â€” kelas alam"),
   },
   {
     slug: "perpustakaan",
@@ -205,7 +205,7 @@ export const berita: Berita[] = [
       "Perpustakaan menjadi ruang favorit anak untuk membaca, berdiskusi, dan mencari ide baru.",
     menitBaca: 2,
     status: "Terbit",
-    foto: foto("Foto dokumentasi ilustratif — perpustakaan"),
+    foto: foto("Foto dokumentasi ilustratif â€” perpustakaan"),
   },
 ];
 
@@ -213,18 +213,18 @@ export const lingkunganBelajar = {
   judul: "Ruang yang mendukung rasa ingin tahu",
   deskripsi:
     "Ruang kelas, perpustakaan, halaman, dan kebun menjadi bagian dari lingkungan belajar yang dirawat bersama.",
-  tautan: "Jelajahi fasilitas →",
+  tautan: "Jelajahi fasilitas â†’",
   href: "/profil",
-  foto: foto("Foto dokumentasi ilustratif — ruang belajar"),
+  foto: foto("Foto dokumentasi ilustratif â€” ruang belajar"),
 };
 
 export const pendidikSekolah = {
   judul: "Guru yang mendampingi dengan hati",
   deskripsi:
     "Kenali para pendidik yang membantu anak bertumbuh melalui bimbingan, keteladanan, dan perhatian.",
-  tautan: "Kenali para guru →",
+  tautan: "Kenali para guru â†’",
   href: "/guru",
-  foto: foto("Foto dokumentasi ilustratif — pendidik"),
+  foto: foto("Foto dokumentasi ilustratif â€” pendidik"),
 };
 
 /* ---------------------------------------------------------------- Profil */
@@ -236,13 +236,13 @@ export const profil = {
     deskripsi:
       "Mengenal sejarah, identitas, visi, dan fasilitas UPTD SD Negeri Banjar Agung sebagai ruang belajar yang aman dan bermakna.",
   },
-  heroFoto: foto("Foto dokumentasi ilustratif — gedung sekolah"),
+  heroFoto: foto("Foto dokumentasi ilustratif â€” gedung sekolah"),
   sejarah: {
     eyebrow: "Sejarah sekolah",
     judul: "Perjalanan sekolah dari masa ke masa.",
     paragraf: [
       "UPTD SD Negeri Banjar Agung berdiri sebagai bagian dari upaya masyarakat setempat menyediakan pendidikan dasar yang dekat dan terjangkau. Sejak awal, sekolah tumbuh bersama dukungan warga, guru, dan orang tua.",
-      "Seiring waktu, layanan sekolah terus dilengkapi—mulai dari ruang kelas tambahan, perpustakaan, hingga area bermain yang aman bagi anak.",
+      "Seiring waktu, layanan sekolah terus dilengkapiâ€”mulai dari ruang kelas tambahan, perpustakaan, hingga area bermain yang aman bagi anak.",
     ],
   },
   identitas: {
@@ -287,19 +287,22 @@ export const profil = {
 
 export const fasilitas: Fasilitas[] = [
   {
+    id: "1",
     judul: "Ruang kelas",
     deskripsi: "Kelas yang tertata untuk belajar, berdiskusi, dan bekerja bersama.",
-    foto: foto("Foto dokumentasi ilustratif — ruang kelas"),
+    foto: foto("Foto dokumentasi ilustratif â€” ruang kelas"),
   },
   {
+    id: "2",
     judul: "Perpustakaan",
     deskripsi: "Koleksi buku dan ruang baca untuk menumbuhkan kecintaan pada bacaan.",
-    foto: foto("Foto dokumentasi ilustratif — perpustakaan"),
+    foto: foto("Foto dokumentasi ilustratif â€” perpustakaan"),
   },
   {
+    id: "3",
     judul: "Halaman dan kebun",
     deskripsi: "Area terbuka untuk bermain, olahraga, dan belajar dari alam sekitar.",
-    foto: foto("Foto dokumentasi ilustratif — halaman sekolah"),
+    foto: foto("Foto dokumentasi ilustratif â€” halaman sekolah"),
   },
 ];
 
@@ -463,8 +466,8 @@ export const ppdbPengantar = {
     "Penerimaan murid baru tahun ajaran 2026/2027 dibuka untuk calon peserta didik yang memenuhi persyaratan. Seluruh proses dilakukan tanpa biaya pendaftaran.",
   paragraf2:
     "Jadwal pada halaman ini merupakan contoh. Informasi resmi akan diumumkan melalui kanal sekolah.",
-  cta: "Hubungi panitia →",
-  foto: foto("Foto dokumentasi ilustratif — penerimaan murid"),
+  cta: "Hubungi panitia â†’",
+  foto: foto("Foto dokumentasi ilustratif â€” penerimaan murid"),
 };
 
 export const ppdbSiapa = {
@@ -485,7 +488,7 @@ export const ppdbBerkas = {
     "Fotokopi akta kelahiran",
     "Fotokopi kartu keluarga",
     "Fotokopi kartu identitas orang tua atau wali",
-    "Pas foto terbaru ukuran 3×4 sebanyak dua lembar",
+    "Pas foto terbaru ukuran 3Ã—4 sebanyak dua lembar",
   ],
   catatan:
     "Berkas dibawa saat verifikasi di sekolah. Simpan dokumen asli untuk pemeriksaan.",
@@ -498,14 +501,14 @@ export const ppdbTahapan = {
     {
       no: "01",
       judul: "Pendaftaran",
-      waktu: "1–12 Juni 2026",
+      waktu: "1â€“12 Juni 2026",
       deskripsi:
         "Mengisi formulir pendaftaran dan menyerahkan berkas persyaratan kepada panitia di sekolah.",
     },
     {
       no: "02",
       judul: "Verifikasi berkas",
-      waktu: "13–18 Juni 2026",
+      waktu: "13â€“18 Juni 2026",
       deskripsi: "Panitia memeriksa kelengkapan dan keabsahan dokumen yang diserahkan.",
     },
     {
@@ -518,7 +521,7 @@ export const ppdbTahapan = {
     {
       no: "04",
       judul: "Daftar ulang",
-      waktu: "25 Juni–2 Juli 2026",
+      waktu: "25 Juniâ€“2 Juli 2026",
       deskripsi:
         "Peserta didik yang diterima melakukan daftar ulang sesuai jadwal yang ditetapkan.",
     },
@@ -534,13 +537,13 @@ export const ppdbPetunjuk = {
     "Hubungi nomor layanan sekolah pada jam kerja.",
     "Sampaikan pertanyaan melalui email resmi sekolah.",
   ],
-  cta: "Hubungi panitia →",
+  cta: "Hubungi panitia â†’",
 };
 
 export const ppdbLayanan = {
   judul: "Layanan panitia",
   isi: "Panitia SPMB siap membantu menjelaskan persyaratan, alur pendaftaran, dan hal lain yang diperlukan calon peserta didik.",
-  detail: "Senin–Jumat • 08.00–14.00 WIB di sekretariat panitia SPMB.",
+  detail: "Seninâ€“Jumat â€¢ 08.00â€“14.00 WIB di sekretariat panitia SPMB.",
   catatan: "Jadwal pada desain ini merupakan contoh, bukan pengumuman penerimaan resmi.",
 };
 
@@ -562,13 +565,13 @@ export const kontak = {
   ],
   jam: {
     judul: "Jam layanan administrasi",
-    isi: "Senin–Jumat • 07.30–14.00 WIB",
+    isi: "Seninâ€“Jumat â€¢ 07.30â€“14.00 WIB",
     catatan: "Layanan tutup pada hari libur nasional dan hari besar keagamaan.",
   },
   peta: {
     label: "Denah lokasi ilustratif",
     keterangan: "Peta lokasi bersifat ilustratif. Gunakan tautan di bawah untuk navigasi.",
-    cta: "Buka di peta →",
+    cta: "Buka di peta â†’",
   },
   sebelum: {
     judul: "Sebelum berkunjung",
@@ -584,33 +587,33 @@ export const dashboard = {
   sapaan: {
     judul: "Selamat datang kembali, Administrator",
     isi: "Kelola konten website sekolah dari satu tempat. Pastikan informasi yang tayang sudah sesuai data resmi sekolah.",
-    catatan: "Terakhir masuk: 14 Mei 2026 • 08.12 WIB",
+    catatan: "Terakhir masuk: 14 Mei 2026 â€¢ 08.12 WIB",
   },
   metrik: [
-    { label: "Pengumuman", jumlah: "6", catatan: "5 terbit • 1 draf" },
+    { label: "Pengumuman", jumlah: "6", catatan: "5 terbit â€¢ 1 draf" },
     { label: "Berita", jumlah: "6", catatan: "6 terbit" },
     { label: "Guru", jumlah: "8", catatan: "7 tayang publik" },
     { label: "Foto galeri", jumlah: "123", catatan: "6 album" },
   ],
   aktivitas: [
     {
-      judul: "Pengumuman “Jadwal penilaian akhir semester genap” diterbitkan",
-      waktu: "14 Mei 2026 • 08.10 WIB",
+      judul: "Pengumuman â€œJadwal penilaian akhir semester genapâ€ diterbitkan",
+      waktu: "14 Mei 2026 â€¢ 08.10 WIB",
       status: "Terbit",
     },
     {
-      judul: "Berita “Pekan Literasi” diperbarui",
-      waktu: "12 Mei 2026 • 15.42 WIB",
+      judul: "Berita â€œPekan Literasiâ€ diperbarui",
+      waktu: "12 Mei 2026 â€¢ 15.42 WIB",
       status: "Terbit",
     },
     {
-      judul: "Enam foto ditambahkan ke album “Kebun sekolah”",
-      waktu: "10 Mei 2026 • 10.05 WIB",
+      judul: "Enam foto ditambahkan ke album â€œKebun sekolahâ€",
+      waktu: "10 Mei 2026 â€¢ 10.05 WIB",
       status: "Galeri",
     },
     {
-      judul: "Pengumuman “Kerja bakti bersama wali murid” disimpan sebagai draf",
-      waktu: "9 Mei 2026 • 16.20 WIB",
+      judul: "Pengumuman â€œKerja bakti bersama wali muridâ€ disimpan sebagai draf",
+      waktu: "9 Mei 2026 â€¢ 16.20 WIB",
       status: "Draf",
     },
   ],
@@ -626,14 +629,14 @@ export const dashboard = {
     judul: "Sebelum memublikasikan",
     isi: "Periksa kembali nama, tanggal, dan tautan. Pastikan konten tidak memuat data pribadi siswa. Publikasikan hanya informasi yang sudah disetujui sekolah.",
   },
-  catatan: "Contoh data dashboard — angka akan mengikuti data Supabase.",
+  catatan: "Contoh data dashboard â€” angka akan mengikuti data Supabase.",
 };
 
 export const adminProfil = {
   judul: "Pengelolaan Profil",
   subjudul: "Perbarui identitas, sejarah, visi misi, fasilitas, dan kontak sekolah.",
   tab: ["Identitas", "Sejarah", "Visi & Misi", "Fasilitas", "Kontak"],
-  umpanBalik: "Perubahan terakhir disimpan pada 14 Mei 2026 • 08.12 WIB.",
+  umpanBalik: "Perubahan terakhir disimpan pada 14 Mei 2026 â€¢ 08.12 WIB.",
   identitas: {
     judul: "Identitas sekolah",
     field: [
@@ -701,7 +704,7 @@ export const adminGuru = {
 export const adminGuruEdit = {
   judul: "Tambah atau Edit Guru",
   subjudul: "Lengkapi data pendidik lalu simpan untuk menampilkan di halaman publik.",
-  kembali: "← Kembali ke data guru",
+  kembali: "â† Kembali ke data guru",
   form: {
     judul: "Informasi pendidik",
     field: [
@@ -715,7 +718,7 @@ export const adminGuruEdit = {
   },
   foto: {
     judul: "Foto guru",
-    petunjuk: "Rasio 3:4, minimal 600 × 800 px.",
+    petunjuk: "Rasio 3:4, minimal 600 Ã— 800 px.",
     aksi: ["Unggah foto", "Hapus"],
   },
   pratinjau: {
@@ -747,7 +750,7 @@ export const adminBerita = {
 export const adminBeritaEdit = {
   judul: "Tambah atau Edit Berita",
   subjudul: "Tulis berita sekolah lengkap dengan sampul dan ringkasan.",
-  kembali: "← Kembali ke daftar berita",
+  kembali: "â† Kembali ke daftar berita",
   status: "Draf",
   editor: {
     judul: "Informasi artikel",
@@ -759,7 +762,7 @@ export const adminBeritaEdit = {
     kategori: { label: "Kategori", nilai: "Kegiatan" },
     isi: {
       judul: "Isi berita",
-      alat: ["B", "I", "U", "H2", "•", "🔗"],
+      alat: ["B", "I", "U", "H2", "â€¢", "ðŸ”—"],
       konten:
         "Membaca bersama, bertukar cerita, dan merawat rasa ingin tahu melalui kegiatan literasi di sekolah.\n\nSelama sepekan, anak-anak mengikuti kegiatan membaca bersama, bertukar cerita, dan menuliskan ulang kisah favorit mereka.",
       petunjuk: "Gunakan paragraf pendek agar mudah dibaca di ponsel.",
@@ -815,7 +818,7 @@ export const adminPpdb = {
     judul: "Informasi umum & persyaratan",
     periode: [
       { label: "Tahun ajaran", nilai: "2026/2027" },
-      { label: "Periode pendaftaran", nilai: "1–12 Juni 2026" },
+      { label: "Periode pendaftaran", nilai: "1â€“12 Juni 2026" },
     ],
     field: [
       {
@@ -863,7 +866,7 @@ export const adminLogin = {
   galeri: {
     judul: "Satu tempat untuk mengelola informasi sekolah.",
     isi: "Perbarui profil, guru, pengumuman, berita, galeri, dan informasi SPMB tanpa menyentuh kode.",
-    foto: foto("Foto dokumentasi ilustratif — gedung sekolah"),
+    foto: foto("Foto dokumentasi ilustratif â€” gedung sekolah"),
     catatan: "Akses terbatas untuk administrator sekolah.",
   },
   error: "Email atau kata sandi belum sesuai. Silakan periksa kembali.",
@@ -871,11 +874,11 @@ export const adminLogin = {
     { label: "Email", nilai: "admin@sekolah.example", petunjuk: "" },
     {
       label: "Kata sandi",
-      nilai: "••••••••",
+      nilai: "â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢",
       petunjuk: "Gunakan minimal 8 karakter.",
     },
   ],
   masuk: "Masuk",
   lupa: "Lupa kata sandi?",
-  kembali: "← Kembali ke website",
+  kembali: "â† Kembali ke website",
 };

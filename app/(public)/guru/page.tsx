@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { PageIntro } from "@/components/ui/page-intro";
-import { Alert } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { SearchField } from "@/components/ui/input";
 import { TeacherCard } from "@/components/public/teacher-card";
@@ -35,10 +34,6 @@ export default function GuruPage({ searchParams }: Props) {
             </Button>
           </form>
 
-          <Alert>
-            Data guru pada halaman ini akan diperbarui dengan data resmi sekolah.
-          </Alert>
-
           <Suspense fallback={<DaftarKerangka />}>
             <DaftarGuru searchParams={searchParams} />
           </Suspense>
@@ -65,7 +60,7 @@ async function DaftarGuru({ searchParams }: Props) {
     <>
       <p className="text-sm leading-[1.5] text-muted">
         {kataKunci
-          ? `Menampilkan ${tampil.length} pendidik untuk “${q}”`
+          ? `Menampilkan ${tampil.length} pendidik untuk â€œ${q}â€`
           : `Menampilkan ${tampil.length} pendidik`}
       </p>
 

@@ -1,13 +1,12 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import { Suspense } from "react";
 import { PageIntro } from "@/components/ui/page-intro";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Foto } from "@/components/ui/foto";
 import { Panel } from "@/components/ui/card";
 import { FacilityCard } from "@/components/public/facility-card";
-import { OrganizationChart } from "@/components/public/organization-chart";
 import { PublicSection } from "@/components/public/public-section";
-import { getFasilitas, getProfil, getStruktur } from "@/lib/data/queries";
+import { getFasilitas, getProfil } from "@/lib/data/queries";
 
 export const metadata: Metadata = { title: "Profil Sekolah" };
 
@@ -27,11 +26,7 @@ export default function ProfilPage() {
 }
 
 async function IsiProfil() {
-  const [profil, fasilitas, struktur] = await Promise.all([
-    getProfil(),
-    getFasilitas(),
-    getStruktur(),
-  ]);
+  const [profil, fasilitas] = await Promise.all([getProfil(), getFasilitas()]);
 
   const paragrafSejarah = profil.sejarah?.split("\n").filter(Boolean) ?? [];
 
@@ -47,11 +42,11 @@ async function IsiProfil() {
         <div className="flex flex-col gap-14">
           <Foto
             src={profil.heroUrl}
-            label="Foto dokumentasi ilustratif — gedung sekolah"
+            label="Foto dokumentasi ilustratif â€” gedung sekolah"
             className="h-[260px] w-full lg:h-[380px]"
           />
 
-          {/* Sejarah dan identitas — 720 / 416 */}
+          {/* Sejarah dan identitas â€” 720 / 416 */}
           <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:gap-16">
             <div className="flex w-full flex-col gap-4 lg:w-[720px]">
               <p className="text-xs font-bold leading-[1.4] tracking-wide text-accent-ink uppercase">
@@ -72,10 +67,10 @@ async function IsiProfil() {
                 <dl className="flex flex-col gap-3">
                   {[
                     { label: "Nama sekolah", nilai: profil.nama },
-                    { label: "NPSN", nilai: profil.npsn ?? "[NPSN resmi]" },
-                    { label: "Status", nilai: profil.statusSekolah ?? "—" },
+                    { label: "NPSN", nilai: profil.npsn ?? "—" },
+                    { label: "Status", nilai: profil.statusSekolah ?? "â€”" },
                     { label: "Akreditasi", nilai: profil.akreditasi ?? "[Akreditasi resmi]" },
-                    { label: "Kepala sekolah", nilai: profil.kepalaSekolah ?? "—" },
+                    { label: "Kepala sekolah", nilai: profil.kepalaSekolah ?? "â€”" },
                   ].map((item) => (
                     <div
                       key={item.label}
@@ -92,7 +87,7 @@ async function IsiProfil() {
             </div>
           </div>
 
-          {/* Visi dan misi — 470 / 698 */}
+          {/* Visi dan misi â€” 470 / 698 */}
           <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:gap-8">
             <div className="flex w-full flex-col gap-4 rounded-card border border-line bg-white p-6 lg:w-[470px] lg:shrink-0">
               <p className="text-xs font-bold leading-[1.4] tracking-wide text-accent-ink uppercase">
@@ -132,12 +127,6 @@ async function IsiProfil() {
               ))}
             </div>
           </div>
-
-          {/* Struktur organisasi */}
-          <div className="flex flex-col gap-6">
-            <SectionHeading eyebrow="Struktur organisasi" judul="Orang-orang di balik sekolah" />
-            <OrganizationChart struktur={struktur} />
-          </div>
         </div>
       </PublicSection>
     </>
@@ -148,7 +137,7 @@ async function IsiProfil() {
 function ProfilKerangka() {
   return (
     <div className="container-page py-14" aria-busy="true">
-      <span className="sr-only">Memuat profil sekolah…</span>
+      <span className="sr-only">Memuat profil sekolahâ€¦</span>
       <div className="flex flex-col gap-3">
         <div className="h-3 w-32 rounded-pill bg-page-alt" />
         <div className="h-9 w-full max-w-[560px] rounded-btn bg-page-alt" />

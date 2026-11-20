@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
+import { useRouter } from "next/navigation";
 import { Alert } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import type { HasilAksi } from "@/lib/actions/auth";
@@ -35,6 +36,7 @@ export function FormAksi({
   id?: string;
 }) {
   const [state, formAction, pending] = useActionState(action, null);
+  const router = useRouter();
 
   return (
     <form action={formAction} className={cn("flex flex-col gap-6", className)} id={id}>
@@ -49,7 +51,12 @@ export function FormAksi({
           {pending ? "Menyimpan…" : petunjuk}
         </p>
         <div className="flex items-center gap-3">
-          <Button type="reset" variant="outline" disabled={pending}>
+          <Button
+            type="button"
+            variant="outline"
+            disabled={pending}
+            onClick={() => router.back()}
+          >
             {teksBatal}
           </Button>
           <Button type="submit" variant="accent" disabled={pending}>

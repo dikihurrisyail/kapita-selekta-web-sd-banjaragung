@@ -51,7 +51,7 @@ export type Album = {
   foto: Foto;
 };
 
-export type Fasilitas = { judul: string; deskripsi: string; foto: Foto };
+export type Fasilitas = { id: string; judul: string; deskripsi: string; foto: Foto };
 
 export type ProfilSekolah = {
   nama: string;

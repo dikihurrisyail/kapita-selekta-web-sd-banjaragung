@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
+import { getProfil } from "@/lib/data/queries";
 import { LoginForm } from "@/components/admin/login-form";
 
 export const metadata: Metadata = { title: "Masuk Admin" };
@@ -27,7 +28,11 @@ async function LoginDinamis({ searchParams }: Props) {
   /* Hanya izinkan tujuan internal /admin untuk mencegah open redirect. */
   const tujuan = lanjut?.startsWith("/admin") ? lanjut : "/admin";
 
-  return <LoginForm lanjut={tujuan} baruDipulihkan={pulih === "1"} />;
+  const profil = await getProfil();
+
+  return (
+    <LoginForm lanjut={tujuan} baruDipulihkan={pulih === "1"} logoUrl={profil.logoUrl} />
+  );;
 }
 
 /** Kerangka dua kolom dengan proporsi sama seperti form asli. */

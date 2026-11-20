@@ -1,24 +1,36 @@
-import { Foto } from "@/components/ui/foto";
-import type { ProfilSekolah } from "@/lib/data/types";
+﻿import { Foto } from "@/components/ui/foto";
+import type { Foto as FotoTipe, ProfilSekolah } from "@/lib/data/types";
 
 /**
  * Sambutan kepala sekolah (layer "Sambutan kepala sekolah"):
  * kartu putih border #E2E8F0, radius 12, padding 32, gap 40.
- * Foto 280×350 radius 8 + pesan (eyebrow, kutipan Newsreader 36, isi, penanda tangan).
+ * Foto 280Ã—350 radius 8 + pesan (eyebrow, kutipan Newsreader 36, isi, penanda tangan).
  */
-export function HeadmasterGreeting({ profil }: { profil: ProfilSekolah }) {
-  const nama = profil.kepalaSekolah ?? "[Nama kepala sekolah]";
+export function HeadmasterGreeting({
+  profil,
+  fotoKepala,
+}: {
+  profil: ProfilSekolah;
+  /** Foto kepala sekolah dari data guru â€” dipakai agar sama dengan halaman /guru. */
+  fotoKepala?: FotoTipe;
+}) {
+  const nama = profil.kepalaSekolah ?? "Kepala Sekolah";
   const kutipan =
-    profil.kutipanKepala ?? "“Setiap anak membawa potensi yang layak kita rawat bersama.”";
+    profil.kutipanKepala ?? "â€œSetiap anak membawa potensi yang layak kita rawat bersama.â€";
   const isi =
     profil.sambutanKepala ??
     "Selamat datang di ruang informasi sekolah. Melalui website ini, kami ingin menjaga komunikasi yang terbuka dengan keluarga dan masyarakat.";
 
+  const foto: FotoTipe = fotoKepala ?? {
+    src: profil.fotoKepalaUrl,
+    label: `Foto ${nama}`,
+  };
+
   return (
     <section className="flex flex-col gap-6 rounded-card border border-line bg-white p-6 lg:flex-row lg:items-start lg:gap-10 lg:p-8">
       <Foto
-        src={profil.fotoKepalaUrl}
-        label={`Foto ${nama}`}
+        src={foto.src}
+        label={foto.label}
         className="h-[340px] w-full shrink-0 lg:h-[350px] lg:w-[280px]"
       />
       <div className="flex flex-1 flex-col gap-5">

@@ -394,6 +394,7 @@ export async function getFasilitas(): Promise<Fasilitas[]> {
     if (error) throw error;
 
     return (data ?? []).map((row) => ({
+      id: row.id,
       judul: row.judul,
       deskripsi: row.deskripsi,
       foto: keFoto(row.foto_url, `Foto dokumentasi — ${row.judul}`),

@@ -9,7 +9,7 @@ import { NewsCard } from "@/components/public/news-card";
 import { GalleryThumb } from "@/components/public/gallery-thumb";
 import { PublicSection } from "@/components/public/public-section";
 import { Foto } from "@/components/ui/foto";
-import { getAlbum, getBerita, getGuru, getPengumuman, getPpdb, getProfil } from "@/lib/data/queries";
+import { getAlbum, getBerita, getFasilitas, getGuru, getPengumuman, getPpdb, getProfil } from "@/lib/data/queries";
 
 /**
  * Beranda.
@@ -27,13 +27,14 @@ export default function BerandaPage() {
 }
 
 async function IsiBeranda() {
-  const [profil, pengumuman, berita, album, guru, ppdb] = await Promise.all([
+  const [profil, pengumuman, berita, album, guru, ppdb, fasilitas] = await Promise.all([
     getProfil(),
     getPengumuman({ hanyaTerbit: true, limit: 3 }),
     getBerita({ hanyaTerbit: true, limit: 3 }),
     getAlbum(),
     getGuru({ hanyaPublik: true }),
     getPpdb(),
+    getFasilitas(),
   ]);
 
   return (
@@ -43,14 +44,14 @@ async function IsiBeranda() {
       <PublicSection className="pt-0">
         <div className="flex flex-col gap-14">
           <SchoolIntroduction profil={profil} />
-          <HeadmasterGreeting profil={profil} />
+          <HeadmasterGreeting profil={profil} fotoKepala={guru[0]?.foto} />
 
           {/* Pengumuman terbaru */}
           <div className="flex flex-col gap-6">
             <SectionHeading
               eyebrow="Papan informasi"
               judul="Pengumuman terbaru"
-              tautan="Semua pengumuman →"
+              tautan="Semua pengumuman â†’"
               href="/pengumuman"
             />
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -65,7 +66,7 @@ async function IsiBeranda() {
             <SectionHeading
               eyebrow="Berita & kegiatan"
               judul="Cerita dari sekolah"
-              tautan="Semua berita →"
+              tautan="Semua berita â†’"
               href="/berita"
             />
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -84,8 +85,8 @@ async function IsiBeranda() {
           <div className="grid gap-8 lg:grid-cols-2">
             <article className="flex flex-col gap-5">
               <Foto
-                src={null}
-                label="Foto dokumentasi ilustratif — ruang belajar"
+                src={fasilitas.find((f) => f.foto.src)?.foto.src ?? null}
+                label="Foto dokumentasi ilustratif â€” ruang belajar"
                 className="h-[280px] w-full"
               />
               <h3 className="text-2xl font-bold leading-[1.25] text-brand-ink">
@@ -99,14 +100,14 @@ async function IsiBeranda() {
                 href="/profil"
                 className="text-sm font-semibold leading-[1.5] text-brand hover:underline"
               >
-                Jelajahi fasilitas →
+                Jelajahi fasilitas â†’
               </Link>
             </article>
 
             <article className="flex flex-col gap-5">
               <Foto
                 src={guru[0]?.foto.src ?? null}
-                label={guru[0]?.foto.label ?? "Foto dokumentasi ilustratif — pendidik"}
+                label={guru[0]?.foto.label ?? "Foto dokumentasi ilustratif â€” pendidik"}
                 className="h-[280px] w-full"
               />
               <h3 className="text-2xl font-bold leading-[1.25] text-brand-ink">
@@ -120,7 +121,7 @@ async function IsiBeranda() {
                 href="/guru"
                 className="text-sm font-semibold leading-[1.5] text-brand hover:underline"
               >
-                Kenali para guru →
+                Kenali para guru â†’
               </Link>
             </article>
           </div>
@@ -130,7 +131,7 @@ async function IsiBeranda() {
             <SectionHeading
               eyebrow="Galeri sekolah"
               judul="Momen kebersamaan"
-              tautan="Lihat galeri →"
+              tautan="Lihat galeri â†’"
               href="/galeri"
             />
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -156,27 +157,23 @@ async function IsiBeranda() {
           </p>
           <div className="flex flex-wrap gap-3">
             <ButtonLink href="/spmb" variant="accent">
-              Lihat Informasi SPMB →
+              Lihat Informasi SPMB â†’
             </ButtonLink>
             <ButtonLink href="/kontak" variant="light">
               Kontak Sekolah
             </ButtonLink>
           </div>
-          <p className="text-xs leading-[1.4] text-line-soft">
-            Jadwal pada halaman ini merupakan contoh, bukan pengumuman penerimaan
-            resmi.
-          </p>
         </div>
       </section>
     </>
   );
 }
 
-/** Kerangka pemuatan beranda — meniru tinggi hero agar tidak ada lompatan. */
+/** Kerangka pemuatan beranda â€” meniru tinggi hero agar tidak ada lompatan. */
 function BerandaKerangka() {
   return (
     <div aria-busy="true">
-      <span className="sr-only">Memuat beranda…</span>
+      <span className="sr-only">Memuat berandaâ€¦</span>
 
       {/* Hero */}
       <section className="bg-page-alt">

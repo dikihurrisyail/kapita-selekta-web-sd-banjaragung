@@ -1,12 +1,11 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import { Suspense } from "react";
 import { PageIntro } from "@/components/ui/page-intro";
-import { Alert } from "@/components/ui/alert";
 import { ButtonLink } from "@/components/ui/button";
 import { Panel } from "@/components/ui/card";
 import { ContactChannel } from "@/components/public/contact-channel";
 import { MapPlaceholder } from "@/components/public/map-placeholder";
-import { petaEmbedUrl, petaTautan } from "@/lib/utils/peta";
+import { petaTautan } from "@/lib/utils/peta";
 import { PublicSection } from "@/components/public/public-section";
 import { getProfil } from "@/lib/data/queries";
 
@@ -31,9 +30,9 @@ async function IsiKontak() {
   const profil = await getProfil();
 
   const saluran = [
-    { ikon: "map-pin", label: "Alamat", nilai: profil.alamat ?? "—" },
-    { ikon: "phone", label: "Telepon", nilai: profil.telepon ?? "[nomor resmi sekolah]" },
-    { ikon: "mail", label: "Email", nilai: profil.email ?? "—" },
+    { ikon: "map-pin", label: "Alamat", nilai: profil.alamat ?? "Ã¢â‚¬â€" },
+    { ikon: "phone", label: "Telepon", nilai: profil.telepon ?? "Belum diisi" },
+    { ikon: "mail", label: "Email", nilai: profil.email ?? "Ã¢â‚¬â€" },
   ];
 
   return (
@@ -46,13 +45,8 @@ async function IsiKontak() {
 
       <PublicSection>
         <div className="flex flex-col gap-8">
-          <Alert>
-            Apabila nomor telepon atau alamat belum lengkap, silakan hubungi
-            sekolah untuk memastikan data terbaru.
-          </Alert>
-
           <div className="grid gap-8 lg:grid-cols-[450px_1fr] lg:gap-8">
-            {/* Saluran sekolah — 450px */}
+            {/* Saluran sekolah Ã¢â‚¬â€ 450px */}
             <div className="flex w-full flex-col gap-6 lg:w-[450px] lg:shrink-0">
               <Panel judul="Kontak resmi sekolah">
                 <div className="flex flex-col gap-5">
@@ -70,7 +64,7 @@ async function IsiKontak() {
               <Panel judul="Jam layanan administrasi">
                 <div className="flex flex-col gap-2">
                   <p className="text-sm font-semibold leading-[1.5] text-brand-ink">
-                    {profil.jamLayanan ?? "—"}
+                    {profil.jamLayanan ?? "Ã¢â‚¬â€"}
                   </p>
                   <p className="text-xs leading-[1.4] text-muted">
                     Layanan tutup pada hari libur nasional dan hari besar keagamaan.
@@ -79,22 +73,17 @@ async function IsiKontak() {
               </Panel>
             </div>
 
-            {/* Presentasi lokasi — 718px */}
+            {/* Presentasi lokasi Ã¢â‚¬â€ 718px */}
             <div className="flex flex-col gap-5">
               <MapPlaceholder
                 namaSekolah={profil.nama}
                 petaUrl={profil.petaUrl}
                 className="h-[300px] w-full lg:h-[420px]"
               />
-              {petaEmbedUrl(profil.petaUrl) ? null : (
-                <p className="text-xs leading-[1.4] text-muted">
-                  Peta lokasi bersifat ilustratif. Gunakan tautan di bawah untuk navigasi.
-                </p>
-              )}
               {petaTautan(profil.petaUrl) ? (
                 <div>
                   <ButtonLink href={petaTautan(profil.petaUrl)!} variant="outline">
-                    Buka di peta →
+                    Buka di peta Ã¢â€ â€™
                   </ButtonLink>
                 </div>
               ) : null}
@@ -112,11 +101,11 @@ async function IsiKontak() {
   );
 }
 
-/** Kerangka pemuatan — proporsi sama dengan halaman akhir. */
+/** Kerangka pemuatan Ã¢â‚¬â€ proporsi sama dengan halaman akhir. */
 function KontakKerangka() {
   return (
     <div className="container-page py-14" aria-busy="true">
-      <span className="sr-only">Memuat kontak…</span>
+      <span className="sr-only">Memuat kontakÃ¢â‚¬Â¦</span>
       <div className="flex flex-col gap-3">
         <div className="h-3 w-32 rounded-pill bg-page-alt" />
         <div className="h-9 w-full max-w-[460px] rounded-btn bg-page-alt" />

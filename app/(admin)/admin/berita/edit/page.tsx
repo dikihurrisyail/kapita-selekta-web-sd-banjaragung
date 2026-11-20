@@ -2,12 +2,12 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { io } from "next/cache";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { Panel } from "@/components/ui/card";
 import { Field, Input, Select, Textarea } from "@/components/ui/input";
 import { Foto } from "@/components/ui/foto";
 import { Badge } from "@/components/ui/badge";
 import { FormAksi } from "@/components/admin/form-aksi";
+import { InputFoto } from "@/components/admin/input-foto";
 import { simpanBerita } from "@/lib/actions/konten";
 import { getBerita } from "@/lib/data/queries";
 
@@ -97,14 +97,11 @@ async function FormBerita({ searchParams }: Props) {
                     ratio="16 / 9"
                     className="w-full"
                   />
-                  <div className="flex items-center gap-3">
-                    <Button type="button" variant="outline" size="sm" disabled>
-                      Ubah sampul
-                    </Button>
-                    <span className="text-xs text-muted">
-                      Rasio 16:9, maksimal 5 MB. Unggah aktif setelah Storage terhubung.
-                    </span>
-                  </div>
+                  <InputFoto
+                    name="sampul"
+                    id="sampul"
+                    petunjuk="Rasio 16:9, JPG/PNG/WebP, maksimal 5 MB. Kosongkan bila tidak ingin mengganti sampul."
+                  />
                 </div>
 
                 <Field label="Kategori" htmlFor="kategori">

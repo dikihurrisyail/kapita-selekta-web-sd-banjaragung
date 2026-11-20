@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { UploadCloud } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Panel } from "@/components/ui/card";
 import { Field, Input, Textarea } from "@/components/ui/input";
 import { FormAksi } from "@/components/admin/form-aksi";
+import { InputFoto } from "@/components/admin/input-foto";
 import { simpanProfil } from "@/lib/actions/konten";
 import { getProfil } from "@/lib/data/queries";
 
@@ -92,18 +91,29 @@ async function FormProfil() {
         </div>
 
         <Panel judul="Logo sekolah">
-          <div className="flex flex-col items-center gap-3 rounded-card border border-dashed border-line-soft bg-page px-6 py-10 text-center">
-            <UploadCloud className="size-7 text-line-soft" aria-hidden />
-            <p className="text-sm font-semibold text-brand-ink">
-              Tarik berkas ke sini atau pilih dari perangkat
-            </p>
-            <p className="text-xs text-muted">PNG atau SVG, maksimal 2 MB</p>
-            <Button type="button" variant="outline" size="sm" disabled>
-              Pilih berkas
-            </Button>
-            <p className="text-[11px] text-muted">
-              Unggah berkas akan aktif setelah Supabase Storage terhubung.
-            </p>
+          <div className="flex flex-col gap-4">
+            {profil.logoUrl ? (
+              <div className="flex items-center gap-4 rounded-card border border-line bg-page px-4 py-3">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={profil.logoUrl}
+                  alt="Logo sekolah saat ini"
+                  className="h-14 w-14 shrink-0 object-contain"
+                />
+                <p className="text-xs leading-[1.4] text-muted">
+                  Logo saat ini. Pilih berkas baru untuk menggantinya.
+                </p>
+              </div>
+            ) : null}
+            <InputFoto
+              name="logo"
+              id="logo"
+              variant="zona"
+              accept="image/png,image/svg+xml"
+              teksZona="PNG atau SVG, maksimal 2 MB"
+              modePratinjau="contain"
+              petunjuk="Logo tampil di header dan footer seluruh halaman website."
+            />
           </div>
         </Panel>
 
@@ -160,6 +170,19 @@ async function FormProfil() {
                 name="jam_layanan"
                 defaultValue={profil.jamLayanan ?? ""}
                 placeholder="Senin–Jumat • 07.30–14.00 WIB"
+              />
+            </Field>
+            <Field
+              label="Tautan peta lokasi"
+              htmlFor="peta_url"
+              petunjuk="Alamat Google Maps. Bila diisi, tombol “Buka di peta” muncul di halaman Kontak."
+            >
+              <Input
+                id="peta_url"
+                name="peta_url"
+                type="url"
+                defaultValue={profil.petaUrl ?? ""}
+                placeholder="https://maps.app.goo.gl/..."
               />
             </Field>
           </div>

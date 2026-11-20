@@ -56,8 +56,7 @@ await page.pdf({
   margin: { top: "18mm", right: "16mm", bottom: "20mm", left: "16mm" },
 });
 
-// Hitung jumlah halaman untuk laporan.
-const jumlah = await page.evaluate(() => 0);
+// Selesai — tutup browser sebelum membaca statistik berkas.
 await browser.close();
 
 const stat = fs.statSync(HASIL);

@@ -202,8 +202,10 @@ menyegarkan halaman publik terkait.
   diperbolehkan. Data runtime (`searchParams`, `params`, `cookies`) dibaca di
   dalam `<Suspense>`; halaman detail memakai `export const instant = false`
   agar slug yang tidak ada tetap mengembalikan status **404** yang benar.
-- Unggah berkas: bucket `media` dan policy-nya sudah siap, tetapi tombol unggah
-  di panel masih dinonaktifkan sampai kredensial Supabase diisi dan diuji.
+- **Unggah berkas** (logo sekolah, foto guru, sampul berita, foto galeri) dikirim
+  lewat Server Action ke bucket `media`. Tipe dan ukuran berkas divalidasi di
+  server, bukan di browser, dan berkas lama dihapus otomatis saat diganti atau
+  saat barisnya dihapus — sehingga tidak ada file yatim di Storage.
 - **Ketahanan saat Supabase tidak dapat dijangkau.** Semua klien Supabase memakai
   `db: { retry: false, timeout: 8000 }` (lihat `OPSI_DB_SUPABASE` di
   `lib/supabase/config.ts`). Secara default supabase-js mencoba ulang permintaan

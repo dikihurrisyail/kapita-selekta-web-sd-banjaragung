@@ -131,7 +131,7 @@ async function IsiDashboard() {
             <ul className="flex flex-col">
               {[
                 { label: "Tulis berita baru", href: "/admin/berita/edit" },
-                { label: "Buat pengumuman", href: "/admin/pengumuman" },
+                { label: "Buat pengumuman", href: "/admin/pengumuman/edit" },
                 { label: "Unggah foto galeri", href: "/admin/galeri" },
                 { label: "Perbarui info PPDB", href: "/admin/ppdb" },
               ].map((p) => (

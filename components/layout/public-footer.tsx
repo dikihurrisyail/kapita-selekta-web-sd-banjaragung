@@ -7,13 +7,13 @@ import { SchoolIdentity } from "./school-identity";
  * Kolom: identitas 440 · tautan cepat 180 · kontak (flex-1). Gap 32.
  * Catatan konten dipisah border-t #334155, pt 24.
  */
-export function PublicFooter() {
+export function PublicFooter({ logoUrl }: { logoUrl?: string | null }) {
   return (
     <footer className="w-full bg-brand-ink">
       <div className="container-page flex flex-col gap-8 pt-12 pb-7">
         <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:gap-8">
           <div className="flex w-full flex-col gap-4.5 lg:w-[440px] lg:shrink-0">
-            <SchoolIdentity variant="dark" />
+            <SchoolIdentity variant="dark" logoUrl={logoUrl} />
             <p className="text-sm leading-[1.5] text-line-soft">
               Ruang informasi dan kabar sekolah untuk orang tua, guru, dan
               masyarakat. Bersama mendampingi setiap langkah anak.

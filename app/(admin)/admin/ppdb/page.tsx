@@ -4,6 +4,7 @@ import { Alert } from "@/components/ui/alert";
 import { Panel } from "@/components/ui/card";
 import { Checkbox, Field, Input, Textarea } from "@/components/ui/input";
 import { FormAksi } from "@/components/admin/form-aksi";
+import { FormTahapan } from "@/components/admin/form-tahapan";
 import { simpanPpdb } from "@/lib/actions/konten";
 import { getPpdb } from "@/lib/data/queries";
 
@@ -85,27 +86,14 @@ async function FormPpdb() {
           </Field>
         </Panel>
 
-        {ppdb.tahapan.length > 0 ? (
-          <Panel judul="Jadwal & tahapan">
-            <ol className="flex flex-col gap-4">
-              {ppdb.tahapan.map((t) => (
-                <li
-                  key={t.nomor}
-                  className="flex flex-col gap-1 rounded-card border border-line bg-page p-4"
-                >
-                  <p className="text-sm font-semibold text-brand-ink">
-                    {t.nomor}. {t.judul}
-                  </p>
-                  <p className="text-xs font-semibold text-accent-ink">{t.waktu}</p>
-                  <p className="text-sm leading-[1.5] text-body">{t.deskripsi}</p>
-                </li>
-              ))}
-            </ol>
-            <p className="mt-4 text-xs text-muted">
-              Pengeditan tahapan per baris akan tersedia setelah data asli masuk.
+        <Panel judul="Jadwal & tahapan">
+          <div className="flex flex-col gap-4">
+            <FormTahapan awal={ppdb.tahapan} />
+            <p className="text-xs leading-[1.4] text-muted">
+              Nomor tahap dibuat otomatis mengikuti urutan di atas.
             </p>
-          </Panel>
-        ) : null}
+          </div>
+        </Panel>
 
         <Panel judul="Kontak panitia & tautan opsional">
           <div className="flex flex-col gap-5">

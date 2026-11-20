@@ -1,4 +1,5 @@
 import "server-only";
+import { cache } from "react";
 import { createClient } from "@/lib/supabase/server";
 import { catatErrorSupabase, isSupabaseConfigured } from "@/lib/supabase/config";
 import * as fallback from "@/lib/data/fallback";
@@ -53,7 +54,14 @@ function catat(label: string, error: unknown): void {
 
 /* ------------------------------------------------------------------ Profil */
 
-export async function getProfil(): Promise<ProfilSekolah> {
+/**
+ * Baca profil sekolah.
+ *
+ * Dibungkus cache() agar header, footer, dan isi halaman yang sama
+ * berbagi satu query per permintaan (logo sekolah kini tampil di
+ * header & footer seluruh halaman publik).
+ */
+export const getProfil = cache(async (): Promise<ProfilSekolah> => {
   if (!isSupabaseConfigured()) return fallbackProfil();
 
   try {
@@ -93,7 +101,7 @@ export async function getProfil(): Promise<ProfilSekolah> {
     catat("profil_sekolah", error);
     return fallbackProfil();
   }
-}
+});
 
 function fallbackProfil(): ProfilSekolah {
   return {
@@ -180,6 +188,7 @@ export async function getPengumuman(opsi?: {
     if (error) throw error;
 
     return (data ?? []).map((row) => ({
+      id: row.id,
       slug: row.slug,
       tanggal: row.tanggal,
       kategori: row.kategori,

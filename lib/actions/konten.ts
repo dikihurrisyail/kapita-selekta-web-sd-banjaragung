@@ -49,6 +49,51 @@ function segarkanPublik(...rute: string[]) {
   rute.forEach((r) => revalidatePath(r));
 }
 
+/* ------------------------------------------------------------- Unggah berkas */
+
+/** Klien Supabase dari Server Action (sudah membawa sesi admin). */
+type Klien = Awaited<ReturnType<typeof createClient>>;
+
+/** Batas ukuran & tipe berkas logo (sesuai keterangan di panel admin). */
+const BATAS_UKURAN_LOGO = 2 * 1024 * 1024;
+const TIPE_LOGO = new Set(["image/png", "image/svg+xml"]);
+
+type HasilUnggah = { ok: true; url: string } | { ok: false; pesan: string };
+
+/**
+ * Unggah satu berkas ke bucket `media` lalu kembalikan URL publiknya.
+ *
+ * Dipakai bersama oleh unggahan logo, foto guru, dan sampul berita. Validasi
+ * tipe/ukuran dilakukan pemanggil SEBELUM fungsi ini dipanggil.
+ */
+async function unggahKeMedia(
+  supabase: Klien,
+  jalur: string,
+  berkas: File,
+): Promise<HasilUnggah> {
+  const { error } = await supabase.storage
+    .from("media")
+    .upload(jalur, berkas, { contentType: berkas.type, upsert: false });
+
+  if (error) return { ok: false, pesan: `Gagal mengunggah berkas: ${error.message}` };
+
+  const {
+    data: { publicUrl },
+  } = supabase.storage.from("media").getPublicUrl(jalur);
+
+  return { ok: true, url: publicUrl };
+}
+
+/**
+ * Hapus berkas di bucket `media` bila URL memang menunjuk ke bucket kita.
+ * URL dari luar (mis. gambar contoh) diabaikan agar tidak menghapus berkas
+ * milik pihak lain.
+ */
+async function hapusDariMedia(supabase: Klien, url: string | null | undefined) {
+  const jalur = jalurStorage(url);
+  if (jalur) await supabase.storage.from("media").remove([jalur]);
+}
+
 /* ------------------------------------------------------------------ Profil */
 
 export async function simpanProfil(
@@ -59,6 +104,37 @@ export async function simpanProfil(
   if (!isSupabaseConfigured()) return MODE_DEMO;
 
   const supabase = await createClient();
+
+  /* Logo baru (opsional) — divalidasi di server, bukan di browser. */
+  const logo = formData.get("logo");
+  let logoBaru: string | null = null;
+  if (logo instanceof File && logo.size > 0) {
+    if (!TIPE_LOGO.has(logo.type)) {
+      return { ok: false, pesan: "Format logo harus PNG atau SVG." };
+    }
+    if (logo.size > BATAS_UKURAN_LOGO) {
+      return { ok: false, pesan: "Ukuran logo maksimal 2 MB." };
+    }
+    const jalur = `logo/sekolah-${Date.now()}-${namaBerkasAman(logo.name)}`;
+    const hasil = await unggahKeMedia(supabase, jalur, logo);
+    if (!hasil.ok) return { ok: false, pesan: hasil.pesan };
+    logoBaru = hasil.url;
+  }
+
+  /* Tautan peta dipakai tombol "Buka di peta" di halaman Kontak. */
+  const petaUrl = teks(formData, "peta_url");
+  if (petaUrl && !/^https?:\/\//i.test(petaUrl)) {
+    if (logoBaru) await hapusDariMedia(supabase, logoBaru);
+    return { ok: false, pesan: "Tautan peta harus diawali http:// atau https://" };
+  }
+
+  /* Simpan logo lama untuk membersihkan berkasnya setelah baris tersimpan. */
+  const { data: lama } = await supabase
+    .from("profil_sekolah")
+    .select("logo_url")
+    .eq("id", 1)
+    .maybeSingle();
+
   const { error } = await supabase
     .from("profil_sekolah")
     .update({
@@ -77,14 +153,30 @@ export async function simpanProfil(
       visi: teks(formData, "visi") || null,
       misi: barisTeks(formData, "misi"),
       sambutan_kepala: teks(formData, "sambutan_kepala") || null,
+      peta_url: petaUrl || null,
+      ...(logoBaru ? { logo_url: logoBaru } : {}),
     })
     .eq("id", 1);
 
-  if (error) return { ok: false, pesan: `Gagal menyimpan: ${error.message}` };
+  if (error) {
+    /* Bila penyimpanan gagal, buang berkas yang barusan diunggah. */
+    if (logoBaru) await hapusDariMedia(supabase, logoBaru);
+    return { ok: false, pesan: `Gagal menyimpan: ${error.message}` };
+  }
+
+  /* Logo lama dihapus hanya setelah logo baru benar-benar tersimpan. */
+  if (logoBaru && lama?.logo_url) await hapusDariMedia(supabase, lama.logo_url);
 
   segarkanPublik("/profil", "/kontak", "/ppdb");
+  /* Logo tampil di header & footer semua halaman publik. */
+  revalidatePath("/", "layout");
   revalidatePath("/admin/profil");
-  return { ok: true, pesan: "Profil sekolah berhasil disimpan." };
+  return {
+    ok: true,
+    pesan: logoBaru
+      ? "Profil dan logo sekolah berhasil disimpan."
+      : "Profil sekolah berhasil disimpan.",
+  };
 }
 
 /* -------------------------------------------------------------------- Guru */
@@ -105,23 +197,67 @@ export async function simpanGuru(
   }
 
   const supabase = await createClient();
+
+  /* Foto baru (opsional) — divalidasi di server, bukan di browser. */
+  const foto = formData.get("foto");
+  let fotoBaru: string | null = null;
+  if (foto instanceof File && foto.size > 0) {
+    if (!TIPE_FOTO.has(foto.type)) {
+      return { ok: false, pesan: "Format foto harus JPG, PNG, atau WebP." };
+    }
+    if (foto.size > BATAS_UKURAN_FOTO) {
+      return { ok: false, pesan: "Ukuran foto maksimal 5 MB." };
+    }
+    const jalur = `guru/${Date.now()}-${namaBerkasAman(foto.name)}`;
+    const hasil = await unggahKeMedia(supabase, jalur, foto);
+    if (!hasil.ok) return { ok: false, pesan: hasil.pesan };
+    fotoBaru = hasil.url;
+  }
+
+  /* Foto lama dibutuhkan untuk membersihkan berkas setelah data tersimpan. */
+  let fotoLama: string | null = null;
+  if (id) {
+    const { data: lama } = await supabase
+      .from("guru")
+      .select("foto_url")
+      .eq("id", id)
+      .maybeSingle();
+    fotoLama = lama?.foto_url ?? null;
+  }
+
   const data = {
     nama,
     jabatan,
     nip: teks(formData, "nip") || null,
     publik: boolean(formData, "publik"),
     urutan: angka(formData, "urutan", 0),
+    ...(fotoBaru ? { foto_url: fotoBaru } : {}),
   };
 
   const { error } = id
     ? await supabase.from("guru").update(data).eq("id", id)
     : await supabase.from("guru").insert(data);
 
-  if (error) return { ok: false, pesan: `Gagal menyimpan: ${error.message}` };
+  if (error) {
+    /* Jangan tinggalkan berkas tanpa baris tabel. */
+    if (fotoBaru) await hapusDariMedia(supabase, fotoBaru);
+    return { ok: false, pesan: `Gagal menyimpan: ${error.message}` };
+  }
+
+  if (fotoBaru && fotoLama) await hapusDariMedia(supabase, fotoLama);
 
   segarkanPublik("/guru");
   revalidatePath("/admin/guru");
-  return { ok: true, pesan: id ? "Data guru diperbarui." : "Guru baru ditambahkan." };
+  return {
+    ok: true,
+    pesan: id
+      ? fotoBaru
+        ? "Data dan foto guru diperbarui."
+        : "Data guru diperbarui."
+      : fotoBaru
+        ? "Guru baru ditambahkan beserta fotonya."
+        : "Guru baru ditambahkan.",
+  };
 }
 
 export async function hapusGuru(id: string): Promise<HasilAksi> {
@@ -129,8 +265,18 @@ export async function hapusGuru(id: string): Promise<HasilAksi> {
   if (!isSupabaseConfigured()) return MODE_DEMO;
 
   const supabase = await createClient();
+
+  /* Simpan URL foto sebelum barisnya hilang agar berkasnya bisa ikut dibersihkan. */
+  const { data: guru } = await supabase
+    .from("guru")
+    .select("foto_url")
+    .eq("id", id)
+    .maybeSingle();
+
   const { error } = await supabase.from("guru").delete().eq("id", id);
   if (error) return { ok: false, pesan: `Gagal menghapus: ${error.message}` };
+
+  await hapusDariMedia(supabase, guru?.foto_url);
 
   segarkanPublik("/guru");
   revalidatePath("/admin/guru");
@@ -199,6 +345,34 @@ export async function simpanBerita(
   if (!judul) return { ok: false, pesan: "Judul berita wajib diisi." };
 
   const supabase = await createClient();
+
+  /* Sampul baru (opsional) — divalidasi di server, bukan di browser. */
+  const sampul = formData.get("sampul");
+  let sampulBaru: string | null = null;
+  if (sampul instanceof File && sampul.size > 0) {
+    if (!TIPE_FOTO.has(sampul.type)) {
+      return { ok: false, pesan: "Format sampul harus JPG, PNG, atau WebP." };
+    }
+    if (sampul.size > BATAS_UKURAN_FOTO) {
+      return { ok: false, pesan: "Ukuran sampul maksimal 5 MB." };
+    }
+    const jalur = `berita/${Date.now()}-${namaBerkasAman(sampul.name)}`;
+    const hasil = await unggahKeMedia(supabase, jalur, sampul);
+    if (!hasil.ok) return { ok: false, pesan: hasil.pesan };
+    sampulBaru = hasil.url;
+  }
+
+  /* Sampul lama dibutuhkan untuk membersihkan berkas setelah berita tersimpan. */
+  let sampulLama: string | null = null;
+  if (slugLama) {
+    const { data: lama } = await supabase
+      .from("berita")
+      .select("foto_url")
+      .eq("slug", slugLama)
+      .maybeSingle();
+    sampulLama = lama?.foto_url ?? null;
+  }
+
   const data = {
     judul,
     slug: teks(formData, "slug") || slugify(judul),
@@ -209,17 +383,31 @@ export async function simpanBerita(
     menit_baca: angka(formData, "menit_baca", 3),
     penulis: teks(formData, "penulis") || "Administrator",
     status: (teks(formData, "status") || "Draf") as "Terbit" | "Draf",
+    ...(sampulBaru ? { foto_url: sampulBaru } : {}),
   };
 
   const { error } = slugLama
     ? await supabase.from("berita").update(data).eq("slug", slugLama)
     : await supabase.from("berita").insert(data);
 
-  if (error) return { ok: false, pesan: `Gagal menyimpan: ${error.message}` };
+  if (error) {
+    /* Jangan tinggalkan berkas tanpa baris tabel. */
+    if (sampulBaru) await hapusDariMedia(supabase, sampulBaru);
+    return { ok: false, pesan: `Gagal menyimpan: ${error.message}` };
+  }
+
+  if (sampulBaru && sampulLama) await hapusDariMedia(supabase, sampulLama);
 
   segarkanPublik("/berita", `/berita/${data.slug}`, `/berita/${slugLama}`);
   revalidatePath("/admin/berita");
-  return { ok: true, pesan: slugLama ? "Berita diperbarui." : "Berita disimpan." };
+  return {
+    ok: true,
+    pesan: slugLama
+      ? sampulBaru
+        ? "Berita dan sampul berhasil diperbarui."
+        : "Berita diperbarui."
+      : "Berita disimpan.",
+  };
 }
 
 export async function hapusBerita(slug: string): Promise<HasilAksi> {
@@ -227,8 +415,18 @@ export async function hapusBerita(slug: string): Promise<HasilAksi> {
   if (!isSupabaseConfigured()) return MODE_DEMO;
 
   const supabase = await createClient();
+
+  /* Simpan URL sampul sebelum barisnya hilang agar berkasnya ikut dibersihkan. */
+  const { data: berita } = await supabase
+    .from("berita")
+    .select("foto_url")
+    .eq("slug", slug)
+    .maybeSingle();
+
   const { error } = await supabase.from("berita").delete().eq("slug", slug);
   if (error) return { ok: false, pesan: `Gagal menghapus: ${error.message}` };
+
+  await hapusDariMedia(supabase, berita?.foto_url);
 
   segarkanPublik("/berita");
   revalidatePath("/admin/berita");
@@ -564,7 +762,51 @@ export async function simpanPpdb(
 
   if (infoError) return { ok: false, pesan: `Gagal menyimpan: ${infoError.message}` };
 
-  segarkanPublik("/ppdb");
+  /*
+   * Tahapan dikirim sebagai isian berulang (satu rangkap per baris). Nomor
+   * tahap dibuat otomatis dari urutan baris supaya admin tidak perlu
+   * mengisinya dan hasilnya selalu rapi di halaman publik.
+   */
+  const judulTahap = formData.getAll("tahapan_judul").map((v) => String(v).trim());
+  const waktuTahap = formData.getAll("tahapan_waktu").map((v) => String(v).trim());
+  const deskripsiTahap = formData
+    .getAll("tahapan_deskripsi")
+    .map((v) => String(v).trim());
+
+  const tahapan = judulTahap
+    .map((judul, i) => ({
+      nomor: String(i + 1).padStart(2, "0"),
+      judul,
+      waktu: waktuTahap[i] ?? "",
+      deskripsi: deskripsiTahap[i] ?? "",
+      urutan: i + 1,
+    }))
+    .filter((t) => t.judul !== "");
+
+  /* Ganti seluruh tahapan: hapus yang lama, lalu sisipkan susunan baru. */
+  const { error: hapusError } = await supabase
+    .from("ppdb_tahapan")
+    .delete()
+    .neq("urutan", -1);
+
+  if (hapusError) {
+    return {
+      ok: false,
+      pesan: `Informasi tersimpan, tetapi tahapan lama gagal dibersihkan: ${hapusError.message}`,
+    };
+  }
+
+  if (tahapan.length > 0) {
+    const { error: sisipError } = await supabase.from("ppdb_tahapan").insert(tahapan);
+    if (sisipError) {
+      return {
+        ok: false,
+        pesan: `Informasi tersimpan, tetapi tahapan gagal disimpan: ${sisipError.message}. Susun ulang tahapan lalu simpan lagi.`,
+      };
+    }
+  }
+
+  segarkanPublik("/ppdb", "/pengumuman");
   revalidatePath("/admin/ppdb");
-  return { ok: true, pesan: "Informasi PPDB disimpan." };
+  return { ok: true, pesan: "Informasi dan tahapan PPDB disimpan." };
 }

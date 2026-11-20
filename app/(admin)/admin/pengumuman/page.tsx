@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
+import Link from "next/link";
 import { Pencil, Trash2 } from "lucide-react";
 import { Alert } from "@/components/ui/alert";
 import { Badge, toneUntukStatus } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Button, ButtonLink } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { SearchField } from "@/components/ui/input";
 import { TombolHapus } from "@/components/admin/form-aksi";
@@ -31,9 +32,14 @@ export default function AdminPengumumanPage({ searchParams }: Props) {
           placeholder="Cari judul pengumuman"
           aria-label="Cari pengumuman"
         />
-        <Button type="submit" variant="accent">
-          Cari
-        </Button>
+        <div className="flex gap-3">
+          <ButtonLink href="/admin/pengumuman/edit" variant="accent">
+            Buat pengumuman
+          </ButtonLink>
+          <Button type="submit" variant="outline">
+            Cari
+          </Button>
+        </div>
       </form>
 
       <Alert>Pengumuman berstatus draf tidak akan tampil di website publik.</Alert>
@@ -100,13 +106,13 @@ async function DaftarPengumuman({ searchParams }: Props) {
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-2">
-                        <a
-                          href={`/pengumuman/${p.slug}`}
-                          aria-label={`Lihat ${p.judul}`}
+                        <Link
+                          href={`/admin/pengumuman/edit?slug=${p.slug}`}
+                          aria-label={`Ubah ${p.judul}`}
                           className="inline-flex size-9 items-center justify-center rounded-btn border border-line-soft text-brand hover:bg-page-alt"
                         >
                           <Pencil className="size-4" aria-hidden />
-                        </a>
+                        </Link>
                         <TombolHapus action={hapusPengumuman} id={p.slug} label={p.judul}>
                           <Trash2 className="size-4" aria-hidden />
                         </TombolHapus>

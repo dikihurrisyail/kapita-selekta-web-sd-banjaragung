@@ -9,6 +9,7 @@
 export type Foto = { src: string | null; label: string };
 
 export type Pengumuman = {
+  id?: string;
   slug: string;
   tanggal: string;
   kategori: string;

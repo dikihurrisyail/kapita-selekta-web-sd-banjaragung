@@ -13,7 +13,7 @@ import { SchoolIdentity } from "./school-identity";
  * Menu: 14px SemiBold, item aktif #1E3A8A dengan garis bawah 2px.
  * CTA "PPDB Info": bg #D97706, teks #0F172A.
  */
-export function PublicHeader() {
+export function PublicHeader({ logoUrl }: { logoUrl?: string | null }) {
   const pathname = usePathname();
   const [buka, setBuka] = useState(false);
 
@@ -23,7 +23,7 @@ export function PublicHeader() {
   return (
     <header className="w-full border-b border-line bg-white">
       <div className="container-page flex h-[84px] items-center justify-between gap-6">
-        <SchoolIdentity />
+        <SchoolIdentity logoUrl={logoUrl} />
 
         {/* Menu desktop — tersembunyi di bawah 1024px (frame 390 memakai tombol menu). */}
         <nav aria-label="Navigasi utama" className="hidden items-center gap-5 lg:flex">

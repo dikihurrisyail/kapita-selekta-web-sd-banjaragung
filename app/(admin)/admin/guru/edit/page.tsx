@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { Panel } from "@/components/ui/card";
 import { Field, Input, Switch } from "@/components/ui/input";
 import { Foto } from "@/components/ui/foto";
 import { FormAksi } from "@/components/admin/form-aksi";
+import { InputFoto } from "@/components/admin/input-foto";
 import { simpanGuru } from "@/lib/actions/konten";
 import { getGuru } from "@/lib/data/queries";
 
@@ -100,13 +100,11 @@ async function FormGuru({ searchParams }: Props) {
                 ratio="3 / 4"
                 className="w-full"
               />
-              <p className="text-xs text-muted">Rasio 3:4, minimal 600 × 800 px.</p>
-              <Button type="button" variant="outline" size="sm" disabled>
-                Unggah foto
-              </Button>
-              <p className="text-[11px] text-muted">
-                Unggah foto aktif setelah Supabase Storage terhubung.
-              </p>
+              <InputFoto
+                name="foto"
+                id="foto"
+                petunjuk="Rasio 3:4, minimal 600 × 800 px. JPG, PNG, atau WebP, maksimal 5 MB. Kosongkan bila tidak ingin mengganti foto."
+              />
             </div>
           </Panel>
 

@@ -138,7 +138,7 @@
     display: flex;
     justify-content: space-between;
     gap: 4mm;
-    padding: 1.9mm 0;
+    padding: 1.2mm 0;
     border-bottom: 1px dotted var(--garis);
   }
 
@@ -371,40 +371,47 @@
     <li>
       <span class="nomor">7</span>
       <span class="judul-di">
+        Mengelola Pengumuman
+        <span class="anak">Menulis, mengubah, dan menerbitkan pengumuman sekolah</span>
+      </span>
+    </li>
+    <li>
+      <span class="nomor">8</span>
+      <span class="judul-di">
         Mengelola Berita
         <span class="anak">Menulis berita, menyimpan draf, dan menerbitkan</span>
       </span>
     </li>
     <li>
-      <span class="nomor">8</span>
+      <span class="nomor">9</span>
       <span class="judul-di">
         Mengelola Galeri Foto
         <span class="anak">Membuat album, mengunggah foto, dan menghapus</span>
       </span>
     </li>
     <li>
-      <span class="nomor">9</span>
+      <span class="nomor">10</span>
       <span class="judul-di">
         Mengelola Informasi PPDB
         <span class="anak">Periode, persyaratan, tahapan, dan tautan pendaftaran</span>
       </span>
     </li>
     <li>
-      <span class="nomor">10</span>
+      <span class="nomor">11</span>
       <span class="judul-di">
         Fitur yang Belum Aktif
-        <span class="anak">Bagian yang masih menunggu data resmi atau koneksi penyimpanan</span>
+        <span class="anak">Bagian yang masih menunggu data resmi sekolah</span>
       </span>
     </li>
     <li>
-      <span class="nomor">11</span>
+      <span class="nomor">12</span>
       <span class="judul-di">
         Pertanyaan yang Sering Diajukan
         <span class="anak">Masalah umum dan cara mengatasinya</span>
       </span>
     </li>
     <li>
-      <span class="nomor">12</span>
+      <span class="nomor">13</span>
       <span class="judul-di">
         Aturan Penulisan Konten
         <span class="anak">Panduan singkat agar isi website rapi dan aman</span>
@@ -416,7 +423,7 @@
 <div class="kotak" style="margin-top:6mm;">
   <span class="judul-kotak">Cara membaca panduan ini</span>
   Bagian <strong>2</strong> ditujukan untuk siapa saja yang membuka website.
-  Bagian <strong>3 sampai 9</strong> khusus untuk administrator sekolah yang
+  Bagian <strong>3 sampai 13</strong> khusus untuk administrator sekolah yang
   memiliki akun panel admin. Bila Anda hanya ingin mencari informasi sekolah,
   cukup baca Bagian 2.
 </div>
@@ -736,7 +743,7 @@
     <tr><td><strong>Dashboard</strong></td><td>Ringkasan jumlah konten dan aktivitas terbaru.</td></tr>
     <tr><td><strong>Profil Sekolah</strong></td><td>Identitas, sejarah, visi misi, fasilitas, dan kontak sekolah.</td></tr>
     <tr><td><strong>Data Guru</strong></td><td>Menambah dan mengubah data pendidik.</td></tr>
-    <tr><td><strong>Pengumuman</strong></td><td>Daftar pengumuman beserta status dan aksi.</td></tr>
+    <tr><td><strong>Pengumuman</strong></td><td>Menulis, mengubah, dan menghapus pengumuman sekolah.</td></tr>
     <tr><td><strong>Berita</strong></td><td>Menulis, mengubah, dan menerbitkan berita.</td></tr>
     <tr><td><strong>Galeri</strong></td><td>Membuat album dan mengunggah foto kegiatan.</td></tr>
     <tr><td><strong>Informasi PPDB</strong></td><td>Periode, persyaratan, tahapan, dan kontak panitia.</td></tr>
@@ -813,7 +820,7 @@
 
 <p>
   Hampir semua pekerjaan di panel admin mengikuti urutan yang sama. Pola ini
-  berlaku untuk profil, guru, berita, galeri, maupun PPDB:
+  berlaku untuk profil, guru, pengumuman, berita, galeri, maupun PPDB:
 </p>
 
 <ol class="langkah">
@@ -855,6 +862,10 @@
       <td>Nama sekolah, tagline, NPSN, tahun ajaran.</td>
     </tr>
     <tr>
+      <td><strong>Logo sekolah</strong></td>
+      <td>Berkas logo PNG atau SVG (maksimal 2 MB).</td>
+    </tr>
+    <tr>
       <td><strong>Status sekolah</strong></td>
       <td>Status (negeri/swasta), akreditasi, nama kepala sekolah.</td>
     </tr>
@@ -868,7 +879,7 @@
     </tr>
     <tr>
       <td><strong>Alamat &amp; layanan kontak</strong></td>
-      <td>Alamat, telepon, email, dan jam layanan.</td>
+      <td>Alamat, telepon, email, jam layanan, dan tautan peta lokasi.</td>
     </tr>
   </tbody>
 </table>
@@ -878,14 +889,21 @@
 <ol class="langkah">
   <li>Buka menu <strong>Profil Sekolah</strong>.</li>
   <li>Ubah isian yang perlu diperbarui.</li>
+  <li>
+    Untuk mengganti logo, pilih berkas logo baru pada panel
+    <strong>Logo sekolah</strong> — pratinjau muncul sebelum disimpan.
+  </li>
   <li>Tekan <strong>Simpan perubahan</strong> pada bar di bawah halaman.</li>
   <li>Buka halaman <strong>Profil</strong> dan <strong>Kontak</strong> di website publik untuk memeriksa hasilnya.</li>
 </ol>
 
 <div class="kotak">
-  <span class="judul-kotak">Menulis misi</span>
-  Isi kolom <strong>Misi</strong> dengan <strong>satu butir per baris</strong>.
-  Setiap baris baru akan tampil sebagai butir terpisah di website.
+  <span class="judul-kotak">Misi, logo, dan tautan peta</span>
+  Isi kolom <strong>Misi</strong> dengan <strong>satu butir per baris</strong> —
+  setiap baris baru tampil sebagai butir terpisah di website. Logo yang diunggah
+  langsung tampil di header dan footer seluruh halaman. Tautan peta diisi dengan
+  alamat Google Maps; bila diisi, tombol <strong>Buka di peta</strong> muncul di
+  halaman Kontak.
 </div>
 
 <!-- ============================ 6. GURU ============================ -->
@@ -911,6 +929,10 @@
     Pastikan sakelar <strong>Tampilkan di halaman publik</strong> aktif bila data
     ingin langsung terlihat.
   </li>
+  <li>
+    Bila ingin memasang foto, pilih berkas pada panel <strong>Foto guru</strong>
+    (rasio 3:4, maksimal 5 MB).
+  </li>
   <li>Tekan <strong>Tambah guru</strong> pada bar di bawah halaman.</li>
 </ol>
 
@@ -920,6 +942,12 @@
   Pada tabel Data Guru, temukan nama yang ingin diubah, klik
   <strong>ikon pensil</strong> pada kolom Aksi, perbarui isian, lalu tekan
   <strong>Simpan guru</strong>.
+</p>
+
+<p>
+  Foto juga dapat diganti dari halaman yang sama: pilih berkas baru pada panel
+  <strong>Foto guru</strong>, lalu simpan. Biarkan kosong bila tidak ingin
+  mengganti foto yang sudah ada.
 </p>
 
 <h3>6.3 Menyembunyikan data tanpa menghapus</h3>
@@ -951,8 +979,59 @@
   <li>Baca konfirmasi yang muncul, lalu setujui atau batalkan.</li>
 </ol>
 
-<!-- ============================ 7. BERITA ============================ -->
-<h2 class="bagian halaman-baru">7. Mengelola Berita</h2>
+<!-- ============================ 7. PENGUMUMAN ============================ -->
+<h2 class="bagian halaman-baru">7. Mengelola Pengumuman</h2>
+
+<p>
+  Halaman <strong>Pengumuman</strong> adalah papan informasi sekolah. Dari sini
+  Anda menulis pengumuman baru, memperbaiki yang sudah ada, dan menghapus yang
+  tidak diperlukan lagi.
+</p>
+
+<h3>7.1 Menulis pengumuman baru</h3>
+
+<ol class="langkah">
+  <li>Buka menu <strong>Pengumuman</strong>, lalu tekan <strong>Buat pengumuman</strong>.</li>
+  <li>
+    Isi <strong>Judul pengumuman</strong> (wajib). Kolom <strong>Slug</strong>
+    boleh dikosongkan — alamatnya dibuat otomatis dari judul.
+  </li>
+  <li>Isi <strong>Kategori</strong>, misalnya “Akademik” atau “Kegiatan”.</li>
+  <li>
+    Tulis isi pengumuman pada kotak <strong>Isi pengumuman</strong>. Pisahkan
+    paragraf dengan menekan Enter.
+  </li>
+  <li>
+    Pada panel <strong>Publikasi</strong>, pilih <strong>Status</strong>:
+    <strong>Draf</strong> bila belum siap tayang, atau <strong>Terbit</strong>
+    bila siap dibaca orang tua.
+  </li>
+  <li>Periksa <strong>Tanggal tayang</strong>.</li>
+  <li>
+    Isi <strong>Ringkasan</strong> — teks pendek yang tampil pada kartu
+    pengumuman di beranda.
+  </li>
+  <li>Tekan <strong>Simpan draf</strong> atau <strong>Simpan pengumuman</strong>.</li>
+</ol>
+
+<h3>7.2 Mengubah dan menghapus pengumuman</h3>
+
+<p>
+  Pada tabel pengumuman, klik <strong>ikon pensil</strong> untuk membuka
+  pengumuman tersebut, perbarui isinya, lalu tekan
+  <strong>Simpan pengumuman</strong>. Untuk menghapus, klik
+  <strong>ikon tempat sampah</strong> lalu setujui konfirmasi yang muncul.
+</p>
+
+<div class="kotak peringatan">
+  <span class="judul-kotak">Draf tidak terlihat pengunjung</span>
+  Pengumuman berstatus <strong>Draf</strong> hanya tampil di panel admin. Ubah
+  status menjadi <strong>Terbit</strong> saat isinya sudah final agar muncul di
+  beranda dan halaman Pengumuman.
+</div>
+
+<!-- ============================ 8. BERITA ============================ -->
+<h2 class="bagian halaman-baru">8. Mengelola Berita</h2>
 
 <p>
   Halaman <strong>Berita</strong> memuat daftar seluruh berita beserta status
@@ -960,7 +1039,7 @@
   sudah ada.
 </p>
 
-<h3>7.1 Menulis berita baru</h3>
+<h3>8.1 Menulis berita baru</h3>
 
 <ol class="langkah">
   <li>Buka menu <strong>Berita</strong>.</li>
@@ -970,6 +1049,10 @@
     dikosongkan — akan dibuat otomatis dari judul.
   </li>
   <li>Isi <strong>Kategori</strong>, misalnya “Kegiatan” atau “Prestasi”.</li>
+  <li>
+    Bila ingin memasang sampul, pilih berkas pada bagian
+    <strong>Sampul berita</strong> (rasio 16:9, maksimal 5 MB).
+  </li>
   <li>
     Tulis isi berita pada kotak <strong>Isi berita</strong>. Pisahkan paragraf
     dengan menekan Enter.
@@ -990,7 +1073,7 @@
   </li>
 </ol>
 
-<h3>7.2 Menyimpan sebagai draf lebih dahulu</h3>
+<h3>8.2 Menyimpan sebagai draf lebih dahulu</h3>
 
 <p>
   Cara aman menulis berita panjang: simpan dengan status <strong>Draf</strong>,
@@ -998,7 +1081,7 @@
   sudah siap. Berita berstatus draf tidak akan terlihat pengunjung.
 </p>
 
-<h3>7.3 Mengubah berita</h3>
+<h3>8.3 Mengubah berita</h3>
 
 <ol class="langkah">
   <li>Pada tabel Berita, temukan judul yang ingin diubah.</li>
@@ -1006,7 +1089,7 @@
   <li>Perbarui isian, lalu tekan <strong>Simpan berita</strong>.</li>
 </ol>
 
-<h3>7.4 Menyaring dan mencari berita</h3>
+<h3>8.4 Menyaring dan mencari berita</h3>
 
 <p>
   Gunakan tombol <strong>Semua</strong>, <strong>Terbit</strong>, atau
@@ -1015,22 +1098,22 @@
   kategori.
 </p>
 
-<div class="kotak peringatan">
-  <span class="judul-kotak">Mengganti gambar sampul berita</span>
-  Tombol <strong>Ubah sampul</strong> pada halaman tulis berita
-  <strong>belum aktif</strong>. Saat ini berita memakai gambar ilustrasi bawaan.
-  Penggantian gambar sampul menunggu penyimpanan gambar terhubung sepenuhnya.
+<div class="kotak">
+  <span class="judul-kotak">Mengganti sampul berita</span>
+  Sampul bisa diganti kapan saja: buka berita lewat ikon pensil, pilih berkas
+  baru pada bagian <strong>Sampul berita</strong>, lalu simpan. Biarkan kosong
+  bila tidak ingin mengganti sampul yang sudah ada.
 </div>
 
-<!-- ============================ 8. GALERI ============================ -->
-<h2 class="bagian halaman-baru">8. Mengelola Galeri Foto</h2>
+<!-- ============================ 9. GALERI ============================ -->
+<h2 class="bagian halaman-baru">9. Mengelola Galeri Foto</h2>
 
 <p>
   Halaman <strong>Galeri</strong> dipakai untuk membuat album dan mengunggah
   foto dokumentasi kegiatan. Foto hanya bisa diunggah setelah album dibuat.
 </p>
 
-<h3>8.1 Membuat album baru</h3>
+<h3>9.1 Membuat album baru</h3>
 
 <ol class="langkah">
   <li>Buka menu <strong>Galeri</strong>.</li>
@@ -1046,7 +1129,7 @@
   album, dan menambahkan akhiran angka bila judulnya sudah pernah dipakai.
 </div>
 
-<h3>8.2 Mengunggah foto</h3>
+<h3>9.2 Mengunggah foto</h3>
 
 <ol class="langkah">
   <li>Pada panel <strong>Unggah dokumentasi</strong>, pilih <strong>Album tujuan</strong>.</li>
@@ -1070,7 +1153,7 @@
   layar. Tulis keterangan singkat yang menjelaskan isi foto.
 </div>
 
-<h3>8.3 Melihat dan menghapus foto</h3>
+<h3>9.3 Melihat dan menghapus foto</h3>
 
 <p>
   Setiap album tampil sebagai kartu berisi sampul, judul, kategori, dan jumlah
@@ -1091,8 +1174,40 @@
   berisi banyak foto penting, pindahkan atau catat dulu sebelum menghapus.
 </div>
 
-<!-- ============================ 9. PPDB ============================ -->
-<h2 class="bagian">9. Mengelola Informasi PPDB</h2>
+<h3>9.4 Merapikan galeri</h3>
+
+<p>
+  Galeri yang rapi memudahkan orang tua menemukan dokumentasi kegiatan anaknya.
+  Beberapa kebiasaan berikut membantu:
+</p>
+
+<ul class="ringkas">
+  <li>
+    <strong>Buat album per kegiatan</strong>, bukan satu album besar untuk
+    seluruh tahun ajaran. Contoh: “Pekan Literasi 2026”.
+  </li>
+  <li>
+    <strong>Pilih kategori yang sesuai</strong> — Kegiatan, Akademik, atau
+    Lingkungan — agar filter di halaman galeri publik bekerja dengan baik.
+  </li>
+  <li>
+    <strong>Unggah foto terbaik lebih dahulu</strong>, karena foto pertama
+    otomatis menjadi sampul album.
+  </li>
+  <li>
+    <strong>Hindari foto yang memperlihatkan wajah siswa secara jelas</strong>
+    tanpa izin orang tua.
+  </li>
+</ul>
+
+<div class="kotak">
+  <span class="judul-kotak">Album kosong sebaiknya dihapus</span>
+  Album tanpa foto tetap tampil sebagai kartu kosong di website. Bila album
+  batal dipakai, hapuslah agar halaman galeri tidak terlihat berantakan.
+</div>
+
+<!-- ============================ 10. PPDB ============================ -->
+<h2 class="bagian halaman-baru">10. Mengelola Informasi PPDB</h2>
 
 <p>
   Halaman <strong>Informasi PPDB</strong> mengatur seluruh isi halaman
@@ -1100,7 +1215,7 @@
   calon orang tua, jadi pastikan selalu mutakhir.
 </p>
 
-<h3>9.1 Bagian yang dapat diubah</h3>
+<h3>10.1 Bagian yang dapat diubah</h3>
 
 <table>
   <thead>
@@ -1120,7 +1235,7 @@
     </tr>
     <tr>
       <td><strong>Jadwal &amp; tahapan</strong></td>
-      <td>Ditampilkan sebagai daftar tahapan (lihat catatan di bawah).</td>
+      <td>Daftar tahapan yang dapat ditambah, diubah, dan dihapus satu per satu.</td>
     </tr>
     <tr>
       <td><strong>Kontak panitia &amp; tautan opsional</strong></td>
@@ -1129,11 +1244,14 @@
   </tbody>
 </table>
 
-<h3>9.2 Cara memperbarui informasi PPDB</h3>
+<h3>10.2 Cara memperbarui informasi PPDB</h3>
 
 <ol class="langkah">
   <li>Buka menu <strong>Informasi PPDB</strong>.</li>
   <li>Perbarui isian yang diperlukan.</li>
+  <li>
+    Susun ulang <strong>Jadwal &amp; tahapan</strong> bila perlu (lihat 10.3).
+  </li>
   <li>Tekan <strong>Simpan informasi PPDB</strong>.</li>
   <li>Buka halaman <strong>PPDB Info</strong> di website publik untuk memeriksa hasilnya.</li>
 </ol>
@@ -1147,20 +1265,41 @@
   lalu simpan.
 </p>
 
-<div class="kotak peringatan">
-  <span class="judul-kotak">Tahapan PPDB belum bisa diubah per baris</span>
-  Daftar tahapan saat ini hanya dapat <strong>dilihat</strong> di panel admin,
-  belum bisa diedit satu per satu. Pengeditan tahapan akan tersedia setelah data
-  resmi sekolah dimasukkan. Untuk sementara, perubahan tahapan dilakukan oleh
-  pengelola teknis website.
-</div>
-
-<!-- ============================ 10. BELUM AKTIF ============================ -->
-<h2 class="bagian">10. Fitur yang Belum Aktif</h2>
+<h3>10.3 Mengatur tahapan PPDB</h3>
 
 <p>
-  Beberapa bagian sengaja belum diaktifkan karena menunggu data resmi sekolah
-  atau penyelesaian teknis. Bagian ini penting diketahui agar tidak dianggap
+  Panel <strong>Jadwal &amp; tahapan</strong> menampilkan setiap tahap sebagai
+  kotak tersendiri. Nomor tahap (<strong>01</strong>, <strong>02</strong>, dan
+  seterusnya) dibuat otomatis mengikuti urutan kotak, jadi Anda tidak perlu
+  mengisinya.
+</p>
+
+<ol class="langkah">
+  <li>
+    Untuk menambah tahap, tekan <strong>Tambah tahapan</strong> di bawah daftar.
+  </li>
+  <li>
+    Isi <strong>Judul tahap</strong>, <strong>Waktu</strong> (misalnya
+    “1–12 Juni 2026”), dan <strong>Deskripsi</strong> singkat.
+  </li>
+  <li>
+    Untuk menghapus satu tahap, tekan <strong>Hapus tahap</strong> pada kotak
+    tahap tersebut. Untuk mengubah urutan, susun ulang lewat tombol hapus dan
+    tambah.
+  </li>
+  <li>
+    Tekan <strong>Simpan informasi PPDB</strong>. Perubahan tahapan baru
+    tersimpan setelah tombol ini ditekan — menutup halaman lebih dahulu akan
+    membatalkan seluruh perubahan tahapan.
+  </li>
+</ol>
+
+<!-- ============================ 11. BELUM AKTIF ============================ -->
+<h2 class="bagian halaman-baru">11. Fitur yang Belum Aktif</h2>
+
+<p>
+  Sebagian besar fitur pengelolaan konten sudah berfungsi. Bagian ini
+  mencantumkan hal yang masih menunggu data resmi sekolah agar tidak dianggap
   kerusakan.
 </p>
 
@@ -1173,28 +1312,12 @@
   </thead>
   <tbody>
     <tr>
-      <td>Unggah logo sekolah</td>
-      <td>Tombol <strong>Pilih berkas</strong> belum aktif. Logo masih memakai gambar bawaan.</td>
-    </tr>
-    <tr>
-      <td>Unggah foto guru</td>
-      <td>Tombol <strong>Unggah foto</strong> belum aktif. Foto memakai gambar ilustrasi.</td>
-    </tr>
-    <tr>
-      <td>Ganti gambar sampul berita</td>
-      <td>Tombol <strong>Ubah sampul</strong> belum aktif.</td>
-    </tr>
-    <tr>
-      <td>Menambah pengumuman baru</td>
-      <td>Halaman Pengumuman baru bisa menampilkan, mencari, membuka, dan menghapus. Penambahan pengumuman masih dilakukan oleh pengelola teknis.</td>
-    </tr>
-    <tr>
-      <td>Mengubah tahapan PPDB</td>
-      <td>Tahapan hanya dapat dilihat, belum bisa diedit per baris.</td>
-    </tr>
-    <tr>
       <td>Peta lokasi</td>
-      <td>Peta masih bersifat ilustratif, belum peta interaktif.</td>
+      <td>
+        Gambar peta pada halaman Kontak masih ilustratif. Tombol
+        <strong>Buka di peta</strong> sudah berfungsi bila tautan peta diisi pada
+        menu Profil Sekolah.
+      </td>
     </tr>
     <tr>
       <td>Seluruh isi website</td>
@@ -1205,13 +1328,56 @@
 
 <div class="kotak">
   <span class="judul-kotak">Yang sudah berfungsi penuh</span>
-  Mengubah profil sekolah, menambah dan mengubah data guru, menulis dan
-  menerbitkan berita, membuat album, mengunggah dan menghapus foto galeri, serta
-  memperbarui informasi PPDB.
+  Mengubah profil sekolah beserta logo dan tautan peta, menambah dan mengubah
+  data guru beserta fotonya, menulis dan menerbitkan pengumuman, menulis dan
+  menerbitkan berita beserta sampulnya, membuat album, mengunggah dan menghapus
+  foto galeri, serta memperbarui informasi dan tahapan PPDB.
 </div>
 
-<!-- ============================ 11. FAQ ============================ -->
-<h2 class="bagian halaman-baru">11. Pertanyaan yang Sering Diajukan</h2>
+<h3>11.1 Menyiapkan data resmi sekolah</h3>
+
+<p>
+  Website sudah siap dipakai, tetapi isinya masih berupa contoh. Sebelum
+  alamatnya diumumkan kepada orang tua, lengkapi data berikut agar tidak ada
+  informasi yang menyesatkan:
+</p>
+
+<ol class="langkah">
+  <li>
+    <strong>Identitas sekolah</strong> — nama resmi, NPSN, status, akreditasi,
+    nama kepala sekolah, dan tahun ajaran berjalan.
+  </li>
+  <li>
+    <strong>Logo resmi</strong> — berkas PNG atau SVG, lalu unggah lewat menu
+    Profil Sekolah.
+  </li>
+  <li>
+    <strong>Alamat dan kontak</strong> — alamat lengkap, telepon sekolah, email
+    resmi, jam layanan, serta tautan peta lokasi.
+  </li>
+  <li>
+    <strong>Sejarah, visi, misi, dan sambutan kepala sekolah</strong> — gunakan
+    kalimat resmi yang sudah disetujui pihak sekolah.
+  </li>
+  <li>
+    <strong>Data guru</strong> — nama, NIP, jabatan, urutan tampil, dan foto
+    resmi masing-masing pendidik.
+  </li>
+  <li>
+    <strong>Informasi PPDB</strong> — periode, persyaratan, tahapan, kontak
+    panitia, dan tautan pendaftaran bila ada.
+  </li>
+</ol>
+
+<div class="kotak peringatan">
+  <span class="judul-kotak">Periksa sebelum diumumkan</span>
+  Setelah data resmi dimasukkan, buka seluruh halaman publik — Beranda, Profil,
+  Guru, Pengumuman, Berita, Galeri, PPDB, dan Kontak — lalu pastikan tidak ada
+  lagi nama, alamat, atau foto contoh yang tertinggal.
+</div>
+
+<!-- ============================ 12. FAQ ============================ -->
+<h2 class="bagian halaman-baru">12. Pertanyaan yang Sering Diajukan</h2>
 
 <h4>Saya sudah menyimpan, tetapi website belum berubah.</h4>
 <p>
@@ -1262,6 +1428,43 @@
   <li>Pastikan album sudah dibuat terlebih dahulu.</li>
 </ul>
 
+<h4>Logo gagal diunggah.</h4>
+<ul class="ringkas">
+  <li>Pastikan formatnya <strong>PNG</strong> atau <strong>SVG</strong>.</li>
+  <li>Pastikan ukurannya di bawah <strong>2 MB</strong>.</li>
+  <li>Pastikan Anda menekan <strong>Simpan perubahan</strong> setelah memilih berkas.</li>
+</ul>
+
+<h4>Logo sudah diunggah, tetapi tidak muncul di header.</h4>
+<p>
+  Muat ulang halaman publik. Bila masih belum tampil, buka kembali
+  <strong>Profil Sekolah</strong>, pilih ulang berkas logo, lalu tekan
+  <strong>Simpan perubahan</strong> sampai muncul pesan berhasil. Pastikan pula
+  berkasnya benar-benar gambar PNG atau SVG, bukan berkas lain yang hanya
+  diganti namanya.
+</p>
+
+<h4>Foto guru atau sampul berita tidak berubah setelah disimpan.</h4>
+<p>
+  Berkas hanya tersimpan bila Anda menekan tombol simpan pada bar di bawah
+  halaman. Memilih berkas lalu menutup halaman tanpa menyimpan akan membatalkan
+  unggahan. Periksa juga apakah muncul pesan berhasil setelah menyimpan.
+</p>
+
+<h4>Bagaimana mengubah urutan data guru?</h4>
+<p>
+  Buka data guru lewat ikon pensil, ubah isian <strong>Urutan tampil</strong>,
+  lalu simpan. Angka kecil tampil lebih dahulu — gunakan 1 untuk kepala sekolah,
+  2 untuk wakil kepala sekolah, dan seterusnya.
+</p>
+
+<h4>Bagaimana mengubah susunan tahapan PPDB?</h4>
+<p>
+  Pada panel <strong>Jadwal &amp; tahapan</strong>, hapus tahap yang salah lalu
+  tambahkan tahap baru pada posisi yang diinginkan. Nomor tahap mengikuti urutan
+  kotak, jadi Anda cukup menyusun kotaknya dari atas ke bawah lalu menyimpan.
+</p>
+
 <h4>Apakah data yang saya hapus bisa dikembalikan?</h4>
 <p>
   <strong>Tidak.</strong> Penghapusan bersifat permanen. Untuk menyembunyikan
@@ -1275,14 +1478,14 @@
   perubahan terakhir yang tersimpan akan menggantikan yang sebelumnya.
 </p>
 
-<!-- ============================ 12. ATURAN KONTEN ============================ -->
-<h2 class="bagian halaman-baru">12. Aturan Penulisan Konten</h2>
+<!-- ============================ 13. ATURAN KONTEN ============================ -->
+<h2 class="bagian halaman-baru">13. Aturan Penulisan Konten</h2>
 
 <p>
   Agar isi website rapi, konsisten, dan aman, ikuti panduan singkat berikut.
 </p>
 
-<h3>12.1 Keamanan dan privasi</h3>
+<h3>13.1 Keamanan dan privasi</h3>
 
 <ul class="ringkas">
   <li>
@@ -1294,7 +1497,7 @@
   <li>Hindari mencantumkan nomor telepon pribadi guru; gunakan nomor sekolah.</li>
 </ul>
 
-<h3>12.2 Gaya penulisan</h3>
+<h3>13.2 Gaya penulisan</h3>
 
 <ul class="ringkas">
   <li>Gunakan bahasa Indonesia yang baku dan mudah dipahami.</li>
@@ -1303,7 +1506,7 @@
   <li>Periksa ejaan nama orang, gelar, dan jabatan sebelum menerbitkan.</li>
 </ul>
 
-<h3>12.3 Sebelum menekan Terbit</h3>
+<h3>13.3 Sebelum menekan Terbit</h3>
 
 <ol class="langkah">
   <li>Periksa kembali <strong>nama</strong>, <strong>tanggal</strong>, dan <strong>angka</strong>.</li>
@@ -1313,7 +1516,7 @@
   <li>Simpan sebagai draf, baca ulang, baru terbitkan.</li>
 </ol>
 
-<h3>12.4 Kebiasaan yang baik</h3>
+<h3>13.4 Kebiasaan yang baik</h3>
 
 <table>
   <thead>

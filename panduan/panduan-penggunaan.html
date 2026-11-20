@@ -1,0 +1,1355 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<title>Panduan Penggunaan Website SD Banjaragung</title>
+<style>
+  /* ---------- Dasar cetak ---------- */
+  @page {
+    size: A4;
+    margin: 18mm 16mm 20mm 16mm;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.62;
+    color: #1f2937;
+  }
+
+  /* ---------- Warna merek (sama dengan situs) ---------- */
+  :root {
+    --biru: #1e3a8a;
+    --biru-gelap: #0f172a;
+    --oranye: #d97706;
+    --abu: #64748b;
+    --garis: #e2e8f0;
+    --latar: #f8fafc;
+  }
+
+  /* ---------- Halaman sampul ---------- */
+  .sampul {
+    height: 251mm;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    page-break-after: always;
+  }
+
+  .sampul-atas {
+    padding-top: 30mm;
+  }
+
+  .sampul-label {
+    font-size: 9pt;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--oranye);
+    margin: 0 0 10mm 0;
+  }
+
+  .sampul h1 {
+    font-size: 30pt;
+    line-height: 1.16;
+    color: var(--biru-gelap);
+    margin: 0 0 6mm 0;
+    font-weight: 700;
+  }
+
+  .sampul .tagline {
+    font-size: 12pt;
+    color: var(--abu);
+    margin: 0;
+    max-width: 130mm;
+  }
+
+  .sampul-garis {
+    height: 3px;
+    width: 42mm;
+    background: var(--oranye);
+    margin: 12mm 0;
+  }
+
+  .sampul-info {
+    border-top: 1px solid var(--garis);
+    padding-top: 6mm;
+    font-size: 9.5pt;
+    color: var(--abu);
+  }
+
+  .sampul-info strong { color: var(--biru-gelap); }
+
+  /* ---------- Judul bagian ---------- */
+  h2.bagian {
+    font-size: 17pt;
+    color: var(--biru);
+    margin: 9mm 0 4mm 0;
+    padding-bottom: 2.5mm;
+    border-bottom: 2px solid var(--oranye);
+    page-break-after: avoid;
+    font-weight: 700;
+  }
+
+  /* Bab yang mengalir butuh jarak atas lebih besar agar terasa terpisah. */
+  h2.bagian:not(.halaman-baru) { margin-top: 11mm; }
+
+  h3 {
+    font-size: 12pt;
+    color: var(--biru-gelap);
+    margin: 6mm 0 2.2mm 0;
+    page-break-after: avoid;
+    font-weight: 700;
+  }
+
+  /* Sub-bab terakhir tidak perlu memaksa turun ke halaman baru. */
+  h3:last-of-type { margin-bottom: 1.5mm; }
+
+  h4 {
+    font-size: 10.5pt;
+    color: var(--biru);
+    margin: 4.2mm 0 1.6mm 0;
+    page-break-after: avoid;
+    font-weight: 700;
+  }
+
+  /* Jarak antar item FAQ lebih rapat agar tidak menyisakan halaman kosong. */
+  h4 + p { margin-top: 0; }
+
+  p { margin: 0 0 2.6mm 0; }
+
+  .halaman-baru { page-break-before: always; }
+
+  /* ---------- Daftar isi ---------- */
+  .daftar-isi { font-size: 10.5pt; }
+
+  .daftar-isi ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .daftar-isi > ol > li {
+    display: flex;
+    justify-content: space-between;
+    gap: 4mm;
+    padding: 1.9mm 0;
+    border-bottom: 1px dotted var(--garis);
+  }
+
+  .daftar-isi .nomor {
+    color: var(--oranye);
+    font-weight: 700;
+    min-width: 9mm;
+  }
+
+  .daftar-isi .judul-di { flex: 1; font-weight: 600; color: var(--biru-gelap); }
+
+  .daftar-isi .anak {
+    display: block;
+    font-size: 9.2pt;
+    color: var(--abu);
+    font-weight: 400;
+    margin-top: 0.6mm;
+  }
+
+  /* ---------- Langkah bernomor ---------- */
+  ol.langkah {
+    list-style: none;
+    counter-reset: langkah;
+    padding: 0;
+    margin: 0 0 4mm 0;
+  }
+
+  ol.langkah > li {
+    counter-increment: langkah;
+    position: relative;
+    padding-left: 9mm;
+    margin-bottom: 3.2mm;
+    page-break-inside: avoid;
+  }
+
+  ol.langkah > li::before {
+    content: counter(langkah);
+    position: absolute;
+    left: 0;
+    top: 0.2mm;
+    width: 6mm;
+    height: 6mm;
+    border-radius: 50%;
+    background: var(--biru);
+    color: #fff;
+    font-size: 8.5pt;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ---------- Kotak catatan ---------- */
+  .kotak {
+    border-left: 3px solid var(--biru);
+    background: var(--latar);
+    padding: 3.2mm 4mm;
+    margin: 3.5mm 0;
+    page-break-inside: avoid;
+    font-size: 10pt;
+  }
+
+  .kotak.peringatan { border-left-color: var(--oranye); background: #fffbeb; }
+  .kotak.bahaya { border-left-color: #dc2626; background: #fef2f2; }
+
+  .kotak .judul-kotak {
+    font-weight: 700;
+    display: block;
+    margin-bottom: 1.2mm;
+    color: var(--biru-gelap);
+  }
+
+  .kotak.bahaya .judul-kotak { color: #b91c1c; }
+  .kotak.peringatan .judul-kotak { color: #b45309; }
+
+  /* ---------- Tabel ---------- */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 3mm 0 4mm 0;
+    font-size: 9.5pt;
+    page-break-inside: avoid;
+  }
+
+  th {
+    background: var(--biru-gelap);
+    color: #fff;
+    text-align: left;
+    padding: 2.4mm 3mm;
+    font-weight: 600;
+    font-size: 9pt;
+  }
+
+  td {
+    padding: 2.2mm 3mm;
+    border-bottom: 1px solid var(--garis);
+    vertical-align: top;
+  }
+
+  tr:nth-child(even) td { background: #fbfcfd; }
+
+  code {
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 9pt;
+    background: #eef2f7;
+    padding: 0.4mm 1.4mm;
+    border-radius: 1.5mm;
+    color: #b91c1c;
+  }
+
+  /* ---------- Dua kolom ---------- */
+  .dua-kolom {
+    display: flex;
+    gap: 6mm;
+    page-break-inside: avoid;
+  }
+
+  .dua-kolom > div { flex: 1; }
+
+  /* ---------- Kartu fitur ---------- */
+  .kartu {
+    border: 1px solid var(--garis);
+    border-radius: 2mm;
+    padding: 3.4mm 4mm;
+    margin-bottom: 3mm;
+    page-break-inside: avoid;
+  }
+
+  .kartu .kartu-judul {
+    font-weight: 700;
+    color: var(--biru);
+    margin-bottom: 1.4mm;
+    font-size: 10.5pt;
+  }
+
+  .kartu p:last-child { margin-bottom: 0; }
+
+  ul.ringkas { margin: 0 0 3mm 0; padding-left: 5mm; }
+  ul.ringkas li { margin-bottom: 1.4mm; }
+
+  .kaki-halaman {
+    margin-top: 4mm;
+    padding-top: 2.5mm;
+    border-top: 1px solid var(--garis);
+    font-size: 8.5pt;
+    color: var(--abu);
+  }
+
+  /*
+   * Setiap bagian utama dimulai di halaman baru. Tanpa ini, judul bagian
+   * bisa tertinggal sendirian di dasar halaman sebelumnya.
+   */
+  h2.bagian.halaman-baru {
+    margin-top: 0;
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================ SAMPUL ============================ -->
+<section class="sampul">
+  <div class="sampul-atas">
+    <p class="sampul-label">Panduan Penggunaan</p>
+    <h1>Website Sekolah Dasar<br />Banjaragung</h1>
+    <div class="sampul-garis"></div>
+    <p class="tagline">
+      Petunjuk lengkap untuk pengunjung website dan administrator sekolah —
+      dari membaca informasi hingga mengelola konten.
+    </p>
+  </div>
+
+  <div class="sampul-info">
+    <p><strong>Untuk:</strong> Pengunjung website &amp; Administrator sekolah</p>
+    <p><strong>Versi dokumen:</strong> 1.0</p>
+    <p><strong>Alamat website:</strong> sesuaikan dengan domain resmi sekolah</p>
+    <p style="margin-top:4mm;">
+      <em>Catatan: seluruh isi website saat ini masih berupa data contoh dan akan
+      diganti dengan data resmi sekolah.</em>
+    </p>
+  </div>
+</section>
+
+<!-- ============================ DAFTAR ISI ============================ -->
+<h2 class="bagian">Daftar Isi</h2>
+
+<div class="daftar-isi">
+  <ol>
+    <li>
+      <span class="nomor">1</span>
+      <span class="judul-di">
+        Mengenal Website Sekolah
+        <span class="anak">Tujuan, siapa penggunanya, dan dua bagian utama website</span>
+      </span>
+    </li>
+    <li>
+      <span class="nomor">2</span>
+      <span class="judul-di">
+        Panduan untuk Pengunjung Website
+        <span class="anak">Beranda, profil, guru, pengumuman, berita, galeri, PPDB, kontak</span>
+      </span>
+    </li>
+    <li>
+      <span class="nomor">3</span>
+      <span class="judul-di">
+        Masuk ke Panel Admin
+        <span class="anak">Alamat panel, cara masuk, dan bila lupa kata sandi</span>
+      </span>
+    </li>
+    <li>
+      <span class="nomor">4</span>
+      <span class="judul-di">
+        Mengenal Panel Admin
+        <span class="anak">Menu, dashboard, dan istilah status konten</span>
+      </span>
+    </li>
+    <li>
+      <span class="nomor">5</span>
+      <span class="judul-di">
+        Mengelola Profil Sekolah
+        <span class="anak">Identitas, sejarah, visi misi, alamat, dan kontak</span>
+      </span>
+    </li>
+    <li>
+      <span class="nomor">6</span>
+      <span class="judul-di">
+        Mengelola Data Guru
+        <span class="anak">Menambah, mengubah, menyembunyikan, dan menghapus data guru</span>
+      </span>
+    </li>
+    <li>
+      <span class="nomor">7</span>
+      <span class="judul-di">
+        Mengelola Berita
+        <span class="anak">Menulis berita, menyimpan draf, dan menerbitkan</span>
+      </span>
+    </li>
+    <li>
+      <span class="nomor">8</span>
+      <span class="judul-di">
+        Mengelola Galeri Foto
+        <span class="anak">Membuat album, mengunggah foto, dan menghapus</span>
+      </span>
+    </li>
+    <li>
+      <span class="nomor">9</span>
+      <span class="judul-di">
+        Mengelola Informasi PPDB
+        <span class="anak">Periode, persyaratan, tahapan, dan tautan pendaftaran</span>
+      </span>
+    </li>
+    <li>
+      <span class="nomor">10</span>
+      <span class="judul-di">
+        Fitur yang Belum Aktif
+        <span class="anak">Bagian yang masih menunggu data resmi atau koneksi penyimpanan</span>
+      </span>
+    </li>
+    <li>
+      <span class="nomor">11</span>
+      <span class="judul-di">
+        Pertanyaan yang Sering Diajukan
+        <span class="anak">Masalah umum dan cara mengatasinya</span>
+      </span>
+    </li>
+    <li>
+      <span class="nomor">12</span>
+      <span class="judul-di">
+        Aturan Penulisan Konten
+        <span class="anak">Panduan singkat agar isi website rapi dan aman</span>
+      </span>
+    </li>
+  </ol>
+</div>
+
+<div class="kotak" style="margin-top:6mm;">
+  <span class="judul-kotak">Cara membaca panduan ini</span>
+  Bagian <strong>2</strong> ditujukan untuk siapa saja yang membuka website.
+  Bagian <strong>3 sampai 9</strong> khusus untuk administrator sekolah yang
+  memiliki akun panel admin. Bila Anda hanya ingin mencari informasi sekolah,
+  cukup baca Bagian 2.
+</div>
+
+<!-- ============================ 1. MENGENAL ============================ -->
+<h2 class="bagian halaman-baru">1. Mengenal Website Sekolah</h2>
+
+<p>
+  Website SD Banjaragung adalah ruang informasi resmi sekolah untuk orang tua,
+  guru, calon peserta didik, dan masyarakat umum. Melalui website ini sekolah
+  membagikan profil, data pendidik, pengumuman, berita kegiatan, dokumentasi
+  foto, serta informasi penerimaan peserta didik baru (PPDB).
+</p>
+
+<h3>Dua bagian utama website</h3>
+
+<div class="kartu">
+  <div class="kartu-judul">A. Website publik</div>
+  <p>
+    Bagian yang dapat dibuka siapa saja tanpa perlu masuk. Semua informasi
+    sekolah yang ingin disampaikan kepada masyarakat ditampilkan di sini.
+    Alamatnya adalah alamat utama website sekolah.
+  </p>
+</div>
+
+<div class="kartu">
+  <div class="kartu-judul">B. Panel admin</div>
+  <p>
+    Bagian khusus administrator untuk mengubah isi website. Bagian ini
+    <strong>tidak bisa dibuka tanpa akun administrator</strong>. Setiap
+    perubahan yang disimpan di panel admin akan langsung tampil di website
+    publik.
+  </p>
+</div>
+
+<h3>Gambaran alur kerja</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th style="width:38%;">Siapa</th>
+      <th>Melakukan apa</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Pengunjung website</td>
+      <td>Membaca profil, pengumuman, berita, galeri, dan informasi PPDB.</td>
+    </tr>
+    <tr>
+      <td>Administrator sekolah</td>
+      <td>
+        Masuk ke panel admin, memperbarui isi website, lalu memeriksa hasilnya
+        di website publik.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="kotak peringatan">
+  <span class="judul-kotak">Penting diketahui sejak awal</span>
+  Saat ini hampir seluruh isi website masih berupa <strong>data contoh</strong>
+  (nama sekolah, alamat, guru, berita, dan foto). Data tersebut perlu diganti
+  dengan data resmi sekolah sebelum website diumumkan kepada publik.
+</div>
+
+<h3>Istilah yang dipakai dalam panduan ini</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th style="width:26%;">Istilah</th>
+      <th>Artinya</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>Website publik</strong></td><td>Bagian yang dapat dibuka siapa saja tanpa masuk.</td></tr>
+    <tr><td><strong>Panel admin</strong></td><td>Tempat administrator mengubah isi website.</td></tr>
+    <tr><td><strong>Konten</strong></td><td>Segala isi website: profil, guru, pengumuman, berita, foto, PPDB.</td></tr>
+    <tr><td><strong>Draf</strong></td><td>Konten tersimpan tetapi belum tampil di website.</td></tr>
+    <tr><td><strong>Terbit</strong></td><td>Konten sudah tampil dan dapat dibaca pengunjung.</td></tr>
+  </tbody>
+</table>
+
+<!-- ============================ 2. PENGUNJUNG ============================ -->
+<h2 class="bagian">2. Panduan untuk Pengunjung Website</h2>
+
+<p>
+  Bagian ini menjelaskan apa yang bisa dilakukan pengunjung di setiap halaman
+  website publik. Tidak diperlukan akun atau kata sandi.
+</p>
+
+<h3>2.1 Menu navigasi</h3>
+
+<p>
+  Menu utama berada di bagian atas halaman dan berisi:
+  <strong>Beranda</strong>, <strong>Profil</strong>, <strong>Guru</strong>,
+  <strong>Pengumuman</strong>, <strong>Berita</strong>,
+  <strong>Galeri</strong>, <strong>Kontak</strong>, serta tombol
+  <strong>PPDB Info</strong>.
+</p>
+
+<ul class="ringkas">
+  <li>Halaman yang sedang dibuka ditandai dengan warna biru dan garis bawah.</li>
+  <li>Di ponsel, menu disembunyikan di balik tombol bergambar tiga garis.</li>
+  <li>Tombol <strong>PPDB Info</strong> berwarna oranye dan selalu tersedia.</li>
+</ul>
+
+<h3>2.2 Beranda</h3>
+
+<p>Halaman pertama yang muncul saat website dibuka. Isinya:</p>
+
+<ul class="ringkas">
+  <li>Sambutan utama sekolah beserta ajakan menjelajahi website.</li>
+  <li>Pengantar singkat tentang sekolah dan sambutan kepala sekolah.</li>
+  <li>Tiga pengumuman terbaru dan tiga berita terbaru.</li>
+  <li>Cuplikan galeri kegiatan.</li>
+  <li>Ajakan menuju halaman informasi PPDB.</li>
+</ul>
+
+<p>
+  Setiap bagian memiliki tautan <em>“Semua pengumuman →”</em>,
+  <em>“Semua berita →”</em>, atau <em>“Lihat galeri →”</em> untuk membuka daftar
+  lengkapnya.
+</p>
+
+<h3>2.3 Profil sekolah</h3>
+
+<p>
+  Memuat sejarah sekolah, identitas, visi dan misi, sambutan kepala sekolah,
+  daftar fasilitas, serta struktur organisasi sekolah.
+</p>
+
+<h3>2.4 Data guru</h3>
+
+<p>
+  Menampilkan kartu berisi foto, nama, dan jabatan setiap pendidik dan tenaga
+  kependidikan. Data ini dikelola sekolah melalui panel admin.
+</p>
+
+<h3>2.5 Pengumuman</h3>
+
+<p>
+  Papan informasi sekolah. Setiap pengumuman dapat dibuka untuk membaca isi
+  lengkapnya. Hanya pengumuman berstatus <strong>Terbit</strong> yang tampil di
+  sini — pengumuman berstatus draf tidak terlihat oleh pengunjung.
+</p>
+
+<h3>2.6 Berita dan kegiatan</h3>
+
+<p>
+  Kabar terbaru seputar kegiatan belajar, prestasi, dan keseharian sekolah.
+  Halaman ini dilengkapi kotak pencarian.
+</p>
+
+<ol class="langkah">
+  <li>Ketik kata kunci pada kotak <strong>Cari judul berita</strong>.</li>
+  <li>Tekan tombol <strong>Cari</strong>.</li>
+  <li>Daftar berita akan disaring sesuai kata kunci.</li>
+</ol>
+
+<p>
+  Klik salah satu kartu berita untuk membaca isi lengkap beserta tanggal
+  terbit, penulis, dan perkiraan waktu baca.
+</p>
+
+<h3>2.7 Galeri</h3>
+
+<p>
+  Kumpulan dokumentasi kegiatan dalam bentuk album foto. Album dapat disaring
+  menggunakan tombol kategori: <strong>Semua</strong>,
+  <strong>Kegiatan</strong>, <strong>Akademik</strong>, dan
+  <strong>Lingkungan</strong>.
+</p>
+
+<h3>2.8 Informasi PPDB</h3>
+
+<p>
+  Halaman penerimaan peserta didik baru. Isinya meliputi periode pendaftaran,
+  persyaratan calon peserta didik, daftar berkas yang harus disiapkan, tahapan
+  pendaftaran, serta kontak panitia.
+</p>
+
+<div class="kotak">
+  <span class="judul-kotak">Perlu diperhatikan</span>
+  Jadwal dan ketentuan PPDB di website bersifat informasi awal. Ketentuan resmi
+  tetap mengikuti pengumuman sekolah. Bila ada tombol
+  <strong>Daftar daring</strong>, tombol itu hanya muncul ketika sekolah
+  mengaktifkannya.
+</div>
+
+<h3>2.9 Kontak dan lokasi</h3>
+
+<p>
+  Berisi alamat sekolah, nomor telepon, alamat email, jam layanan administrasi,
+  serta peta lokasi. Peta bersifat ilustratif; gunakan tombol
+  <strong>Buka di peta</strong> bila tersedia untuk navigasi.
+</p>
+
+<h3>2.10 Membuka website di ponsel</h3>
+
+<p>
+  Website dapat dibuka dari ponsel, tablet, maupun komputer. Tata letaknya
+  menyesuaikan ukuran layar secara otomatis. Di ponsel, gunakan tombol menu di
+  kanan atas untuk membuka daftar navigasi.
+</p>
+
+<!-- ============================ 3. MASUK ============================ -->
+<h2 class="bagian">3. Masuk ke Panel Admin</h2>
+
+<h3>3.1 Alamat panel admin</h3>
+
+<p>
+  Panel admin diakses melalui alamat website sekolah ditambah
+  <code>/admin/login</code>. Contoh:
+</p>
+
+<p><code>https://domain-sekolah.sch.id/admin/login</code></p>
+
+<div class="kotak">
+  <span class="judul-kotak">Tidak ada pendaftaran mandiri</span>
+  Akun administrator <strong>tidak bisa dibuat sendiri</strong> melalui website.
+  Akun hanya dapat dibuat oleh pengelola teknis website. Bila Anda memerlukan
+  akun baru, hubungi pengelola website sekolah.
+</div>
+
+<h3>3.2 Cara masuk</h3>
+
+<ol class="langkah">
+  <li>Buka alamat <code>/admin/login</code>.</li>
+  <li>
+    Isi kolom <strong>Email</strong> dengan alamat email administrator yang
+    terdaftar.
+  </li>
+  <li>Isi kolom <strong>Kata sandi</strong>.</li>
+  <li>Tekan tombol <strong>Masuk</strong>.</li>
+  <li>
+    Bila berhasil, Anda akan diarahkan ke halaman <strong>Dashboard</strong>.
+  </li>
+</ol>
+
+<div class="kotak bahaya">
+  <span class="judul-kotak">Bila muncul pesan “Email atau kata sandi belum sesuai”</span>
+  Periksa kembali ejaan email dan kata sandi, serta pastikan tombol Caps Lock
+  tidak aktif. Bila pesan yang muncul adalah
+  <em>“Akun ini tidak terdaftar sebagai administrator sekolah”</em>, berarti
+  email tersebut belum didaftarkan sebagai administrator — hubungi pengelola
+  website.
+</div>
+
+<h3>3.3 Bila lupa kata sandi</h3>
+
+<p>
+  Pemulihan kata sandi menggunakan <strong>kode verifikasi</strong> yang dikirim
+  ke email administrator. Anda tidak perlu mengklik tautan apa pun.
+</p>
+
+<ol class="langkah">
+  <li>
+    Pada halaman masuk, klik tautan <strong>Lupa kata sandi?</strong>.
+  </li>
+  <li>
+    Masukkan <strong>email administrator</strong>, lalu tekan
+    <strong>Kirim kode verifikasi</strong>.
+  </li>
+  <li>
+    Buka kotak masuk email. Anda akan menerima email berisi
+    <strong>kode angka</strong>. Bila tidak menemukannya, periksa folder spam.
+  </li>
+  <li>
+    Masukkan seluruh angka tersebut pada kolom <strong>Kode verifikasi</strong>,
+    lalu tekan <strong>Verifikasi kode</strong>.
+  </li>
+  <li>
+    Setelah kode dinyatakan benar, isi <strong>Kata sandi baru</strong> dan
+    <strong>Ulangi kata sandi baru</strong> (minimal 8 karakter).
+  </li>
+  <li>
+    Tekan <strong>Simpan kata sandi baru</strong>. Anda akan diarahkan kembali
+    ke halaman masuk.
+  </li>
+  <li>Masuk menggunakan kata sandi baru tersebut.</li>
+</ol>
+
+<div class="kotak peringatan">
+  <span class="judul-kotak">Bila muncul “Tunggu N detik lagi”</span>
+  Ini adalah pengaman anti-spam: satu alamat email hanya boleh meminta kode
+  baru sekali dalam sekitar satu menit. Tunggu sesuai jumlah detik yang
+  tertera, lalu coba lagi. Bila pesan menyebut <em>kuota per jam</em>, tunggu
+  sekitar satu jam.
+</div>
+
+<h3>3.4 Keluar dari panel</h3>
+
+<p>
+  Klik tombol <strong>Keluar</strong> di bagian bawah menu samping (kiri).
+  Selalu keluar setelah selesai, terutama bila menggunakan komputer bersama.
+</p>
+
+<!-- ============================ 4. PANEL ADMIN ============================ -->
+<h2 class="bagian">4. Mengenal Panel Admin</h2>
+
+<h3>4.1 Menu panel</h3>
+
+<p>
+  Menu berada di sisi kiri dan berisi tujuh pilihan berikut:
+</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="width:32%;">Menu</th>
+      <th>Kegunaan</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>Dashboard</strong></td><td>Ringkasan jumlah konten dan aktivitas terbaru.</td></tr>
+    <tr><td><strong>Profil Sekolah</strong></td><td>Identitas, sejarah, visi misi, fasilitas, dan kontak sekolah.</td></tr>
+    <tr><td><strong>Data Guru</strong></td><td>Menambah dan mengubah data pendidik.</td></tr>
+    <tr><td><strong>Pengumuman</strong></td><td>Daftar pengumuman beserta status dan aksi.</td></tr>
+    <tr><td><strong>Berita</strong></td><td>Menulis, mengubah, dan menerbitkan berita.</td></tr>
+    <tr><td><strong>Galeri</strong></td><td>Membuat album dan mengunggah foto kegiatan.</td></tr>
+    <tr><td><strong>Informasi PPDB</strong></td><td>Periode, persyaratan, tahapan, dan kontak panitia.</td></tr>
+  </tbody>
+</table>
+
+<p>
+  Di layar kecil, menu samping digantikan tombol menu di bagian atas halaman.
+</p>
+
+<h3>4.2 Halaman Dashboard</h3>
+
+<p>Dashboard menampilkan:</p>
+
+<ul class="ringkas">
+  <li>Empat angka ringkasan: jumlah <strong>Pengumuman</strong>, <strong>Berita</strong>, <strong>Guru</strong>, dan <strong>Foto galeri</strong>.</li>
+  <li>Daftar <strong>Aktivitas terbaru</strong> dari pengumuman dan berita terakhir.</li>
+  <li>Panel <strong>Aksi cepat</strong> untuk langsung menuju pekerjaan yang sering dilakukan.</li>
+  <li>Pengingat <strong>Sebelum memublikasikan</strong>.</li>
+</ul>
+
+<h3>4.3 Arti status konten</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th style="width:24%;">Status</th>
+      <th>Artinya</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Draf</strong></td>
+      <td>Konten tersimpan tetapi <strong>tidak tampil</strong> di website publik. Aman untuk disimpan sementara.</td>
+    </tr>
+    <tr>
+      <td><strong>Terbit</strong></td>
+      <td>Konten <strong>tampil</strong> di website publik dan dapat dibaca siapa saja.</td>
+    </tr>
+    <tr>
+      <td><strong>Tayang</strong></td>
+      <td>Dipakai pada data guru: data ditampilkan di halaman publik.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>4.4 Tombol yang sering dipakai</h3>
+
+<ul class="ringkas">
+  <li>
+    <strong>Simpan</strong> / <strong>Simpan perubahan</strong> — menyimpan isian.
+    Letaknya pada bar di bagian bawah halaman.
+  </li>
+  <li>
+    <strong>Batal</strong> — mengembalikan isian ke kondisi sebelum diubah.
+  </li>
+  <li>
+    <strong>Ikon pensil</strong> — mengubah data yang sudah ada.
+  </li>
+  <li>
+    <strong>Ikon tempat sampah</strong> — menghapus data. Akan muncul
+    konfirmasi sebelum data benar-benar dihapus.
+  </li>
+</ul>
+
+<div class="kotak">
+  <span class="judul-kotak">Setelah menyimpan, periksa hasilnya</span>
+  Setelah menekan Simpan dan muncul pesan berhasil, buka website publik untuk
+  memastikan tampilannya sudah sesuai. Perubahan yang tersimpan langsung
+  terlihat oleh pengunjung.
+</div>
+
+<h3>4.5 Alur kerja yang biasa dipakai</h3>
+
+<p>
+  Hampir semua pekerjaan di panel admin mengikuti urutan yang sama. Pola ini
+  berlaku untuk profil, guru, berita, galeri, maupun PPDB:
+</p>
+
+<ol class="langkah">
+  <li>Buka menu yang sesuai di sisi kiri.</li>
+  <li>Ubah isian, atau tekan tombol tambah bila membuat data baru.</li>
+  <li>Tekan tombol simpan pada bar di bagian bawah halaman.</li>
+  <li>Tunggu hingga muncul pesan berhasil.</li>
+  <li>Buka website publik dan periksa hasilnya.</li>
+</ol>
+
+<p>
+  <strong>Bila pesan yang muncul berwarna merah:</strong> penyimpanan gagal dan
+  perubahan <strong>tidak tersimpan</strong>. Baca pesan yang muncul, perbaiki
+  isian yang ditandai, lalu simpan kembali. Jangan menutup halaman sebelum
+  muncul pesan berhasil.
+</p>
+
+<!-- ============================ 5. PROFIL ============================ -->
+<h2 class="bagian">5. Mengelola Profil Sekolah</h2>
+
+<p>
+  Halaman <strong>Profil Sekolah</strong> mengatur informasi dasar sekolah yang
+  tampil di banyak halaman sekaligus — beranda, profil, dan kontak. Perubahan
+  di sini berdampak luas, jadi periksa dengan teliti.
+</p>
+
+<h3>5.1 Bagian yang dapat diubah</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th style="width:34%;">Bagian</th>
+      <th>Isian</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Identitas sekolah</strong></td>
+      <td>Nama sekolah, tagline, NPSN, tahun ajaran.</td>
+    </tr>
+    <tr>
+      <td><strong>Status sekolah</strong></td>
+      <td>Status (negeri/swasta), akreditasi, nama kepala sekolah.</td>
+    </tr>
+    <tr>
+      <td><strong>Sejarah sekolah</strong></td>
+      <td>Uraian sejarah singkat sekolah.</td>
+    </tr>
+    <tr>
+      <td><strong>Visi &amp; misi</strong></td>
+      <td>Visi, misi, dan sambutan kepala sekolah.</td>
+    </tr>
+    <tr>
+      <td><strong>Alamat &amp; layanan kontak</strong></td>
+      <td>Alamat, telepon, email, dan jam layanan.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>5.2 Cara memperbarui profil</h3>
+
+<ol class="langkah">
+  <li>Buka menu <strong>Profil Sekolah</strong>.</li>
+  <li>Ubah isian yang perlu diperbarui.</li>
+  <li>Tekan <strong>Simpan perubahan</strong> pada bar di bawah halaman.</li>
+  <li>Buka halaman <strong>Profil</strong> dan <strong>Kontak</strong> di website publik untuk memeriksa hasilnya.</li>
+</ol>
+
+<div class="kotak">
+  <span class="judul-kotak">Menulis misi</span>
+  Isi kolom <strong>Misi</strong> dengan <strong>satu butir per baris</strong>.
+  Setiap baris baru akan tampil sebagai butir terpisah di website.
+</div>
+
+<!-- ============================ 6. GURU ============================ -->
+<h2 class="bagian halaman-baru">6. Mengelola Data Guru</h2>
+
+<p>
+  Halaman <strong>Data Guru</strong> menampilkan tabel berisi foto, nama, NIP,
+  jabatan, dan status setiap pendidik. Data ini tampil di halaman publik
+  <code>/guru</code>.
+</p>
+
+<h3>6.1 Menambah data guru</h3>
+
+<ol class="langkah">
+  <li>Buka menu <strong>Data Guru</strong>, lalu tekan <strong>Tambah guru</strong>.</li>
+  <li>Isi kolom <strong>Nama lengkap</strong> dan <strong>Jabatan</strong> (wajib).</li>
+  <li>Isi <strong>NIP</strong> bila ada.</li>
+  <li>
+    Isi <strong>Urutan tampil</strong>. Angka kecil tampil lebih dahulu — gunakan
+    1 untuk kepala sekolah, 2 untuk wakil, dan seterusnya.
+  </li>
+  <li>
+    Pastikan sakelar <strong>Tampilkan di halaman publik</strong> aktif bila data
+    ingin langsung terlihat.
+  </li>
+  <li>Tekan <strong>Tambah guru</strong> pada bar di bawah halaman.</li>
+</ol>
+
+<h3>6.2 Mengubah data guru</h3>
+
+<p>
+  Pada tabel Data Guru, temukan nama yang ingin diubah, klik
+  <strong>ikon pensil</strong> pada kolom Aksi, perbarui isian, lalu tekan
+  <strong>Simpan guru</strong>.
+</p>
+
+<h3>6.3 Menyembunyikan data tanpa menghapus</h3>
+
+<p>
+  Bila data guru perlu disembunyikan sementara, cukup matikan sakelar
+  <strong>Tampilkan di halaman publik</strong> lalu simpan. Data tetap tersimpan
+  dan statusnya berubah menjadi <strong>Draf</strong>, tetapi tidak tampil di
+  website.
+</p>
+
+<p>
+  Untuk mencari data tertentu, ketik nama atau jabatan pada kotak
+  <strong>Cari nama atau jabatan guru</strong> lalu tekan <strong>Filter</strong>.
+  Daftar akan langsung disaring sesuai kata kunci.
+</p>
+
+<h3>6.4 Menghapus data guru</h3>
+
+<div class="kotak bahaya">
+  <span class="judul-kotak">Penghapusan tidak dapat dibatalkan</span>
+  Data yang sudah dihapus tidak bisa dikembalikan. Bila hanya ingin
+  menyembunyikan sementara, gunakan sakelar <strong>Tampilkan di halaman
+  publik</strong> — jangan dihapus.
+</div>
+
+<ol class="langkah">
+  <li>Klik <strong>ikon tempat sampah</strong> pada kolom Aksi.</li>
+  <li>Baca konfirmasi yang muncul, lalu setujui atau batalkan.</li>
+</ol>
+
+<!-- ============================ 7. BERITA ============================ -->
+<h2 class="bagian halaman-baru">7. Mengelola Berita</h2>
+
+<p>
+  Halaman <strong>Berita</strong> memuat daftar seluruh berita beserta status
+  dan aksinya. Dari sini Anda dapat menulis berita baru maupun mengubah yang
+  sudah ada.
+</p>
+
+<h3>7.1 Menulis berita baru</h3>
+
+<ol class="langkah">
+  <li>Buka menu <strong>Berita</strong>.</li>
+  <li>Tekan tombol <strong>Tulis berita</strong>.</li>
+  <li>
+    Isi <strong>Judul berita</strong> (wajib). Kolom <strong>Slug</strong> boleh
+    dikosongkan — akan dibuat otomatis dari judul.
+  </li>
+  <li>Isi <strong>Kategori</strong>, misalnya “Kegiatan” atau “Prestasi”.</li>
+  <li>
+    Tulis isi berita pada kotak <strong>Isi berita</strong>. Pisahkan paragraf
+    dengan menekan Enter.
+  </li>
+  <li>
+    Pada panel <strong>Publikasi</strong>, pilih <strong>Status</strong>:
+    <strong>Draf</strong> bila belum siap tayang, atau <strong>Terbit</strong>
+    bila siap dipublikasikan.
+  </li>
+  <li>
+    Periksa <strong>Tanggal tayang</strong>, <strong>Penulis</strong>, dan
+    <strong>Menit baca</strong>.
+  </li>
+  <li>Isi <strong>Ringkasan</strong> — teks pendek yang tampil pada kartu berita.</li>
+  <li>
+    Tekan <strong>Simpan draf</strong> atau <strong>Simpan berita</strong> pada
+    bar di bawah halaman.
+  </li>
+</ol>
+
+<h3>7.2 Menyimpan sebagai draf lebih dahulu</h3>
+
+<p>
+  Cara aman menulis berita panjang: simpan dengan status <strong>Draf</strong>,
+  periksa kembali isinya, lalu ubah status menjadi <strong>Terbit</strong> saat
+  sudah siap. Berita berstatus draf tidak akan terlihat pengunjung.
+</p>
+
+<h3>7.3 Mengubah berita</h3>
+
+<ol class="langkah">
+  <li>Pada tabel Berita, temukan judul yang ingin diubah.</li>
+  <li>Klik <strong>ikon pensil</strong> pada kolom Aksi.</li>
+  <li>Perbarui isian, lalu tekan <strong>Simpan berita</strong>.</li>
+</ol>
+
+<h3>7.4 Menyaring dan mencari berita</h3>
+
+<p>
+  Gunakan tombol <strong>Semua</strong>, <strong>Terbit</strong>, atau
+  <strong>Draf</strong> untuk menyaring berdasarkan status. Kotak
+  <strong>Cari judul berita</strong> dipakai untuk mencari berdasarkan judul atau
+  kategori.
+</p>
+
+<div class="kotak peringatan">
+  <span class="judul-kotak">Mengganti gambar sampul berita</span>
+  Tombol <strong>Ubah sampul</strong> pada halaman tulis berita
+  <strong>belum aktif</strong>. Saat ini berita memakai gambar ilustrasi bawaan.
+  Penggantian gambar sampul menunggu penyimpanan gambar terhubung sepenuhnya.
+</div>
+
+<!-- ============================ 8. GALERI ============================ -->
+<h2 class="bagian halaman-baru">8. Mengelola Galeri Foto</h2>
+
+<p>
+  Halaman <strong>Galeri</strong> dipakai untuk membuat album dan mengunggah
+  foto dokumentasi kegiatan. Foto hanya bisa diunggah setelah album dibuat.
+</p>
+
+<h3>8.1 Membuat album baru</h3>
+
+<ol class="langkah">
+  <li>Buka menu <strong>Galeri</strong>.</li>
+  <li>Pada panel <strong>Buat album baru</strong>, isi <strong>Judul album</strong>, misalnya “Pekan Literasi”.</li>
+  <li>Pilih <strong>Kategori</strong>: Kegiatan, Akademik, atau Lingkungan.</li>
+  <li>Isi <strong>Tanggal kegiatan</strong>, atau biarkan kosong untuk memakai tanggal hari ini.</li>
+  <li>Tekan <strong>Buat album</strong>.</li>
+</ol>
+
+<div class="kotak">
+  <span class="judul-kotak">Alamat album dibuat otomatis</span>
+  Anda tidak perlu mengisi alamat album. Sistem membuatnya otomatis dari judul
+  album, dan menambahkan akhiran angka bila judulnya sudah pernah dipakai.
+</div>
+
+<h3>8.2 Mengunggah foto</h3>
+
+<ol class="langkah">
+  <li>Pada panel <strong>Unggah dokumentasi</strong>, pilih <strong>Album tujuan</strong>.</li>
+  <li>Tekan <strong>Berkas foto</strong>, lalu pilih foto dari perangkat.</li>
+  <li>Pratinjau foto akan muncul sebelum diunggah.</li>
+  <li>Isi <strong>Keterangan foto</strong>, misalnya “Kegiatan literasi kelas 4”.</li>
+  <li>Tekan <strong>Unggah foto</strong>.</li>
+</ol>
+
+<h4>Ketentuan foto</h4>
+
+<ul class="ringkas">
+  <li>Format yang diterima: <strong>JPG</strong>, <strong>PNG</strong>, atau <strong>WebP</strong>.</li>
+  <li>Ukuran maksimal <strong>5 MB</strong> per foto.</li>
+  <li>Foto pertama yang diunggah otomatis menjadi sampul album.</li>
+</ul>
+
+<div class="kotak">
+  <span class="judul-kotak">Isi keterangan foto</span>
+  Keterangan membantu penelusuran dan aksesibilitas — misalnya untuk pembaca
+  layar. Tulis keterangan singkat yang menjelaskan isi foto.
+</div>
+
+<h3>8.3 Melihat dan menghapus foto</h3>
+
+<p>
+  Setiap album tampil sebagai kartu berisi sampul, judul, kategori, dan jumlah
+  foto. Daftar foto di dalam album muncul di bawah kartu tersebut. Ketik judul
+  atau kategori pada kotak <strong>Cari album</strong> lalu tekan
+  <strong>Filter</strong> untuk menyaring daftar.
+</p>
+
+<ol class="langkah">
+  <li>Untuk menghapus <strong>satu foto</strong>, klik ikon tempat sampah di samping foto itu.</li>
+  <li>Untuk menghapus <strong>satu album beserta seluruh fotonya</strong>, klik ikon tempat sampah pada kartu album.</li>
+  <li>Setujui konfirmasi yang muncul.</li>
+</ol>
+
+<div class="kotak bahaya">
+  <span class="judul-kotak">Menghapus album berarti menghapus semua fotonya</span>
+  Konfirmasi akan menyebutkan jumlah foto yang ikut terhapus. Bila album
+  berisi banyak foto penting, pindahkan atau catat dulu sebelum menghapus.
+</div>
+
+<!-- ============================ 9. PPDB ============================ -->
+<h2 class="bagian">9. Mengelola Informasi PPDB</h2>
+
+<p>
+  Halaman <strong>Informasi PPDB</strong> mengatur seluruh isi halaman
+  <code>/ppdb</code> di website publik. Informasi ini paling sering ditanyakan
+  calon orang tua, jadi pastikan selalu mutakhir.
+</p>
+
+<h3>9.1 Bagian yang dapat diubah</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th style="width:34%;">Bagian</th>
+      <th>Isian</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Informasi umum &amp; persyaratan</strong></td>
+      <td>Tahun ajaran, periode pendaftaran, judul, dan deskripsi PPDB.</td>
+    </tr>
+    <tr>
+      <td><strong>Berkas yang diperlukan</strong></td>
+      <td>Daftar berkas, satu berkas per baris.</td>
+    </tr>
+    <tr>
+      <td><strong>Jadwal &amp; tahapan</strong></td>
+      <td>Ditampilkan sebagai daftar tahapan (lihat catatan di bawah).</td>
+    </tr>
+    <tr>
+      <td><strong>Kontak panitia &amp; tautan opsional</strong></td>
+      <td>Telepon, email, catatan panitia, serta tautan pendaftaran daring.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>9.2 Cara memperbarui informasi PPDB</h3>
+
+<ol class="langkah">
+  <li>Buka menu <strong>Informasi PPDB</strong>.</li>
+  <li>Perbarui isian yang diperlukan.</li>
+  <li>Tekan <strong>Simpan informasi PPDB</strong>.</li>
+  <li>Buka halaman <strong>PPDB Info</strong> di website publik untuk memeriksa hasilnya.</li>
+</ol>
+
+<p>
+  <strong>Bila kotak centang tidak dicentang</strong>, tombol
+  <strong>Daftar daring</strong> tidak akan muncul di website meskipun tautannya
+  sudah diisi. Untuk mengaktifkan pendaftaran daring, isi kolom
+  <strong>Tautan pendaftaran</strong> dengan alamat formulir (diawali
+  <code>https://</code>), centang <strong>Aktifkan tautan pendaftaran daring</strong>,
+  lalu simpan.
+</p>
+
+<div class="kotak peringatan">
+  <span class="judul-kotak">Tahapan PPDB belum bisa diubah per baris</span>
+  Daftar tahapan saat ini hanya dapat <strong>dilihat</strong> di panel admin,
+  belum bisa diedit satu per satu. Pengeditan tahapan akan tersedia setelah data
+  resmi sekolah dimasukkan. Untuk sementara, perubahan tahapan dilakukan oleh
+  pengelola teknis website.
+</div>
+
+<!-- ============================ 10. BELUM AKTIF ============================ -->
+<h2 class="bagian">10. Fitur yang Belum Aktif</h2>
+
+<p>
+  Beberapa bagian sengaja belum diaktifkan karena menunggu data resmi sekolah
+  atau penyelesaian teknis. Bagian ini penting diketahui agar tidak dianggap
+  kerusakan.
+</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="width:34%;">Fitur</th>
+      <th>Keadaan saat ini</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Unggah logo sekolah</td>
+      <td>Tombol <strong>Pilih berkas</strong> belum aktif. Logo masih memakai gambar bawaan.</td>
+    </tr>
+    <tr>
+      <td>Unggah foto guru</td>
+      <td>Tombol <strong>Unggah foto</strong> belum aktif. Foto memakai gambar ilustrasi.</td>
+    </tr>
+    <tr>
+      <td>Ganti gambar sampul berita</td>
+      <td>Tombol <strong>Ubah sampul</strong> belum aktif.</td>
+    </tr>
+    <tr>
+      <td>Menambah pengumuman baru</td>
+      <td>Halaman Pengumuman baru bisa menampilkan, mencari, membuka, dan menghapus. Penambahan pengumuman masih dilakukan oleh pengelola teknis.</td>
+    </tr>
+    <tr>
+      <td>Mengubah tahapan PPDB</td>
+      <td>Tahapan hanya dapat dilihat, belum bisa diedit per baris.</td>
+    </tr>
+    <tr>
+      <td>Peta lokasi</td>
+      <td>Peta masih bersifat ilustratif, belum peta interaktif.</td>
+    </tr>
+    <tr>
+      <td>Seluruh isi website</td>
+      <td>Masih berupa data contoh sampai data resmi sekolah dimasukkan.</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="kotak">
+  <span class="judul-kotak">Yang sudah berfungsi penuh</span>
+  Mengubah profil sekolah, menambah dan mengubah data guru, menulis dan
+  menerbitkan berita, membuat album, mengunggah dan menghapus foto galeri, serta
+  memperbarui informasi PPDB.
+</div>
+
+<!-- ============================ 11. FAQ ============================ -->
+<h2 class="bagian halaman-baru">11. Pertanyaan yang Sering Diajukan</h2>
+
+<h4>Saya sudah menyimpan, tetapi website belum berubah.</h4>
+<p>
+  Muat ulang halaman website publik (tekan F5 atau tarik ke bawah pada ponsel).
+  Perubahan yang tersimpan seharusnya langsung tampil. Bila masih belum,
+  pastikan status konten memang <strong>Terbit</strong> dan bukan
+  <strong>Draf</strong>.
+</p>
+
+<h4>Konten saya tidak muncul di website.</h4>
+<p>
+  Periksa statusnya. Pengumuman dan berita berstatus <strong>Draf</strong> tidak
+  tampil. Untuk data guru, pastikan sakelar
+  <strong>Tampilkan di halaman publik</strong> aktif.
+</p>
+
+<h4>Saya tidak menerima email kode pemulihan.</h4>
+<ol class="langkah">
+  <li>Periksa folder <strong>spam</strong> atau <strong>promosi</strong>.</li>
+  <li>Pastikan alamat email yang dimasukkan benar.</li>
+  <li>Tunggu sekitar satu menit, lalu minta kode baru.</li>
+  <li>Bila tetap tidak ada, hubungi pengelola website.</li>
+</ol>
+
+<h4>Muncul pesan “Tunggu N detik lagi” saat meminta kode.</h4>
+<p>
+  Itu pengaman anti-spam bawaan, bukan kerusakan. Tunggu sesuai jumlah detik
+  yang tertera, lalu coba lagi.
+</p>
+
+<h4>Saya lupa kata sandi dan email saya juga tidak bisa dibuka.</h4>
+<p>
+  Hubungi pengelola teknis website. Pemulihan tanpa akses email hanya dapat
+  dilakukan melalui pengaturan server oleh pengelola.
+</p>
+
+<h4>Muncul pesan “Akun ini tidak terdaftar sebagai administrator sekolah”.</h4>
+<p>
+  Akun tersebut ada, tetapi belum diberi hak administrator. Hubungi pengelola
+  website untuk didaftarkan.
+</p>
+
+<h4>Foto gagal diunggah.</h4>
+<ul class="ringkas">
+  <li>Pastikan ukurannya di bawah <strong>5 MB</strong>.</li>
+  <li>Pastikan formatnya <strong>JPG</strong>, <strong>PNG</strong>, atau <strong>WebP</strong>.</li>
+  <li>Pastikan sudah memilih <strong>Album tujuan</strong>.</li>
+  <li>Pastikan album sudah dibuat terlebih dahulu.</li>
+</ul>
+
+<h4>Apakah data yang saya hapus bisa dikembalikan?</h4>
+<p>
+  <strong>Tidak.</strong> Penghapusan bersifat permanen. Untuk menyembunyikan
+  konten sementara, gunakan status <strong>Draf</strong> atau matikan sakelar
+  tampil publik, bukan menghapus.
+</p>
+
+<h4>Bisakah dua orang masuk bersamaan?</h4>
+<p>
+  Bisa. Namun hindari mengubah data yang sama pada waktu bersamaan, karena
+  perubahan terakhir yang tersimpan akan menggantikan yang sebelumnya.
+</p>
+
+<!-- ============================ 12. ATURAN KONTEN ============================ -->
+<h2 class="bagian halaman-baru">12. Aturan Penulisan Konten</h2>
+
+<p>
+  Agar isi website rapi, konsisten, dan aman, ikuti panduan singkat berikut.
+</p>
+
+<h3>12.1 Keamanan dan privasi</h3>
+
+<ul class="ringkas">
+  <li>
+    <strong>Jangan menampilkan data pribadi siswa</strong> — nama lengkap
+    beserta kelas, nomor induk, alamat rumah, nomor telepon orang tua, atau foto
+    yang dapat dikenali secara pribadi tanpa izin.
+  </li>
+  <li>Publikasikan hanya informasi yang sudah disetujui pihak sekolah.</li>
+  <li>Hindari mencantumkan nomor telepon pribadi guru; gunakan nomor sekolah.</li>
+</ul>
+
+<h3>12.2 Gaya penulisan</h3>
+
+<ul class="ringkas">
+  <li>Gunakan bahasa Indonesia yang baku dan mudah dipahami.</li>
+  <li>Tulis paragraf pendek — 3 sampai 5 kalimat — agar nyaman dibaca di ponsel.</li>
+  <li>Hindari huruf kapital seluruhnya, karena sulit dibaca dan terkesan membentak.</li>
+  <li>Periksa ejaan nama orang, gelar, dan jabatan sebelum menerbitkan.</li>
+</ul>
+
+<h3>12.3 Sebelum menekan Terbit</h3>
+
+<ol class="langkah">
+  <li>Periksa kembali <strong>nama</strong>, <strong>tanggal</strong>, dan <strong>angka</strong>.</li>
+  <li>Pastikan tidak ada data pribadi siswa.</li>
+  <li>Pastikan judul sudah menggambarkan isi.</li>
+  <li>Isi ringkasan agar kartu berita mudah dipahami.</li>
+  <li>Simpan sebagai draf, baca ulang, baru terbitkan.</li>
+</ol>
+
+<h3>12.4 Kebiasaan yang baik</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th style="width:46%;">Lakukan</th>
+      <th>Hindari</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Simpan sebagai draf sebelum terbit.</td>
+      <td>Langsung menerbitkan tanpa membaca ulang.</td>
+    </tr>
+    <tr>
+      <td>Matikan sakelar tampil untuk menyembunyikan sementara.</td>
+      <td>Menghapus data hanya karena ingin menyembunyikannya.</td>
+    </tr>
+    <tr>
+      <td>Keluar setelah selesai memakai panel.</td>
+      <td>Meninggalkan sesi terbuka di komputer bersama.</td>
+    </tr>
+    <tr>
+      <td>Beri keterangan pada setiap foto galeri.</td>
+      <td>Mengunggah foto tanpa keterangan.</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="kaki-halaman">
+  <p style="margin-bottom:0;">
+    <strong>Panduan Penggunaan Website SD Banjaragung</strong> — Versi 1.0.
+    Disusun mengikuti tampilan dan fitur website yang sebenarnya. Bila menemukan
+    bagian yang tidak sesuai atau memerlukan bantuan teknis, hubungi pengelola
+    website sekolah.
+  </p>
+</div>
+
+</body>
+</html>

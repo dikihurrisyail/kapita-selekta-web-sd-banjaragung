@@ -122,10 +122,20 @@ export async function simpanProfil(
   }
 
   /* Tautan peta dipakai tombol "Buka di peta" di halaman Kontak. */
-  const petaUrl = teks(formData, "peta_url");
+  let petaUrl = teks(formData, "peta_url");
   if (petaUrl && !/^https?:\/\//i.test(petaUrl)) {
     if (logoBaru) await hapusDariMedia(supabase, logoBaru);
     return { ok: false, pesan: "Tautan peta harus diawali http:// atau https://" };
+  }
+  /* Tautan pendek "Bagikan" diurai ke tautan panjang agar koordinatnya terbaca. */
+  if (/^https:\/\/maps\.app\.goo\.gl\//i.test(petaUrl)) {
+    try {
+      const r = await fetch(petaUrl, { redirect: "manual" });
+      const panjang = r.headers.get("location");
+      if (panjang?.startsWith("https://www.google.com/maps")) petaUrl = panjang;
+    } catch {
+      /* tetap simpan tautan pendek; tombol "Buka di peta" tetap berfungsi */
+    }
   }
 
   /* Simpan logo lama untuk membersihkan berkasnya setelah baris tersimpan. */

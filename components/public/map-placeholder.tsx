@@ -10,7 +10,9 @@ import { MapPin } from "lucide-react";
  */
 /** Ambil koordinat dari tautan Google Maps panjang (…@lat,lng / ?q=lat,lng). */
 export function petaEmbedUrl(url?: string | null) {
-  const m = url?.match(/(-?\d{1,3}\.\d+),\s*(-?\d{1,3}\.\d+)/);
+  const m =
+    url?.match(/!3d(-?\d+\.\d+)!4d(-?\d+\.\d+)/) ??
+    url?.match(/(-?\d{1,3}\.\d+),\s*(-?\d{1,3}\.\d+)/);
   return m
     ? `https://maps.google.com/maps?q=${m[1]},${m[2]}&z=17&output=embed`
     : null;

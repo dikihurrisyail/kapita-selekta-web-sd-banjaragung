@@ -15,7 +15,7 @@ dashboard.
 ## Subject
 
 ```
-Kode pemulihan kata sandi SD Banjaragung
+Kode pemulihan kata sandi UPTD SD Negeri Banjar Agung
 ```
 
 ## Body (HTML)
@@ -28,7 +28,7 @@ Kode pemulihan kata sandi SD Banjaragung
 
   <p style="margin: 0 0 16px; font-size: 14px; line-height: 1.6;">
     Seseorang meminta pengaturan ulang kata sandi untuk akun administrator
-    SD Banjaragung yang memakai alamat email ini.
+    UPTD SD Negeri Banjar Agung yang memakai alamat email ini.
   </p>
 
   <p style="margin: 0 0 8px; font-size: 14px; line-height: 1.6;">

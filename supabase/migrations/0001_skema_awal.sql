@@ -1,5 +1,5 @@
 -- ===========================================================================
--- SD Banjaragung — Skema awal
+-- UPTD SD Negeri Banjar Agung — Skema awal
 -- ===========================================================================
 -- Cara pakai:
 --   1. Buka Supabase Dashboard > SQL Editor > New query
@@ -381,7 +381,7 @@ insert into public.profil_sekolah (
 )
 values (
   1,
-  'SD Banjaragung',
+  'UPTD SD Negeri Banjar Agung',
   'Bertumbuh bersama, berakar pada nilai.',
   null,
   'Negeri',
@@ -389,10 +389,10 @@ values (
   'Ratna Wulandari, S.Pd.',
   'Jl. Pendidikan No. 01, Kel. Teladan, Kec. Harapan, Kota Contoh, 00000',
   null,
-  'halo@sdbanjaragung.example',
+  'halo@sdnbanjaragung.example',
   'Senin–Jumat • 07.30–14.00 WIB',
   '2026/2027',
-  'SD Banjaragung berdiri sebagai bagian dari upaya masyarakat setempat menyediakan pendidikan dasar yang dekat dan terjangkau. Sejak awal, sekolah tumbuh bersama dukungan warga, guru, dan orang tua.',
+  'UPTD SD Negeri Banjar Agung berdiri sebagai bagian dari upaya masyarakat setempat menyediakan pendidikan dasar yang dekat dan terjangkau. Sejak awal, sekolah tumbuh bersama dukungan warga, guru, dan orang tua.',
   'Menjadi sekolah dasar yang menumbuhkan karakter kuat, rasa ingin tahu tinggi, dan kepedulian terhadap sesama serta lingkungan.',
   array[
     'Menyelenggarakan pembelajaran yang bermakna dan menyenangkan.',
@@ -401,7 +401,7 @@ values (
     'Membangun kerja sama yang erat dengan orang tua dan masyarakat.'
   ],
   '“Setiap anak membawa potensi yang layak kita rawat bersama.”',
-  'Selamat datang di ruang informasi SD Banjaragung. Melalui website ini, kami ingin menjaga komunikasi yang terbuka dengan keluarga dan masyarakat.'
+  'Selamat datang di ruang informasi UPTD SD Negeri Banjar Agung. Melalui website ini, kami ingin menjaga komunikasi yang terbuka dengan keluarga dan masyarakat.'
 )
 on conflict (id) do nothing;
 

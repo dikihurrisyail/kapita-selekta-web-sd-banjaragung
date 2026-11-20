@@ -1,6 +1,6 @@
-# SD Banjaragung — Website Sekolah
+# UPTD SD Negeri Banjar Agung — Website Sekolah
 
-Website resmi SD Banjaragung: halaman publik (profil, guru, pengumuman, berita,
+Website resmi UPTD SD Negeri Banjar Agung: halaman publik (profil, guru, pengumuman, berita,
 galeri, SPMB, kontak) dan panel admin untuk mengelola seluruh kontennya.
 
 Dibangun dengan **Next.js 16 (App Router)**, **TypeScript**, **Tailwind CSS v4**,
@@ -103,7 +103,7 @@ email dibuka di ponsel sementara kode diminta dari laptop.
    (myaccount.google.com → Security → 2-Step Verification). App Password tidak
    bisa dibuat tanpa ini.
 2. Buka **myaccount.google.com/apppasswords** → buat App Password baru
-   (nama bebas, mis. `Supabase SD Banjaragung`). Google menampilkan
+   (nama bebas, mis. `Supabase UPTD SD Negeri Banjar Agung`). Google menampilkan
    **16 karakter**; salin tanpa spasi. Sandi Gmail biasa **tidak akan bekerja**.
 3. Di Supabase: **Authentication → Emails → SMTP Settings**, aktifkan
    *Enable Custom SMTP*, lalu isi:
@@ -115,7 +115,7 @@ email dibuka di ponsel sementara kode diminta dari laptop.
    | Username | alamat Gmail lengkap, mis. `sdbajaragung@gmail.com` |
    | Password | App Password 16 karakter (tanpa spasi) |
    | Sender email | **harus sama** dengan alamat Gmail di atas |
-   | Sender name | `SD Banjaragung` |
+   | Sender name | `UPTD SD Negeri Banjar Agung` |
 
 4. Di **Authentication → URL Configuration → Redirect URLs**, tambahkan:
 

@@ -18,8 +18,8 @@ const newsreader = Newsreader({
 
 export const metadata: Metadata = {
   title: {
-    default: "SD Banjaragung — Bertumbuh bersama, berakar pada nilai.",
-    template: "%s | SD Banjaragung",
+    default: "UPTD SD Negeri Banjar Agung — Bertumbuh bersama, berakar pada nilai.",
+    template: "%s | UPTD SD Negeri Banjar Agung",
   },
   description:
     "Ruang informasi dan kabar sekolah untuk orang tua, guru, dan masyarakat. Bersama mendampingi setiap langkah anak.",

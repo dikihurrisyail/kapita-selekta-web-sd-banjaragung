@@ -168,7 +168,7 @@ async function jalankan() {
 
   if (!balas.startsWith("220")) gagal("Server menolak koneksi.", balas);
 
-  kirim(aktif, `EHLO sdbanjaragung.local`);
+  kirim(aktif, `EHLO sdnbanjaragung.local`);
   balas = await baca();
   console.log(`  ← ${balas.split("\n")[0]}`);
 
@@ -189,7 +189,7 @@ async function jalankan() {
     baca = buatPembaca(aktif);
     console.log("  ✓ TLS aktif");
 
-    kirim(aktif, "EHLO sdbanjaragung.local");
+    kirim(aktif, "EHLO sdnbanjaragung.local");
     balas = await baca();
   }
 

@@ -70,7 +70,7 @@ export const profilRingkas = {
   eyebrow: "Mengenal sekolah",
   judul: "Pendidikan yang dekat dengan kehidupan.",
   paragraf1:
-    "SD Banjaragung adalah sekolah dasar yang menempatkan karakter, rasa ingin tahu, dan kebersamaan sebagai fondasi belajar. Kami membangun lingkungan yang aman agar setiap anak merasa diterima dan berani mencoba.",
+    "UPTD SD Negeri Banjar Agung adalah sekolah dasar yang menempatkan karakter, rasa ingin tahu, dan kebersamaan sebagai fondasi belajar. Kami membangun lingkungan yang aman agar setiap anak merasa diterima dan berani mencoba.",
   paragraf2:
     "Melalui kerja sama guru dan orang tua, pengalaman belajar tidak berhenti di ruang kelas. Nilai saling menghargai, mandiri, dan peduli tumbuh dalam keseharian.",
 };
@@ -78,7 +78,7 @@ export const profilRingkas = {
 export const sambutanKepalaSekolah = {
   eyebrow: "Sambutan kepala sekolah",
   kutipan: "“Setiap anak membawa potensi yang layak kita rawat bersama.”",
-  isi: "Selamat datang di ruang informasi SD Banjaragung. Melalui website ini, kami ingin menjaga komunikasi yang terbuka dengan keluarga dan masyarakat. Mari bergandengan tangan menciptakan pengalaman sekolah yang hangat, aman, dan bermakna.",
+  isi: "Selamat datang di ruang informasi UPTD SD Negeri Banjar Agung. Melalui website ini, kami ingin menjaga komunikasi yang terbuka dengan keluarga dan masyarakat. Mari bergandengan tangan menciptakan pengalaman sekolah yang hangat, aman, dan bermakna.",
   nama: "Ratna Wulandari, S.Pd.",
   jabatan: "Kepala Sekolah • Nama dan foto ilustratif",
 };
@@ -234,21 +234,21 @@ export const profil = {
     eyebrow: "Profil sekolah",
     judul: "Sekolah yang tumbuh bersama warganya.",
     deskripsi:
-      "Mengenal sejarah, identitas, visi, dan fasilitas SD Banjaragung sebagai ruang belajar yang aman dan bermakna.",
+      "Mengenal sejarah, identitas, visi, dan fasilitas UPTD SD Negeri Banjar Agung sebagai ruang belajar yang aman dan bermakna.",
   },
   heroFoto: foto("Foto dokumentasi ilustratif — gedung sekolah"),
   sejarah: {
     eyebrow: "Sejarah sekolah",
     judul: "Perjalanan sekolah dari masa ke masa.",
     paragraf: [
-      "SD Banjaragung berdiri sebagai bagian dari upaya masyarakat setempat menyediakan pendidikan dasar yang dekat dan terjangkau. Sejak awal, sekolah tumbuh bersama dukungan warga, guru, dan orang tua.",
+      "UPTD SD Negeri Banjar Agung berdiri sebagai bagian dari upaya masyarakat setempat menyediakan pendidikan dasar yang dekat dan terjangkau. Sejak awal, sekolah tumbuh bersama dukungan warga, guru, dan orang tua.",
       "Seiring waktu, layanan sekolah terus dilengkapi—mulai dari ruang kelas tambahan, perpustakaan, hingga area bermain yang aman bagi anak.",
     ],
   },
   identitas: {
     judul: "Identitas sekolah",
     data: [
-      { label: "Nama sekolah", nilai: "SD Banjaragung" },
+      { label: "Nama sekolah", nilai: "UPTD SD Negeri Banjar Agung" },
       { label: "NPSN", nilai: "[NPSN resmi]" },
       { label: "Status", nilai: "Negeri" },
       { label: "Akreditasi", nilai: "[Akreditasi resmi]" },
@@ -548,7 +548,7 @@ export const ppdbLayanan = {
 
 export const kontakIntro = {
   eyebrow: "Kontak dan lokasi",
-  judul: "Hubungi SD Banjaragung",
+  judul: "Hubungi UPTD SD Negeri Banjar Agung",
   deskripsi:
     "Sampaikan pertanyaan, kebutuhan informasi, atau rencana kunjungan melalui kanal resmi sekolah.",
 };
@@ -637,7 +637,7 @@ export const adminProfil = {
   identitas: {
     judul: "Identitas sekolah",
     field: [
-      { label: "Nama sekolah", nilai: "SD Banjaragung" },
+      { label: "Nama sekolah", nilai: "UPTD SD Negeri Banjar Agung" },
       { label: "NPSN", nilai: "[NPSN resmi]" },
     ],
   },
@@ -657,7 +657,7 @@ export const adminProfil = {
     judul: "Sejarah sekolah",
     label: "Sejarah",
     nilai:
-      "SD Banjaragung berdiri sebagai bagian dari upaya masyarakat setempat menyediakan pendidikan dasar yang dekat dan terjangkau.",
+      "UPTD SD Negeri Banjar Agung berdiri sebagai bagian dari upaya masyarakat setempat menyediakan pendidikan dasar yang dekat dan terjangkau.",
     petunjuk: "Gunakan bahasa yang ringkas dan mudah dipahami.",
   },
   visiMisi: {

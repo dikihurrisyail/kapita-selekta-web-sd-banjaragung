@@ -1,14 +1,14 @@
 /**
  * Identitas & data statis situs.
  * CATATAN: seluruh nilai di file ini adalah PLACEHOLDER.
- * Ganti dengan data resmi SD Banjaragung sebelum publikasi.
+ * Ganti dengan data resmi UPTD SD Negeri Banjar Agung sebelum publikasi.
  */
 export const site = {
-  nama: "SD Banjaragung",
+  nama: "UPTD SD Negeri Banjar Agung",
   tagline: "Bertumbuh bersama, berakar pada nilai.",
   singkatan: "SD",
   telepon: "[nomor resmi sekolah]",
-  email: "halo@sdbanjaragung.example",
+  email: "halo@sdnbanjaragung.example",
   alamat:
     "Jl. Pendidikan No. 01, Kel. Teladan, Kec. Harapan, Kota Contoh, 00000 (alamat contoh)",
   alamatRingkas: "Jl. Pendidikan No. 01 • Alamat contoh",
@@ -16,7 +16,7 @@ export const site = {
   tahunAjaran: "2026/2027",
   catatanKonten:
     "Contoh konten — sesuaikan dengan data resmi sekolah. Nama, foto, jadwal, dan informasi bersifat ilustratif.",
-  hakCipta: "© 2026 SD Banjaragung • Contoh situs informasi sekolah",
+  hakCipta: "© 2026 UPTD SD Negeri Banjar Agung • Contoh situs informasi sekolah",
 } as const;
 
 /** Menu publik — 7 tautan + 1 CTA (sesuai desain header). */

@@ -16,7 +16,7 @@ const puppeteer = require("puppeteer-core");
 
 const DIR = path.dirname(fileURLToPath(import.meta.url));
 const SUMBER = path.join(DIR, "panduan-penggunaan.html");
-const HASIL = path.join(DIR, "Panduan-Penggunaan-Website-SD-Banjaragung.pdf");
+const HASIL = path.join(DIR, "Panduan-Penggunaan-Website-SD-Banjar Agung.pdf");
 
 const KANDIDAT_CHROME = [
   "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
@@ -50,7 +50,7 @@ await page.pdf({
   headerTemplate: "<div></div>",
   footerTemplate: `
     <div style="width:100%;padding:0 16mm;font-family:Arial,sans-serif;font-size:8pt;color:#94a3b8;display:flex;justify-content:space-between;">
-      <span>Panduan Penggunaan Website SD Banjaragung</span>
+      <span>Panduan Penggunaan Website UPTD SD Negeri Banjar Agung</span>
       <span class="pageNumber"></span>
     </div>`,
   margin: { top: "18mm", right: "16mm", bottom: "20mm", left: "16mm" },

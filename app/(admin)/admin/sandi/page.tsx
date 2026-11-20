@@ -45,7 +45,7 @@ async function FormSandi() {
         teksSimpan="Simpan kata sandi baru"
         petunjuk="Kata sandi lama tidak akan disimpan atau ditampilkan."
       >
-        <Panel judul="Formulari Ubah Kata Sandi">
+        <Panel judul="Ubah Kata Sandi">
           <div className="flex flex-col gap-5">
             <Field label="Kata sandi lama" htmlFor="sandi_lama">
               <Input

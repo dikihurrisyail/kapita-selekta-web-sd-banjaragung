@@ -382,7 +382,7 @@ insert into public.profil_sekolah (
 values (
   1,
   'UPTD SD Negeri Banjar Agung',
-  'Bertumbuh bersama, berakar pada nilai.',
+  'Tumbuh Bersama, Cerdas Berkarakter Jujur dalam Tindakan Mulia dalam Tujuan',
   null,
   'Negeri',
   null,

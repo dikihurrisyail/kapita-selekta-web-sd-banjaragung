@@ -106,7 +106,7 @@ export const getProfil = cache(async (): Promise<ProfilSekolah> => {
 function fallbackProfil(): ProfilSekolah {
   return {
     nama: fallback.profil.identitas.data[0].nilai,
-    tagline: "Bertumbuh bersama, berakar pada nilai.",
+    tagline: "Tumbuh Bersama, Cerdas Berkarakter Jujur dalam Tindakan Mulia dalam Tujuan",
     npsn: null,
     statusSekolah: "Negeri",
     akreditasi: null,

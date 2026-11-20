@@ -5,7 +5,7 @@
  */
 export const site = {
   nama: "UPTD SD Negeri Banjar Agung",
-  tagline: "Bertumbuh bersama, berakar pada nilai.",
+  tagline: "Tumbuh Bersama, Cerdas Berkarakter Jujur dalam Tindakan Mulia dalam Tujuan",
   singkatan: "SD",
   telepon: "[nomor resmi sekolah]",
   email: "halo@sdnbanjaragung.example",

@@ -18,7 +18,7 @@ const newsreader = Newsreader({
 
 export const metadata: Metadata = {
   title: {
-    default: "UPTD SD Negeri Banjar Agung — Bertumbuh bersama, berakar pada nilai.",
+    default: "UPTD SD Negeri Banjar Agung — Tumbuh Bersama, Cerdas Berkarakter Jujur dalam Tindakan Mulia dalam Tujuan",
     template: "%s | UPTD SD Negeri Banjar Agung",
   },
   description:

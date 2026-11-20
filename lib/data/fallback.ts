@@ -391,7 +391,7 @@ export const galeriIntro = {
     "Kumpulan momen kegiatan belajar, bermain, dan berkarya anak-anak bersama guru dan keluarga.",
 };
 
-export const kategoriGaleri = ["Semua", "Kegiatan", "Akademik", "Lingkungan"];
+export const kategoriGaleri = ["Semua", "Kegiatan", "Akademik", "Lingkungan", "Lainnya"];
 
 export const album: Album[] = [
   {

@@ -520,7 +520,7 @@ function namaBerkasAman(nama: string): string {
 }
 
 /** Kategori album yang tersedia di filter galeri publik. */
-const KATEGORI_ALBUM = new Set(["Kegiatan", "Akademik", "Lingkungan"]);
+const KATEGORI_ALBUM = new Set(["Kegiatan", "Akademik", "Lingkungan", "Lainnya"]);
 
 /**
  * Ambil jalur berkas di bucket `media` dari URL publiknya.

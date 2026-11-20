@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils/cn";
 
 export const metadata: Metadata = { title: "Galeri Kegiatan" };
 
-const kategoriGaleri = ["Semua", "Kegiatan", "Akademik", "Lingkungan"];
+const kategoriGaleri = ["Semua", "Kegiatan", "Akademik", "Lingkungan", "Lainnya"];
 
 type Props = { searchParams: Promise<{ kategori?: string }> };
 

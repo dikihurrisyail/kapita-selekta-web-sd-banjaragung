@@ -16,7 +16,7 @@ import { getAlbum, getSemuaFoto } from "@/lib/data/queries";
 export const metadata: Metadata = { title: "Galeri Admin" };
 
 /** Kategori album — sama dengan filter di halaman galeri publik. */
-const KATEGORI_ALBUM = ["Kegiatan", "Akademik", "Lingkungan"];
+const KATEGORI_ALBUM = ["Kegiatan", "Akademik", "Lingkungan", "Lainnya"];
 
 type Props = { searchParams: Promise<{ q?: string }> };
 

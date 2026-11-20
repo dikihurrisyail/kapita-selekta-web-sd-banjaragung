@@ -112,21 +112,30 @@ export async function logoutAdmin() {
 
 /* --------------------------------------------------- Pemulihan kata sandi */
 /*
- * Alur: email -> kode 6 angka -> verifikasi -> sandi baru.
+ * Alur: email -> kode verifikasi -> sandi baru.
  *
  * Kenapa kode, bukan tautan:
  *   * Tautan pemulihan harus membawa token yang hanya berlaku sekali dan
  *     bergantung pada alamat redirect yang benar. Kalau admin membuka email di
  *     ponsel sementara tautan diminta dari laptop, atau Site URL masih
  *     localhost, tautan gagal.
- *   * Kode 6 angka tidak butuh redirect sama sekali — pengguna cukup menyalin
- *     angka dari email ke halaman yang sama. Tidak ada perpindahan perangkat,
- *     tidak ada masalah URL.
+ *   * Kode verifikasi tidak butuh redirect sama sekali — pengguna cukup
+ *     menyalin angka dari email ke halaman yang sama. Tidak ada perpindahan
+ *     perangkat, tidak ada masalah URL.
+ *
+ * Panjang kode mengikuti setelan "OTP Length" proyek Supabase (proyek ini
+ * 8 digit), jadi jangan dipatok di kode aplikasi.
  */
 
-/** Pesan netral, dipakai baik email terdaftar maupun tidak. */
+/**
+ * Pesan netral, dipakai baik email terdaftar maupun tidak.
+ *
+ * Tidak menyebut jumlah digit: panjang kode mengikuti setelan "OTP Length"
+ * proyek Supabase (proyek ini 8 digit), dan menyebut angka yang salah membuat
+ * pengguna mengira kodenya terpotong.
+ */
 const PESAN_KODE_DIKIRIM =
-  "Bila alamat tersebut terdaftar sebagai administrator, kode 6 angka sudah dikirim ke email itu. Kode berlaku 10 menit.";
+  "Bila alamat tersebut terdaftar sebagai administrator, kode verifikasi sudah dikirim ke email itu. Kode berlaku 10 menit.";
 
 /** Terjemahkan galat Supabase menjadi pesan yang bisa ditindaklanjuti. */
 function pesanGalatEmail(error: {
@@ -167,7 +176,7 @@ function pesanGalatEmail(error: {
 }
 
 /**
- * Langkah 1 — kirim kode 6 angka ke email.
+ * Langkah 1 — kirim kode verifikasi ke email.
  *
  * Email yang tidak terdaftar tidak diberi tahu (permintaannya tetap sukses)
  * supaya halaman ini tidak bisa dipakai menebak email administrator mana yang

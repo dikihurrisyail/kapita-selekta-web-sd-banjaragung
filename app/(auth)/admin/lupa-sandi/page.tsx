@@ -7,7 +7,7 @@ export const metadata: Metadata = { title: "Lupa Kata Sandi" };
 /**
  * Halaman pemulihan kata sandi.
  *
- * Seluruh alur (email -> kode 6 angka -> sandi baru) terjadi di satu halaman.
+ * Seluruh alur (email -> kode verifikasi -> sandi baru) terjadi di satu halaman.
  * Tidak ada tautan yang diklik dari email, sehingga tidak bergantung pada
  * Site URL, Redirect URLs, maupun perangkat yang dipakai membuka email.
  */

@@ -72,7 +72,6 @@ export function PemulihanSandi() {
                 autoComplete="one-time-code"
                 maxLength={10}
                 required
-                placeholder="12345678"
                 className="text-center text-lg font-semibold tracking-[0.4em]"
               />
             </Field>

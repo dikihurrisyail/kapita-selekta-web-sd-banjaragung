@@ -8,10 +8,10 @@ import { FormTahapan } from "@/components/admin/form-tahapan";
 import { simpanPpdb } from "@/lib/actions/konten";
 import { getPpdb } from "@/lib/data/queries";
 
-export const metadata: Metadata = { title: "Informasi PPDB Admin" };
+export const metadata: Metadata = { title: "Informasi SPMB Admin" };
 
 /**
- * Data PPDB dibaca di dalam <Suspense> karena query Supabase memakai
+ * Data SPMB dibaca di dalam <Suspense> karena query Supabase memakai
  * cookies()/fetch (data runtime).
  */
 export default function AdminPpdbPage() {
@@ -32,16 +32,16 @@ async function FormPpdb() {
           Pengelolaan
         </p>
         <h1 className="text-[30px] font-bold leading-[1.25] text-brand-ink">
-          Informasi PPDB
+          Informasi SPMB
         </h1>
         <p className="text-sm leading-[1.5] text-body">
-          Perbarui periode, persyaratan, tahapan, dan kontak panitia PPDB.
+          Perbarui periode, persyaratan, tahapan, dan kontak panitia SPMB.
         </p>
       </div>
 
-      <Alert>Perubahan akan tampil di halaman publik /ppdb.</Alert>
+      <Alert>Perubahan akan tampil di halaman publik /spmb.</Alert>
 
-      <FormAksi action={simpanPpdb} teksSimpan="Simpan informasi PPDB">
+      <FormAksi action={simpanPpdb} teksSimpan="Simpan informasi SPMB">
         <Panel judul="Informasi umum & persyaratan">
           <div className="flex flex-col gap-5">
             <div className="grid gap-5 sm:grid-cols-2">
@@ -58,7 +58,7 @@ async function FormPpdb() {
               </Field>
             </div>
             <Field
-              label="Judul PPDB"
+              label="Judul SPMB"
               htmlFor="judul"
               petunjuk="Tampil sebagai judul di halaman publik."
             >
@@ -142,11 +142,11 @@ async function FormPpdb() {
   );
 }
 
-/** Kerangka pemuatan form PPDB admin. */
+/** Kerangka pemuatan form SPMB admin. */
 function FormKerangka() {
   return (
     <div className="flex flex-col gap-6" aria-busy="true">
-      <span className="sr-only">Memuat informasi PPDB…</span>
+      <span className="sr-only">Memuat informasi SPMB…</span>
       <div className="h-3 w-24 rounded-pill bg-page-alt" />
       <div className="h-8 w-64 rounded-btn bg-page-alt" />
       <div className="h-56 rounded-card bg-page-alt" />

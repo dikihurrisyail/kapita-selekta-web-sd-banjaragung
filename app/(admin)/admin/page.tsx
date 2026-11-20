@@ -133,7 +133,7 @@ async function IsiDashboard() {
                 { label: "Tulis berita baru", href: "/admin/berita/edit" },
                 { label: "Buat pengumuman", href: "/admin/pengumuman/edit" },
                 { label: "Unggah foto galeri", href: "/admin/galeri" },
-                { label: "Perbarui info PPDB", href: "/admin/ppdb" },
+                { label: "Perbarui info SPMB", href: "/admin/spmb" },
               ].map((p) => (
                 <li key={p.href} className="border-b border-line last:border-0">
                   <Link

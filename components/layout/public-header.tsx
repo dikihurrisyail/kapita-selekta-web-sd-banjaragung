@@ -11,7 +11,7 @@ import { SchoolIdentity } from "./school-identity";
 /**
  * Navigasi utama — tinggi 88px, border-b #E2E8F0.
  * Menu: 14px SemiBold, item aktif #1E3A8A dengan garis bawah 2px.
- * CTA "PPDB Info": bg #D97706, teks #0F172A.
+ * CTA "SPMB Info": bg #D97706, teks #0F172A.
  */
 export function PublicHeader({ logoUrl }: { logoUrl?: string | null }) {
   const pathname = usePathname();

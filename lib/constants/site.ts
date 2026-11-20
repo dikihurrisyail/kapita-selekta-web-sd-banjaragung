@@ -30,7 +30,7 @@ export const menuPublik = [
   { label: "Kontak", href: "/kontak" },
 ] as const;
 
-export const ctaPpdb = { label: "PPDB Info", href: "/ppdb" } as const;
+export const ctaPpdb = { label: "SPMB Info", href: "/spmb" } as const;
 
 /** Menu sidebar admin — 7 item + keluar. */
 export const menuAdmin = [
@@ -40,7 +40,7 @@ export const menuAdmin = [
   { label: "Pengumuman", href: "/admin/pengumuman", icon: "megaphone" },
   { label: "Berita", href: "/admin/berita", icon: "newspaper" },
   { label: "Galeri", href: "/admin/galeri", icon: "images" },
-  { label: "Informasi PPDB", href: "/admin/ppdb", icon: "clipboard-list" },
+  { label: "Informasi SPMB", href: "/admin/spmb", icon: "clipboard-list" },
 ] as const;
 
 /** Tautan footer — 4 item. */
@@ -48,5 +48,5 @@ export const tautanFooter = [
   { label: "Profil Sekolah", href: "/profil" },
   { label: "Informasi Guru", href: "/guru" },
   { label: "Pengumuman", href: "/pengumuman" },
-  { label: "Informasi PPDB", href: "/ppdb" },
+  { label: "Informasi SPMB", href: "/spmb" },
 ] as const;

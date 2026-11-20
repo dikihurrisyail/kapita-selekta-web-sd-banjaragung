@@ -11,9 +11,9 @@ type Tahapan = { nomor: string; judul: string; waktu: string; deskripsi: string 
 type Baris = { kunci: string; judul: string; waktu: string; deskripsi: string };
 
 /**
- * Penyunting daftar tahapan PPDB.
+ * Penyunting daftar tahapan SPMB.
  *
- * Berupa kumpulan isian berulang di dalam form PPDB induk. Setiap baris
+ * Berupa kumpulan isian berulang di dalam form SPMB induk. Setiap baris
  * mengirim tiga kolom: `tahapan_judul`, `tahapan_waktu`, `tahapan_deskripsi`.
  * Nomor tahap (01, 02, …) dibuat otomatis di server mengikuti urutan baris,
  * sehingga admin tidak perlu mengisinya sendiri.

@@ -11,10 +11,10 @@ import { RequirementChecklist } from "@/components/public/requirement-checklist"
 import { PublicSection } from "@/components/public/public-section";
 import { getPpdb } from "@/lib/data/queries";
 
-export const metadata: Metadata = { title: "Informasi PPDB" };
+export const metadata: Metadata = { title: "Informasi SPMB" };
 
 /**
- * Halaman PPDB.
+ * Halaman SPMB.
  *
  * Data dibaca di dalam <Suspense> karena query Supabase memakai
  * cookies()/fetch (data runtime). Tanpa boundary ini, build produksi gagal
@@ -34,8 +34,8 @@ async function IsiPpdb() {
   return (
     <>
       <PageIntro
-        eyebrow="Penerimaan peserta didik baru"
-        judul={`Informasi PPDB ${ppdb.tahunAjaran}`}
+        eyebrow="Penerimaan murid baru"
+        judul={`Informasi SPMB ${ppdb.tahunAjaran}`}
         deskripsi="Pelajari persyaratan, tahapan, dan cara memperoleh petunjuk pendaftaran sebelum mendaftar ke sekolah."
       />
 
@@ -46,7 +46,7 @@ async function IsiPpdb() {
             akan diumumkan melalui kanal sekolah.
           </Alert>
 
-          {/* Pengantar PPDB — 560 / 608 */}
+          {/* Pengantar SPMB — 560 / 608 */}
           <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:gap-8">
             <div className="flex w-full flex-col gap-5 lg:w-[560px] lg:shrink-0">
               <p className="text-xs font-bold leading-[1.4] tracking-wide text-accent-ink uppercase">
@@ -73,7 +73,7 @@ async function IsiPpdb() {
             </div>
             <Foto
               src={null}
-              label="Foto dokumentasi ilustratif — penerimaan peserta didik"
+              label="Foto dokumentasi ilustratif — penerimaan murid"
               className="h-[240px] w-full lg:h-[320px] lg:flex-1"
             />
           </div>
@@ -118,10 +118,10 @@ async function IsiPpdb() {
             </Panel>
           </div>
 
-          {/* Tahapan PPDB */}
+          {/* Tahapan SPMB */}
           {ppdb.tahapan.length > 0 ? (
             <div className="flex flex-col gap-8">
-              <SectionHeading eyebrow="Tahapan PPDB" judul="Langkah menuju sekolah" />
+              <SectionHeading eyebrow="Tahapan SPMB" judul="Langkah menuju sekolah" />
               <ol className="flex flex-col">
                 {ppdb.tahapan.map((t, i) => (
                   <PpdbStep
@@ -143,7 +143,7 @@ async function IsiPpdb() {
               Layanan panitia
             </h2>
             <p className="text-sm leading-[1.6] text-body">
-              Panitia PPDB siap membantu menjelaskan persyaratan, alur pendaftaran,
+              Panitia SPMB siap membantu menjelaskan persyaratan, alur pendaftaran,
               dan hal lain yang diperlukan calon peserta didik.
             </p>
             {ppdb.telepon ? (
@@ -163,11 +163,11 @@ async function IsiPpdb() {
   );
 }
 
-/** Kerangka pemuatan halaman PPDB. */
+/** Kerangka pemuatan halaman SPMB. */
 function PpdbKerangka() {
   return (
     <div className="container-page py-14" aria-busy="true">
-      <span className="sr-only">Memuat informasi PPDB…</span>
+      <span className="sr-only">Memuat informasi SPMB…</span>
       <div className="flex flex-col gap-3">
         <div className="h-3 w-40 rounded-pill bg-page-alt" />
         <div className="h-9 w-full max-w-[520px] rounded-btn bg-page-alt" />

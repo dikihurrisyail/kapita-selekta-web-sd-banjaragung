@@ -433,7 +433,7 @@ function fallbackStruktur(): StrukturItem[] {
   ];
 }
 
-/* -------------------------------------------------------------------- PPDB */
+/* -------------------------------------------------------------------- SPMB */
 
 export async function getPpdb(): Promise<PpdbInfo> {
   if (!isSupabaseConfigured()) return fallbackPpdb();
@@ -475,7 +475,7 @@ export async function getPpdb(): Promise<PpdbInfo> {
 
 function fallbackPpdb(): PpdbInfo {
   return {
-    tahunAjaran: fallback.ppdbIntro.judul.replace("Informasi PPDB ", ""),
+    tahunAjaran: fallback.ppdbIntro.judul.replace("Informasi SPMB ", ""),
     periode: fallback.ppdbTahapan.tahap[0]?.waktu ?? "",
     judul: fallback.ppdbIntro.judul,
     deskripsi: fallback.ppdbPengantar.paragraf1,

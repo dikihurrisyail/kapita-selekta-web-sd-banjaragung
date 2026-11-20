@@ -1,7 +1,7 @@
 # SD Banjaragung — Website Sekolah
 
 Website resmi SD Banjaragung: halaman publik (profil, guru, pengumuman, berita,
-galeri, PPDB, kontak) dan panel admin untuk mengelola seluruh kontennya.
+galeri, SPMB, kontak) dan panel admin untuk mengelola seluruh kontennya.
 
 Dibangun dengan **Next.js 16 (App Router)**, **TypeScript**, **Tailwind CSS v4**,
 dan **Supabase** (database, autentikasi, penyimpanan berkas).

@@ -142,11 +142,11 @@ async function IsiBeranda() {
         </div>
       </PublicSection>
 
-      {/* Undangan PPDB */}
+      {/* Undangan SPMB */}
       <section className="bg-brand">
         <div className="container-page flex flex-col gap-6 py-12">
           <p className="text-xs font-bold leading-[1.4] tracking-wide text-white uppercase">
-            Penerimaan peserta didik baru
+            Penerimaan murid baru
           </p>
           <h2 className="text-[32px] font-bold leading-[1.15] text-white sm:text-[36px]">
             Mari mengenal sekolah lebih dekat.
@@ -155,8 +155,8 @@ async function IsiBeranda() {
             {ppdb.deskripsi}
           </p>
           <div className="flex flex-wrap gap-3">
-            <ButtonLink href="/ppdb" variant="accent">
-              Lihat Informasi PPDB →
+            <ButtonLink href="/spmb" variant="accent">
+              Lihat Informasi SPMB →
             </ButtonLink>
             <ButtonLink href="/kontak" variant="light">
               Kontak Sekolah

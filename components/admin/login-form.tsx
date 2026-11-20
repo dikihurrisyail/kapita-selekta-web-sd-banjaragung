@@ -35,7 +35,7 @@ export function LoginForm({
             Satu tempat untuk mengelola informasi sekolah.
           </h1>
           <p className="max-w-[532px] text-base leading-[1.6] text-white">
-            Perbarui profil, guru, pengumuman, berita, galeri, dan informasi PPDB
+            Perbarui profil, guru, pengumuman, berita, galeri, dan informasi SPMB
             tanpa menyentuh kode.
           </p>
         </div>

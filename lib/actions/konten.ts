@@ -187,7 +187,7 @@ export async function simpanProfil(
   /* Logo lama dihapus hanya setelah logo baru benar-benar tersimpan. */
   if (logoBaru && lama?.logo_url) await hapusDariMedia(supabase, lama.logo_url);
 
-  segarkanPublik("/profil", "/kontak", "/ppdb");
+  segarkanPublik("/profil", "/kontak", "/spmb");
   /* Logo tampil di header & footer semua halaman publik. */
   revalidatePath("/", "layout");
   revalidatePath("/admin/profil");
@@ -753,7 +753,7 @@ export async function simpanKeteranganFoto(
   return { ok: true, pesan: "Keterangan foto disimpan." };
 }
 
-/* -------------------------------------------------------------------- PPDB */
+/* -------------------------------------------------------------------- SPMB */
 
 export async function simpanPpdb(
   _sebelumnya: HasilAksi | null,
@@ -826,7 +826,7 @@ export async function simpanPpdb(
     }
   }
 
-  segarkanPublik("/ppdb", "/pengumuman");
-  revalidatePath("/admin/ppdb");
-  return { ok: true, pesan: "Informasi dan tahapan PPDB disimpan." };
+  segarkanPublik("/spmb", "/pengumuman");
+  revalidatePath("/admin/spmb");
+  return { ok: true, pesan: "Informasi dan tahapan SPMB disimpan." };
 }

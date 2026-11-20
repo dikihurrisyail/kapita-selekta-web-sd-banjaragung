@@ -5,6 +5,9 @@ const nextConfig: NextConfig = {
   experimental: {
     agentFeedback: true,
   },
+  async redirects() {
+    return [{ source: "/ppdb", destination: "/spmb", permanent: true }];
+  },
   cacheComponents: true,
   partialPrefetching: true,
   turbopack: {

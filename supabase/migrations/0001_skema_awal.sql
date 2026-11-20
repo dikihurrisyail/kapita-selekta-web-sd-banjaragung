@@ -509,8 +509,8 @@ values (
   1,
   '2026/2027',
   '1–12 Juni 2026',
-  'Penerimaan Peserta Didik Baru 2026/2027',
-  'Penerimaan peserta didik baru tahun ajaran 2026/2027 dibuka untuk calon peserta didik yang memenuhi persyaratan. Seluruh proses dilakukan tanpa biaya pendaftaran.',
+  'Penerimaan Murid Baru 2026/2027',
+  'Penerimaan murid baru tahun ajaran 2026/2027 dibuka untuk calon peserta didik yang memenuhi persyaratan. Seluruh proses dilakukan tanpa biaya pendaftaran.',
   array[
     'Fotokopi akta kelahiran',
     'Fotokopi kartu keluarga',

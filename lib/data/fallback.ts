@@ -447,11 +447,11 @@ export const album: Album[] = [
   },
 ];
 
-/* ---------------------------------------------------------------- PPDB */
+/* ---------------------------------------------------------------- SPMB */
 
 export const ppdbIntro = {
-  eyebrow: "Penerimaan peserta didik baru",
-  judul: "Informasi PPDB 2026/2027",
+  eyebrow: "Penerimaan murid baru",
+  judul: "Informasi SPMB 2026/2027",
   deskripsi:
     "Pelajari persyaratan, tahapan, dan cara memperoleh petunjuk pendaftaran sebelum mendaftar ke sekolah.",
 };
@@ -460,11 +460,11 @@ export const ppdbPengantar = {
   label: "Informasi penerimaan",
   judul: "Mari mengenal sekolah lebih dekat.",
   paragraf1:
-    "Penerimaan peserta didik baru tahun ajaran 2026/2027 dibuka untuk calon peserta didik yang memenuhi persyaratan. Seluruh proses dilakukan tanpa biaya pendaftaran.",
+    "Penerimaan murid baru tahun ajaran 2026/2027 dibuka untuk calon peserta didik yang memenuhi persyaratan. Seluruh proses dilakukan tanpa biaya pendaftaran.",
   paragraf2:
     "Jadwal pada halaman ini merupakan contoh. Informasi resmi akan diumumkan melalui kanal sekolah.",
   cta: "Hubungi panitia →",
-  foto: foto("Foto dokumentasi ilustratif — penerimaan peserta didik"),
+  foto: foto("Foto dokumentasi ilustratif — penerimaan murid"),
 };
 
 export const ppdbSiapa = {
@@ -492,7 +492,7 @@ export const ppdbBerkas = {
 };
 
 export const ppdbTahapan = {
-  eyebrow: "Tahapan PPDB",
+  eyebrow: "Tahapan SPMB",
   judul: "Empat langkah menuju sekolah",
   tahap: [
     {
@@ -528,7 +528,7 @@ export const ppdbTahapan = {
 export const ppdbPetunjuk = {
   judul: "Cara memperoleh petunjuk pendaftaran",
   paragraf1:
-    "Untuk konsultasi dan petunjuk pendaftaran, silakan menghubungi panitia PPDB atau berkunjung langsung ke sekolah pada hari dan jam layanan.",
+    "Untuk konsultasi dan petunjuk pendaftaran, silakan menghubungi panitia SPMB atau berkunjung langsung ke sekolah pada hari dan jam layanan.",
   butir: [
     "Datang ke sekretariat panitia di sekolah pada hari kerja.",
     "Hubungi nomor layanan sekolah pada jam kerja.",
@@ -539,8 +539,8 @@ export const ppdbPetunjuk = {
 
 export const ppdbLayanan = {
   judul: "Layanan panitia",
-  isi: "Panitia PPDB siap membantu menjelaskan persyaratan, alur pendaftaran, dan hal lain yang diperlukan calon peserta didik.",
-  detail: "Senin–Jumat • 08.00–14.00 WIB di sekretariat panitia PPDB.",
+  isi: "Panitia SPMB siap membantu menjelaskan persyaratan, alur pendaftaran, dan hal lain yang diperlukan calon peserta didik.",
+  detail: "Senin–Jumat • 08.00–14.00 WIB di sekretariat panitia SPMB.",
   catatan: "Jadwal pada desain ini merupakan contoh, bukan pengumuman penerimaan resmi.",
 };
 
@@ -618,7 +618,7 @@ export const dashboard = {
     { label: "Tulis berita baru", href: "/admin/berita/edit" },
     { label: "Buat pengumuman", href: "/admin/pengumuman" },
     { label: "Unggah foto galeri", href: "/admin/galeri" },
-    { label: "Perbarui info PPDB", href: "/admin/ppdb" },
+    { label: "Perbarui info SPMB", href: "/admin/spmb" },
   ],
   umpanBalik:
     "Semua perubahan tersimpan otomatis sebagai draf sampai Anda menekan Terbitkan.",
@@ -808,9 +808,9 @@ export const adminGaleri = {
 };
 
 export const adminPpdb = {
-  judul: "Informasi PPDB",
-  subjudul: "Perbarui periode, persyaratan, tahapan, dan kontak panitia PPDB.",
-  umpanBalik: "Perubahan akan tampil di halaman publik /ppdb.",
+  judul: "Informasi SPMB",
+  subjudul: "Perbarui periode, persyaratan, tahapan, dan kontak panitia SPMB.",
+  umpanBalik: "Perubahan akan tampil di halaman publik /spmb.",
   umum: {
     judul: "Informasi umum & persyaratan",
     periode: [
@@ -819,8 +819,8 @@ export const adminPpdb = {
     ],
     field: [
       {
-        label: "Judul PPDB",
-        nilai: "Penerimaan Peserta Didik Baru 2026/2027",
+        label: "Judul SPMB",
+        nilai: "Penerimaan Murid Baru 2026/2027",
         petunjuk: "Tampil sebagai judul di halaman publik.",
       },
       { label: "Deskripsi", nilai: ppdbPengantar.paragraf1 },
@@ -854,7 +854,7 @@ export const adminPpdb = {
     },
     url: { label: "Tautan pendaftaran", nilai: "[tautan pendaftaran]", petunjuk: "Contoh: https://..." },
   },
-  simpan: { petunjuk: "Perubahan belum disimpan.", simpan: "Simpan informasi PPDB", batal: "Batal" },
+  simpan: { petunjuk: "Perubahan belum disimpan.", simpan: "Simpan informasi SPMB", batal: "Batal" },
 };
 
 export const adminLogin = {
@@ -862,7 +862,7 @@ export const adminLogin = {
   subjudul: "Gunakan akun administrator sekolah untuk mengelola konten website.",
   galeri: {
     judul: "Satu tempat untuk mengelola informasi sekolah.",
-    isi: "Perbarui profil, guru, pengumuman, berita, galeri, dan informasi PPDB tanpa menyentuh kode.",
+    isi: "Perbarui profil, guru, pengumuman, berita, galeri, dan informasi SPMB tanpa menyentuh kode.",
     foto: foto("Foto dokumentasi ilustratif — gedung sekolah"),
     catatan: "Akses terbatas untuk administrator sekolah.",
   },

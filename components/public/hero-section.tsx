@@ -34,8 +34,8 @@ export function HeroSection({ profil }: { profil: ProfilSekolah }) {
               <ButtonLink href="/profil" variant="light">
                 Kenali Sekolah
               </ButtonLink>
-              <ButtonLink href="/ppdb" variant="accent">
-                Informasi PPDB →
+              <ButtonLink href="/spmb" variant="accent">
+                Informasi SPMB →
               </ButtonLink>
             </div>
           </div>

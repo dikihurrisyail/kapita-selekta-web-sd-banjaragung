@@ -1,5 +1,5 @@
 /**
- * Langkah PPDB (layer "Tahap penerimaan"):
+ * Langkah SPMB (layer "Tahap penerimaan"):
  * penanda angka 44×44 (radius pill, bg brand, teks putih) + rincian
  * (judul, waktu, deskripsi). Di desktop: penanda di kiri, garis penghubung.
  */

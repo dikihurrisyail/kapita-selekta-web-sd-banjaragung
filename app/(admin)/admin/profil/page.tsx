@@ -173,16 +173,16 @@ async function FormProfil() {
               />
             </Field>
             <Field
-              label="Tautan peta lokasi"
+              label="Peta lokasi"
               htmlFor="peta_url"
-              petunjuk="Tempel tautan dari tombol Bagikan di Google Maps. Peta dan tombol “Buka di peta” tampil di halaman Kontak."
+              petunjuk="Di Google Maps klik Bagikan, tab Sematkan peta, Salin HTML, lalu tempel di sini. Tautan Bagikan biasa juga bisa."
             >
-              <Input
+              <Textarea
                 id="peta_url"
                 name="peta_url"
-                type="url"
+                rows={3}
                 defaultValue={profil.petaUrl ?? ""}
-                placeholder="https://maps.app.goo.gl/..."
+                placeholder="<iframe src=&quot;https://www.google.com/maps/embed?...&quot;></iframe>"
               />
             </Field>
           </div>

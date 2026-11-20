@@ -1,4 +1,5 @@
 import { MapPin } from "lucide-react";
+import { petaEmbedUrl } from "@/lib/utils/peta";
 
 /**
  * Denah lokasi ilustratif (layer "Denah lokasi ilustratif" di /kontak):
@@ -8,16 +9,6 @@ import { MapPin } from "lucide-react";
  * Bila sekolah punya tautan peta resmi, komponen ini menampilkan tautan
  * tersebut di bawah denah (lihat /kontak).
  */
-/** Ambil koordinat dari tautan Google Maps panjang (…@lat,lng / ?q=lat,lng). */
-export function petaEmbedUrl(url?: string | null) {
-  const m =
-    url?.match(/!3d(-?\d+\.\d+)!4d(-?\d+\.\d+)/) ??
-    url?.match(/(-?\d{1,3}\.\d+),\s*(-?\d{1,3}\.\d+)/);
-  return m
-    ? `https://maps.google.com/maps?q=${m[1]},${m[2]}&z=17&output=embed`
-    : null;
-}
-
 export function MapPlaceholder({
   className,
   namaSekolah = "Sekolah",

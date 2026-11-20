@@ -5,6 +5,7 @@ import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
 import { wajibLogin } from "@/lib/supabase/auth";
 import { slugify } from "@/lib/utils/format-date";
+import { srcDariIframe } from "@/lib/utils/peta";
 import type { HasilAksi } from "./auth";
 
 /**
@@ -123,9 +124,18 @@ export async function simpanProfil(
 
   /* Tautan peta dipakai tombol "Buka di peta" di halaman Kontak. */
   let petaUrl = teks(formData, "peta_url");
+  /* Kode sematan (HTML <iframe>) hanya diterima bila berasal dari embed resmi Google Maps. */
+  if (/^<iframe/i.test(petaUrl)) {
+    const src = srcDariIframe(petaUrl);
+    if (!src) {
+      if (logoBaru) await hapusDariMedia(supabase, logoBaru);
+      return { ok: false, pesan: "Kode sematan harus dari Google Maps (Bagikan → Sematkan peta)." };
+    }
+    petaUrl = src;
+  }
   if (petaUrl && !/^https?:\/\//i.test(petaUrl)) {
     if (logoBaru) await hapusDariMedia(supabase, logoBaru);
-    return { ok: false, pesan: "Tautan peta harus diawali http:// atau https://" };
+    return { ok: false, pesan: "Isi tautan Google Maps atau kode sematan petanya." };
   }
   /* Tautan pendek "Bagikan" diurai ke tautan panjang agar koordinatnya terbaca. */
   if (/^https:\/\/maps\.app\.goo\.gl\//i.test(petaUrl)) {

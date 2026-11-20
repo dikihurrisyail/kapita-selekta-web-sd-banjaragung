@@ -5,7 +5,8 @@ import { Alert } from "@/components/ui/alert";
 import { ButtonLink } from "@/components/ui/button";
 import { Panel } from "@/components/ui/card";
 import { ContactChannel } from "@/components/public/contact-channel";
-import { MapPlaceholder, petaEmbedUrl } from "@/components/public/map-placeholder";
+import { MapPlaceholder } from "@/components/public/map-placeholder";
+import { petaEmbedUrl, petaTautan } from "@/lib/utils/peta";
 import { PublicSection } from "@/components/public/public-section";
 import { getProfil } from "@/lib/data/queries";
 
@@ -90,9 +91,9 @@ async function IsiKontak() {
                   Peta lokasi bersifat ilustratif. Gunakan tautan di bawah untuk navigasi.
                 </p>
               )}
-              {profil.petaUrl ? (
+              {petaTautan(profil.petaUrl) ? (
                 <div>
-                  <ButtonLink href={profil.petaUrl} variant="outline">
+                  <ButtonLink href={petaTautan(profil.petaUrl)!} variant="outline">
                     Buka di peta →
                   </ButtonLink>
                 </div>

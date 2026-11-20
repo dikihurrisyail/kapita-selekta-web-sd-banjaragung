@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { refresh, revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
 import { wajibLogin } from "@/lib/supabase/auth";
@@ -44,10 +44,16 @@ function barisTeks(formData: FormData, kunci: string): string[] {
     .filter(Boolean);
 }
 
-/** Segarkan seluruh halaman publik yang menampilkan konten. */
+/**
+ * Segarkan cache server DAN router klien.
+ *
+ * revalidatePath hanya membuang cache server. Tanpa refresh(), halaman yang
+ * sedang terbuka tetap menampilkan data lama sampai dimuat ulang manual.
+ */
 function segarkanPublik(...rute: string[]) {
   revalidatePath("/");
   rute.forEach((r) => revalidatePath(r));
+  refresh();
 }
 
 /* ------------------------------------------------------------- Unggah berkas */

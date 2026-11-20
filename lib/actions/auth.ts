@@ -1,7 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { revalidatePath } from "next/cache";
+import { refresh, revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { createClient } from "@/lib/supabase/server";
 import { createClientOtp } from "@/lib/supabase/otp";
@@ -97,6 +97,7 @@ export async function loginAdmin(
   }
 
   revalidatePath("/", "layout");
+  refresh();
   redirect(lanjut.startsWith("/admin") ? lanjut : "/admin");
 }
 
@@ -107,6 +108,7 @@ export async function logoutAdmin() {
     await supabase.auth.signOut();
   }
   revalidatePath("/", "layout");
+  refresh();
   redirect("/admin/login");
 }
 
@@ -454,5 +456,7 @@ export async function simpanSandiBaru(
 
   await supabase.auth.signOut();
   revalidatePath("/", "layout");
-  redirect("/admin/login?pulih=1");
+  refresh();
+  redirect("/admin/login");
+}
 }

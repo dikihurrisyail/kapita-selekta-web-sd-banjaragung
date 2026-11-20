@@ -60,7 +60,7 @@ async function FilterStatus({ searchParams }: Props) {
   return (
     <div className="flex flex-wrap items-center gap-2">
       {["Semua", "Terbit", "Draf"].map((f) => (
-        <a
+        <Link
           key={f}
           href={f === "Semua" ? "/admin/berita" : `/admin/berita?status=${f}`}
           aria-current={f === aktif ? "page" : undefined}
@@ -71,7 +71,7 @@ async function FilterStatus({ searchParams }: Props) {
           }
         >
           {f}
-        </a>
+        </Link>
       ))}
     </div>
   );

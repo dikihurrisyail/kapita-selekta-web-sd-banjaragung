@@ -83,3 +83,15 @@
     padding-inline: var(--spacing-gutter);
   }
 }
+
+.progres-navigasi {
+  transform-origin: left;
+  animation: progres-navigasi 8s cubic-bezier(0.1, 0.6, 0.2, 1) forwards;
+}
+@keyframes progres-navigasi {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(0.92); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .progres-navigasi { animation: none; transform: scaleX(0.5); }
+}

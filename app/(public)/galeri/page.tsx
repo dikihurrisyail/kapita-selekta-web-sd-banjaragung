@@ -48,7 +48,7 @@ async function FilterKategori({ searchParams }: Props) {
   return (
     <div className="flex flex-wrap items-center gap-3">
       {kategoriGaleri.map((k) => (
-        <a
+        <Link
           key={k}
           href={k === "Semua" ? "/galeri" : `/galeri?kategori=${encodeURIComponent(k)}`}
           aria-current={k === aktif ? "page" : undefined}
@@ -60,7 +60,7 @@ async function FilterKategori({ searchParams }: Props) {
           )}
         >
           {k}
-        </a>
+        </Link>
       ))}
     </div>
   );

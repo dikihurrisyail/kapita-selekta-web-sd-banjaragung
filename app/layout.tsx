@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, Newsreader } from "next/font/google";
+import { Suspense } from "react";
+import { ProgresNavigasi } from "@/components/ui/progres-navigasi";
 import "./globals.css";
 
 const jakarta = Plus_Jakarta_Sans({
@@ -32,6 +34,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${jakarta.variable} ${newsreader.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-page text-body">
+        <Suspense fallback={null}>
+          <ProgresNavigasi />
+        </Suspense>
         {children}
       </body>
     </html>

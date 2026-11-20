@@ -137,7 +137,25 @@ export async function logoutAdmin() {
 const PESAN_KODE_DIKIRIM =
   "Bila alamat tersebut terdaftar sebagai administrator, kode verifikasi sudah dikirim ke email itu. Kode berlaku 10 menit.";
 
-/** Terjemahkan galat Supabase menjadi pesan yang bisa ditindaklanjuti. */
+/**
+ * Terjemahkan galat Supabase menjadi pesan yang bisa ditindaklanjuti.
+ *
+ * PENTING: Supabase memakai SATU kode (`over_email_send_rate_limit`) untuk DUA
+ * batas yang sangat berbeda, dan hanya isi pesannya yang membedakan:
+ *
+ *   1. "For security purposes, you can only request this after N seconds."
+ *      -> jeda PER ALAMAT EMAIL, bawaan ~60 detik. Ini pengaman anti-spam.
+ *         Tidak ada hubungannya dengan kuota, dan TIDAK hilang walau SMTP
+ *         kustom aktif. Tindakan: tunggu N detik.
+ *
+ *   2. "email rate limit exceeded"
+ *      -> kuota PER PROYEK per jam. Inilah yang berubah bila SMTP kustom
+ *         dipasang dan diatur di Authentication → Rate Limits.
+ *         Tindakan: tunggu ±1 jam atau naikkan batas.
+ *
+ * Menyamakan keduanya membuat pengguna disuruh menunggu satu jam padahal
+ * cukup satu menit — persis keluhan "batas pengirimannya masih terbatas".
+ */
 function pesanGalatEmail(error: {
   code?: string;
   status?: number;
@@ -145,12 +163,23 @@ function pesanGalatEmail(error: {
 }): HasilAksi | null {
   const kode = (error.code ?? "").toLowerCase();
   const status = error.status ?? 0;
+  const pesanMentah = error.message ?? "";
 
+  /* Batas 1: jeda per alamat email. Pesannya menyebut sisa detik. */
+  const jeda = /after (\d+) seconds?/i.exec(pesanMentah);
+  if (jeda) {
+    return {
+      ok: false,
+      pesan: `Email baru saja dikirim ke alamat ini. Tunggu ${jeda[1]} detik lagi, lalu coba kirim ulang.`,
+    };
+  }
+
+  /* Batas 2: kuota per proyek per jam. */
   if (kode.includes("rate_limit") || status === 429) {
     return {
       ok: false,
       pesan:
-        "Batas pengiriman email tercapai. Tunggu sekitar satu jam, atau minta pengelola memeriksa kuota SMTP.",
+        "Kuota pengiriman email per jam sudah tercapai. Tunggu sekitar satu jam, atau minta pengelola menaikkan batas di Authentication → Rate Limits.",
     };
   }
 
